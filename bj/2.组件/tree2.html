@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+
+<!--组件模板 controller view 的 view -->
+<script type="text/x-handlebars-template" id="item-template">
+    <li>
+        <div @click="toggle">
+            {{model.name}}
+            <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
+        </div>
+        <ul v-if="isFolder" v-show="open">
+            <item v-for="model in model.children" :model="model"></item>
+            <li @click="addLi">add</li>
+        </ul>
+    </li>
+</script>
+
+<!--启动-->
+<ul id="app">
+    <item :model="treeData"></item>
+</ul>
+
+<script src="tree.js"></script>
+
+</body>
+</html>
