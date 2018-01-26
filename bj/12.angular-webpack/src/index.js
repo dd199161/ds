@@ -1,0 +1,1 @@
+/** * Created by Randy on 2017/6/2. */var angular = require('angular');var ngModel = angular.module('myApp',['ionic']);require('./directive/helloWorld/helloWorld')(ngModel);require('./controller/myCtrl')(ngModel);

@@ -14,7 +14,7 @@ flex-wrap
 }
 flex-flow：属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。
 .box {
-  flex-flow: <flex-direction> || <flex-wrap>;
+  flex-flow: <flex-direction> || <flex-wrap>;//flex-flow:排列方式 是否换行;
 }
 justify-content：属性定义了项目在主轴上的对齐方式。
 .box {
@@ -59,3 +59,13 @@ align-self
 .item {
   align-self: auto | flex-start | flex-end | center | baseline | stretch;
 }
+
+
+
+
+以块级元素显示（从上到下）：flex-direction:column;
+让多个子元素在一行显示：flex-grow:1;
+元素内容对齐方式：justify-content:center;
+
+
+

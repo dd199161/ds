@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       req: {
-        name: 'frank01',
+        name: 'frank02',
         password: '1234',
         device_type: DeviceType
       },

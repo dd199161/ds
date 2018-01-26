@@ -1,0 +1,40 @@
+npm i vuex --save
+
+main.js
+import vuex from ''vuex
+vue.use(vuex)
+
+new Vue({
+el:'#app',
+store,
+router,
+template:'<App />',
+components:{
+	App
+}
+
+})
+
+
+
+src->新建一个vuex文件夹
+
+store.js
+const store = new Vuex.Store({
+	state:{
+		xxx:0
+	},
+	mutations:{
+		abc(state,xxx){
+		state.xxx += xxx	
+		}
+	}
+})
+
+abk.vue
+
+computed:{
+	xxx(){
+		return this.$store.state.xxx;
+	}
+}

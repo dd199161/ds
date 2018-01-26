@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.link{
+		display: inline-block;
+		width: 100px;
+		height: 40px;
+		background: red;
+		position: relative;
+		color: white;
+		line-height: 40px;
+		text-align: center;
+	}
+	.box{
+		width:200px;
+		height: 100px;
+		background: green;
+		display: none;
+		position: absolute;
+		left: 0;
+		top: 40px;
+	}
+</style>
+</head>
+
+<body>
+<a href="javascript:;" class="link">
+	<div class="box">
+	</div>
+</a>
+
+<script src="jQuery-1.11.3.min.js"></script>
+<script>
+	$('.link').hover(function(){
+            $('.box').slideDown();
+	},function(){
+        console.log('移出link')
+        $('.box').slideUp();
+    });
+
+
+
+</script>
+</body>
+</html>

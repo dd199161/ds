@@ -133,7 +133,6 @@ export default {
         { type: 1, device_type: DeviceType },
         ({ advertisements }) => {
           this.advertisements = advertisements.map(_ => ({ ..._.content }))
-
           this.jQueryRun()
         }
       )

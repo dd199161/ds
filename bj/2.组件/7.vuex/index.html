@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vuex.js"></script>
+</head>
+<body>
+<div id="app">
+    {{total}}
+    <input type="text" v-model="number">
+    <button @click="incNumber">增加输入的数字</button>
+</div>
+<script>
+//state只要一改变，那么就重新渲染，重现渲染的过程：
+//0、user click view emit action
+//1、action commit mutation
+//2、mutation update state
+//3、update getters
+//4、update computed
+//5、update view
+
+//需求： ul li遍历list ，点击按钮 增加new li
+    var store = new Vuex.Store({
+        state : {
+            total : 0,
+            list  : []
+        },
+        mutations : {
+          incTotal : function(state,num){
+              console.log(arguments)
+              state.total += 1;
+          }
+        },
+        getters:{
+            total : function(state){
+                return state.total
+            }
+        }
+    })
+
+    new Vue({
+        el : "#app",
+        computed:{
+            total : function(){
+                return store.getters.total
+            }
+        },
+        methods:{
+            incNumber:function(){
+                store.commit('incTotal',this.number)
+            }
+        },
+        data : {
+            number : 0
+        },
+        store : store
+    })
+</script>
+</body>
+</html>

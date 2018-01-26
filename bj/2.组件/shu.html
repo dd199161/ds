@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+
+	</style>
+	<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<ul>
+		<li id="box">My Tree
+			<span></span>
+			<ul>
+				<li class="last">+</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>
+<script type="text/javascript">
+	var str = "A";
+	var n = 1;
+	if($("#box > span").html() == "") {
+		if($("#box > span+ul li").html() == "+") {
+			$("#box > span+ul li").click(function() {
+				$(this).before("<li><ul><li>AAAAA" + n + "</li><li>+</li></ul></li>");
+				$("#box > span").html("[-]");
+				n++;
+			})
+		}
+		$("#box > span").click(function() {
+			if($("#box > span").html() == "[-]") {
+				console.log(this);
+				$(this).html("[+]");
+				$(this).siblings().children().hide();
+				$(this).siblings().children().last().show();
+			} else if($("#box > span").html() == "[+]") {
+				$(this).html("[-]");
+				$(this).siblings().children().show();
+			}
+		})
+	}
+</script>

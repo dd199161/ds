@@ -1,1 +1,19 @@
+这是 后端API文档
+http://alpha-api.test.bestsnake.com/documentation
+
+http://beta.cttbeta.com
+hxgzs003 a123456
+
+
+
 frank03 1234
+
+账号test1 密码1234
+test1 - test10 都可以用 ，密码一样。，10个账号
+
+点到 文档 - 前端框架 - 输入密码 a123newtopsky321
+
+然后 你先看下 编码规范
+我再补全更多的文档
+
+和 一个vue 范例程序
