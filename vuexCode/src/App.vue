@@ -20,9 +20,6 @@ export default {
   color: #2c3e50;
   margin: 0;
   margin-top: 60px;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
   padding: 0;
 }
 </style>

@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       form: {
-        name: `frank0${process.env.NODE_ENV === 'production' ? 2 : 1}`,
+        name: `frank0${process.env.NODE_ENV === 'production' ? 3 : 2}`,
         password: '1234',
         device_type: DeviceType,
         GAKey: ''
