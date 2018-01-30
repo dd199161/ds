@@ -2,19 +2,21 @@
     <div class="headers">
         <div class="box">
             <div class="top">
-                daf
+                {{ $store.state.username }}
             </div>
             <titles></titles>
         </div>
     </div>
 </template>
 <script>
+import { mapGetters, mapActions} from 'vuex'
 import titles from '@/components/login/titles'
 export default {
   data() {
     return {}
   },
-  methods: {},
+  methods: mapActions(['login','increment', 'decrement']),
+  computed: mapGetters([]),
   components:{
       titles
   }
