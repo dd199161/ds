@@ -3,15 +3,12 @@
     <div class="recharge_tit">账户类型：</div>
     <div class="recharge_con recharge_con2">
       <ul class="xz">
-        <li><a class="active" href="javascript:void(0)">彩票乐账户</a></li>
-        <li><a href="javascript:void(0)">百家乐账户</a></li>
-        <li><a href="javascript:void(0)">快乐彩账户</a></li>
+        <li v-for="(game_accs,index) in game_acc">
+          <a :class="{active:payIndex === index}" href="javascript:void(0)" @click="payIndex = index">{{game_accs.name}}</a>
+        </li>
       </ul>
     </div>
   </div>
-  <style>
-
-  </style>
   <div class="account-recharge">
     <div class="recharge_tit">提现金额：</div>
     <div class="recharge_con">

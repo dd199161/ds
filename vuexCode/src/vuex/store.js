@@ -2,18 +2,27 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 const state = {
-  cartCount: 1
+    count: 0
+}
+
+const mutations = {
+    increment(state) {
+        state.count = state.count + 1
+    },
+    decrement(state) {
+        state.count = state.count - 1
+    }
+}
+const actions = {
+    increment: ({ commit }) => commit('increment'),
+    decrement: ({ commit }) => commit('decrement'),
+}
+const getters = {
+
 }
 export default new Vuex.Store({
-  state
+    state,
+    mutations,
+    actions,
+    getters
 });
-const mutations = {
-  updataCartCount(state, cartCount) {
-    state.cartCount += 2;
-  },
-  jian(state, jian) {
-    if(state.cartCount > 0) {
-      state.cartCount--;
-    }
-  }
-}

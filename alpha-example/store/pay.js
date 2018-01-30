@@ -11,13 +11,25 @@ export const getters = {
   // hasPayPw:({user}) => user.is_set_fund_password,
   bal:({bal}) => round(bal.allow_withdraw_balance,3) || 0,
   totalBal:({bal}) => bal.total_balance,
+  
+	loTcon:({bal}) => bal.lottery_to_consume,
+	withdrawAt:({bal}) => bal.withdraw_amount_today,
+	withdrawCt:({bal}) => bal.withdraw_count_today,
+	withdrawLapd:({bal}) => bal.withdraw_limit_amount_per_day,
+	withdrawLcpd:({bal}) => bal.withdraw_limit_count_per_day,
+	withdrawCwf:({bal}) => bal.withdraw_count_without_fee,
+	
   banks:state => state.banks,
   bankCards:state => state.bankCards,
 }
 
 export const actions = {
+//async getBal({commit},callback = () => {}){
+//  commit('setBal',(await this.$axios.$post('user-balance-account/find-info')).data)
+//  callback()
+//},
   async getBal({commit},callback = () => {}){
-    commit('setBal',(await this.$axios.$post('user-balance-account/find-info')).data)
+    commit('setBal',(await this.$axios.$post('user-balance-account/get-account-info')).data)
     callback()
   },
   getBanks({commit,state:{banks}},callback = () => {}){
