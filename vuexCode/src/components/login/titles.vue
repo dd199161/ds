@@ -67,11 +67,9 @@ export default {
           this.$alert('登陆成功', {
             confirmButtonText: '确定',
             callback: action => {
-              
-                this.$router.push({
-                  path: '/vuexcount',
-                })
-              
+              this.$router.push({
+                path: '/vuexcount',
+              })
             },
           })
         }
