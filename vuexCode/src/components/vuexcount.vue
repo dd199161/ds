@@ -16,16 +16,29 @@
         counts: 0
       }
     },
-    methods:{
-    	...mapActions(['increment','decrement'])
+    /* 1、这是一种简单的写法，用mapActions 前提是前面要引入*/
+    methods: { ...mapActions(['increment', 'decrement'])
     }
-    computed:{
-		...mapGetters([])
-	}
-    
-    /* 与上面的是一样的，如果不用再写其它的就可以直接简写 */
-//  methods: mapActions(['increment', 'decrement']),
-//  computed: mapGetters([]),
+    computed: { ...mapGetters([])
+    }
+    /*
+     * 2、与上面的是一样的，如果不用再写其它的方法或属性，就可以直接简写 
+     * 
+    */
+    //  methods: mapActions(['increment', 'decrement']),
+    //  computed: mapGetters([]),
+    /* 
+     * 3、还有就是dispatch,用来分发actions的 
+     * 
+    */
+    //	methods:{
+    //		increment(){
+    //			this.$store.dispatch('increment')
+    //		},
+    //		decrement(){
+    //			this.$store.dispatch('decrement')
+    //		}
+    //	}
     components: {
       vuexa
     }
