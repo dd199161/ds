@@ -9,17 +9,21 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import titles from '@/components/login/titles'
 export default {
   data() {
     return {}
   },
-  methods: mapActions(['login','increment', 'decrement']),
-  computed: mapGetters([]),
-  components:{
-      titles
-  }
+  methods: {
+    ...mapActions(['login', 'increment', 'decrement']),
+  },
+  computed: {
+    ...mapGetters([]),
+  },
+  components: {
+    titles,
+  },
 }
 </script>
 <style>
@@ -29,10 +33,12 @@ export default {
   margin: 0 auto;
   border: 1px solid #ddd;
 }
-.top{
-    background:#888;
-    height: 48px;
-    line-height: 48px;
+.top {
+  background: #888;
+  height: 48px;
+  line-height: 48px;
+  padding-left: 50px;
+  margin-bottom: 20px;
 }
 </style>
 

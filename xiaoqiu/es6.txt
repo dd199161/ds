@@ -1,0 +1,48 @@
+1、let 声明变量的，作用域只限当前代码域，相同作用域下不能声明相同变量 
+2、const声明常量的，常量声明了就不能再修改的。只有在当前代码域有用，也不能重复声明，声明的常量必须要赋值
+
+3、基本用法
+let name=‘张三'，age='20'，sex='男';
+let [name,age,sex]=['张三','20','男'];
+	对象用法
+let {name,age,sex}={name=‘张三'，age='20'，sex='男'};前后必须对应
+let {name:str}={name:'张三'};str的值就是张三
+	数组用法
+let [arr1,arr2[arr3,[arr4,arr5]]]=[1,2,[3,[4,5,]]];console.log(arr1,arr2,arr3,arr4,arr5);
+let [a,b,c,d,e]='我是中国人';console.log(a,b,c,d,e);如果后面是数字是不行的
+
+4、let set=new Set();  创建一个集合
+去重：let set =new Set(['你好','你好','不好','好吗','好的','知道']);会去掉一个你好
+集合的长度：console.log(set.size);
+追加：set.add（'要得'）.add('可以'); 在后面追加这个二个
+删除：set.delete('好的');返回true或false
+判断集合有没有某个元素：set.has('知道');返回true或false
+清除：set.clear();直接清除set集合的值
+
+5、set.keys();输出set集合的键
+   set.values()输出set集合的值
+
+6、const map = new Map([
+	['name','张三'],
+	['age',18],
+	['sex','男']
+]);
+map.set();设置，添加
+map.get('name');获取值
+map.delete('name')删除
+map.has();
+map.clear();
+map.keys()
+map.values()
+map.entries();输出键值对
+
+
+7、遍历
+map.forEach(function(value,index){
+	console.log(value,index);
+})
+
+注意：  {}===={}对象不等于对象
+
+8、Symbol   对象命名用的
+

@@ -1,0 +1,36 @@
+{
+    "Print to console": {
+        "prefix": "storejson",
+        "body": [
+            "<template>",
+            "  <div></div>",
+            "</template>",
+            "",
+            "<script>",
+            "export default {",
+            "  data() {",
+            "    return {",
+            "",
+            "    };",
+            "  },",
+            "  /* 方法 */",
+            "  methods: {",
+            "",
+            "  },",
+            "  /* 计算属性 */",
+            "  computed: {",
+            "",
+            "  },",
+            "  /* 组件 */",
+            "  components: {",
+            "",
+            "  },",
+            "}",
+            "</script>",
+            "<style lang='scss' scoped>",
+            "",
+            "</style>"
+        ],
+        "description": "Log output to console"
+    }
+}

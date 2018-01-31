@@ -44,15 +44,17 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      let username = this.$store.state.username
+      let pw = this.$store.state.pw
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.ruleForm2.pass !== 'abc') {
+          if (this.ruleForm2.pass !== username) {
             this.$message({
               message: `账号不存在`,
               duration: 800,
               type: 'error',
             })
-          } else if (this.ruleForm2.checkPass !== '123') {
+          } else if (this.ruleForm2.checkPass !== pw) {
             this.$message({
               message: `密码错误`,
               duration: 800,
@@ -61,8 +63,8 @@ export default {
           }
         }
         if (
-          this.ruleForm2.pass === 'abc' &&
-          this.ruleForm2.checkPass === '123'
+          this.ruleForm2.pass === username &&
+          this.ruleForm2.checkPass === pw
         ) {
           this.$alert('登陆成功', {
             confirmButtonText: '确定',

@@ -20,11 +20,25 @@ const mutations = {
     }
 }
 const actions = {
+	//也可以这样写
+//	increment:({context}){
+//		context.commit('increment');
+//	}
+//	decrement:({context}){
+//		context.commit('increment');
+//	}
+//	login:({context}){
+//		context.commit('login')
+//	}
+	//下面是缩写
     increment: ({ commit }) => commit('increment'),
     decrement: ({ commit }) => commit('decrement'),
-    login: ({ username, pw }) => commit('login')
+    login: ({ commit }) => commit('login')
 }
 const getters = {
+
+}
+const modules = {
 
 }
 export default new Vuex.Store({
