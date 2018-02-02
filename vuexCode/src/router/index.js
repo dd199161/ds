@@ -7,6 +7,7 @@ import abck from '@/components/abck'
 import search from '@/components/search'
 import vueAxios from '@/components/vueAxios'
 import formtab from '@/components/formtab'
+import fetch from '@/components/fetch'
 import headers from '@/components/login/headers'
 
 Vue.use(Router)
@@ -18,7 +19,7 @@ export default new Router({
             component: HelloWorld
         },
         {
-            path: '/count',
+            path: '/',
             name: 'count',
             component: count
         },
@@ -28,7 +29,12 @@ export default new Router({
             component: vuexcount
         },
         {
-            path: '/',
+        	path: '/fetch',
+        	name: 'fetch',
+        	component: fetch
+        },
+        {
+            path: '/headers',
             name: 'headers',
             component: headers
         },

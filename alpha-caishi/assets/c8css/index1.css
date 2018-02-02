@@ -1,0 +1,193 @@
+.fixpr {
+    width: 154px;
+    height: 378px;
+    background: #FFD22C;
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    margin-top: -177px;
+}
+
+/* login*/
+
+.login {
+    display: flex;
+    background-color: #FFD22C;
+    height: 42px;
+    justify-content: center;
+    & .loginBox {
+        display: flex;
+        width: 1100px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    & .loginTime {
+        font-size: 12px;
+    }
+    & .l_min {
+        display: flex;
+        align-items: center;
+        & .dlk_s {
+            display: flex;
+            align-items: center;
+            line-height: 32px;
+            & ul {
+                display: flex;
+                color: #000;
+                & li {
+                    padding: 0px 10px;
+                    cursor: pointer;
+                    height: 42px;
+                    line-height: 42px;
+                    border-right: 1px solid #DDB72D;
+                }
+                & li.active {
+                    color: #fff;
+                    background: #444;
+                }
+                & li:nth-child(8) {
+                    border: none;
+                }
+                & li:nth-child(1) {
+                    background: url(../img/indexHome/n1.png) no-repeat 6px center;
+                    padding-left: 26px;
+                }
+                & li:nth-child(2) {
+                    background: url(../img/indexHome/n2.png) no-repeat 6px center;
+                    padding: 0 16px 0px 26px;
+                }
+                & li:nth-child(3) {
+                    background: url(../img/indexHome/n3.png) no-repeat 6px center;
+                    padding: 0 16px 0px 26px;
+                }
+                & li:nth-child(8) {
+                    background: url(../img/indexHome/n4.png) no-repeat 6px center;
+                    padding-left: 26px;
+                }
+                & li:nth-child(1).active {
+                    background: #444444 url(../img/indexHome/h1.png) no-repeat 6px center;
+                    padding-left: 26px;
+                }
+                & li:nth-child(2).active {
+                    background: #444444 url(../img/indexHome/h2.png) no-repeat 6px center;
+                    padding: 0 16px 0px 26px;
+                }
+                & li:nth-child(3).active {
+                    background: #444444 url(../img/indexHome/h3.png) no-repeat 6px center;
+                    padding: 0 16px 0px 26px;
+                }
+                & li:nth-child(8).active {
+                    background: #444444 url(../img/indexHome/h4.png) no-repeat 6px center;
+                    padding-left: 26px;
+                }
+                & .dlk_sbutt {
+                    background: url(../img/indexHome/OUT.png) no-repeat center center;
+                    width: 131px;
+                    height: 42px;
+                    border: none;
+                    margin-left: 6px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    & .loginform {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &>div {
+            margin-right: 5px;
+        }
+        &>.iconBox {
+            display: flex;
+            position: relative;
+            align-items: center;
+            &>input {
+                padding-left: 20px;
+                padding-right: 4px;
+                height: 32px;
+                width: 148px;
+            }
+            &>.iconLogin {
+                position: absolute;
+                left: 2px;
+            }
+        }
+        &>.code {
+            position: relative;
+            &>.xcode {
+                height: 32px;
+                width: 128px;
+                padding-left: 8px;
+            }
+            &>.verif {
+                position: absolute;
+                width: 66px;
+                height: 24px;
+                top: 1px;
+                right: 1px;
+            }
+        }
+        &>.submite {
+            width: 131px;
+            height: 32px;
+            background: url(../img/indexHome/in.png) no-repeat;
+        }
+        &>.reCe button {
+            width: 70px;
+            height: 32px;
+            border-radius: 4px;
+            background: #5E5E5E;
+            border: none;
+            color: #fff;
+        }
+        &>.mima {
+            display: flex;
+            align-self: flex-end;
+            &>.remember {
+                font-size: 12px;
+                text-decoration: underline;
+                color: #5E5E5E;
+            }
+        }
+    }
+}
+
+/*导航*/
+
+.nav {
+    height: 115px;
+}
+.content {
+    height: 436px;
+}
+.games {
+    height: 686px;
+    border-top: 1px solid #E1E1E1;
+    &>.gamesF {
+        height: 468px;
+        background: #F5F5F5;
+    }
+    &>.gamesS {}
+}
+.footer {
+    height: 72px;
+    background: #1B1B1B;
+}
+
+
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+     background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+     background-color: #d3dce6;
+  }

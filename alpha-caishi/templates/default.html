@@ -1,0 +1,21 @@
+<div>
+  <div class="top" id="top">
+    <!--<div class="mobliem"> </div>-->
+    <div class="logo">
+      <img src="~/assets/img/indexHome/log.png" alt="">
+    </div>
+    <div class="nav">
+      <nuxt-link to="/home" class="active"><span>首页<br /></span><b>HOME</b></nuxt-link>
+      <nuxt-link to="/lottery"><span>彩票游戏  ∨<i class="navHot"></i><br /></span><b>LOTTERY</b></nuxt-link>
+      <nuxt-link to="/events"><span>棋牌娱乐<br /></span><b>BOARD AND CARD</b></nuxt-link>
+      <nuxt-link to="/admin/user"><span>真人娱乐 ∨<i class="navNew"></i><br /></span><b>LIVE CASINO</b></nuxt-link>
+      <nuxt-link to="/admin/agent" v-show="isAgent"><span>体育竞技<br /></span><b>SPORTS</b></nuxt-link>
+      <nuxt-link to="/docs"><span>电子游戏<br /></span><b>SLOTS</b></nuxt-link>
+      <nuxt-link to="/domains"><span>手机下注<br /></span><b>MOBILE BET</b></nuxt-link>
+      <nuxt-link to="/test"><span>优惠活动<br /></span><b>PROMOTIONS</b></nuxt-link>
+    </div>
+  </div>
+
+  <div class="page-box">
+    <nuxt/> </div>
+</div>

@@ -17,10 +17,12 @@
       }
     },
     /* 1、这是一种简单的写法，用mapActions 前提是前面要引入*/
-    methods: { ...mapActions(['increment', 'decrement'])
-    }
-    computed: { ...mapGetters([])
-    }
+    methods: { 
+    	...mapActions(['increment', 'decrement'])
+    },
+    computed: { 
+    	...mapGetters([])
+    },
     /*
      * 2、与上面的是一样的，如果不用再写其它的方法或属性，就可以直接简写 
      * 
