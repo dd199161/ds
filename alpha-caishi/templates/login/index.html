@@ -31,11 +31,34 @@
             </div>
           </form>
         </div>
-        <div class="dlk_s" v-show="loginscc">
-          <ul>
+        <div class="dlk_s"  v-show="loginscc">
+        	<ul>
+        		<li class="active">活动专区</li>
+        		<li @click="dlksTopL">我的账户  ∨
+        			<div class="dlk_sTop" v-show="dlksTop">
+        				<ul>
+        					<li v-for="(dlksTop,index) in dlk_sTop"><a href="javascript:;" :class="{active:payIndexf === index}" @click="payIndexf = index">{{dlksTop.name}}</a></li>
+        				</ul>
+        			</div>
+        		</li>
+        		<li @click="dlksTopsR">人民币：0.00元  ∨
+        			<div class="dlk_sTops" v-show="dlksTops">
+        				<ul>
+        					<li v-for="(dlksTops,index) in dlk_sTops"><a href="javascript:;" :class="{active:payIndexs === index}" @click="payIndexs = index">{{dlksTops.name}}</a></li>
+        				</ul>
+        			</div>
+        		</li>
+        		<li>充值</li>
+        		<li>提款</li>
+        		<li>转账</li>
+        		<li>公告</li>
+        		<li>客服</li>
+        		<button class="dlk_sbutt"></button>
+        	</ul>
+          <!--<ul>
             <li v-for="(topnames,index) in topname" :class="{active:payIndex === index}" @click="payIndex = index">{{ topnames.name }}</li>
             <button class="dlk_sbutt"></button>
-          </ul>
+          </ul>-->
         </div>
       </div>
     </div>

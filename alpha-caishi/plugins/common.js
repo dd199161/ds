@@ -8,7 +8,6 @@ import '~/util/cache'
 import '~/util/mixins/lotto'
 import '~/util/mixins/reposal'
 import '~/util/mixins/reposal-type'
-
 import '~/components/reposal/DragonTiger'
 import '~/components/reposal/All5in1'
 

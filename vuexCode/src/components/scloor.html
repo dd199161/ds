@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    div {
+      height: 26px;
+    }
+    #bannerAdvConR {
+      height: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 553px;
+      margin: 0 auto;
+      border: 1px solid #333;
+    }
+    #scroll_begin, #scroll_end {
+      display: inline;
+      background: red;
+    }
+    #scroll_end {
+      background: green;
+    }
+    .pad_right {
+      display: inline-block;
+      padding-right: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="bannerAdvConR" class="fl">
+    <div id="scroll_begin">恭喜793765***获得50元巨人点卡奖励</span>
+    </div>
+    <div id="scroll_end">1</div>
+  </div>
+  <script type="text/javascript">
+    function ScrollImgLeft() {
+      var MyMar = null;
+      var scroll_begin = document.getElementById("scroll_begin");
+      var scroll_end = document.getElementById("scroll_end");
+      var bannerAdvConR = document.getElementById("bannerAdvConR");
+      scroll_end.innerHTML = scroll_begin.innerHTML;
+      scroll_begin.innerHTML += scroll_begin.innerHTML;
+
+      function Marquee() {
+        if(scroll_end.offsetWidth - bannerAdvConR.scrollLeft <= 0) {
+          bannerAdvConR.scrollLeft -= scroll_begin.offsetWidth;
+        } else {
+          bannerAdvConR.scrollLeft++;
+        }
+      }
+            MyMar = setInterval(Marquee, 80);
+      bannerAdvConR.onmouseover = function() {　　　　　　　
+        clearInterval(MyMar);　　　
+      }
+      bannerAdvConR.onmouseout = function() {　　　　　　　
+        MyMar = setInterval(Marquee, 80);　　　　　　　　　
+      }
+    }
+    ScrollImgLeft();
+  </script>
+</body>
+</html>

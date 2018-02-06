@@ -163,22 +163,24 @@ ul, ol, li {
   font-size: 15px;
   font-weight: 700;
   flex-wrap: wrap;
+  position: relative;
   & span{
+  	display: flex;
   	position: relative;
   	& .navHot{
   		position: absolute;
   		width: 27px;
   		height: 38px;
-  		left: 58px;
-  		top:-32px;
+  		left: 64px;
+  		top:-18px;
   		background: url(../img/indexHome/Hot.png) no-repeat;
   	}
   	& .navNew{
   		position: absolute;
   		width: 36px;
   		height: 30px;
-  		left: 52px;
-  		top:-24px;
+  		left: 58px;
+  		top:-8px;
   		background: url(../img/indexHome/new.png) no-repeat;
   	}
   }
@@ -562,7 +564,7 @@ ul, ol, li {
     display: block
   }
   #top .nav a.active {
-    /* background: #3C4D75; */
+     background: #3C4D75; 
   }
   #top .nav .n_bg {
     display: none !important;

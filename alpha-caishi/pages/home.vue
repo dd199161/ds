@@ -1,5 +1,5 @@
 <template src="../templates/home/index.html"> </template>
-<style src="../assets/c8css/index.css">
+<style src="../assets/c8css/index1.css">
 
 </style>
 <style lang="scss">
@@ -62,14 +62,25 @@
   import initLikes from '~/util/initLikes'
   import { DeviceType } from '~/plugins/UA'
   import News from '~/components/News'
+  import Vue from 'vue'
+  import { Collapse, CollapseItem,Carousel,CarouselItem} from 'element-ui'
+  Vue.use(Collapse)
+  Vue.use(Carousel)
+  Vue.use(CarouselItem)
+  Vue.use(CollapseItem)
   export default {
     name: 'home',
-    fetch({store, app,redirect,from}) {
+    fetch({
+      store,
+      app,
+      redirect,
+      from
+    }) {
       if(!store.state.user.token)
         //from.name === 'login',it fix login page f5 refresh redirect '/home'
         return from && from.name === 'login' ? redirect('/login') : Promise.resolve()
-        return store.dispatch('getNews')
-        // return initLikes(store,app,redirect)
+      return store.dispatch('getNews')
+      // return initLikes(store,app,redirect)
     },
     async asyncData({
       app,
@@ -85,6 +96,86 @@
     },
     data() {
       return {
+        gy: [{
+          name: '关于我们'
+        }, {
+          name: '联系我们'
+        }, {
+          name: '合作伙伴'
+        }, {
+          name: '存款帮助'
+        }, {
+          name: '取款帮助'
+        }, {
+          name: '常见问题'
+        }, {
+          name: '负责任博彩'
+        }, ],
+        ssc: [{
+          lotname: '重庆时时彩'
+        }, {
+          lotname: '天津时时彩'
+        }, {
+          lotname: '新疆时时彩'
+        }],
+        tsc: [{
+          lotname: '腾讯分分彩'
+        }, {
+          lotname: '首尔1.5分彩'
+        }, {
+          lotname: '纽约1.5分彩'
+        }, {
+          lotname: '韩国1.5分彩'
+        }, {
+          lotname: '东京1.5分彩'
+        }, {
+          lotname: '北京5分彩'
+        }, {
+          lotname: '台湾5分彩'
+        }],
+        phc: [{
+          lotname: '菲律宾1.5分彩'
+        }, {
+          lotname: '菲律宾2分彩'
+        }, {
+          lotname: '菲律宾5分彩'
+        }],
+        qtc: [{
+          lotname: '迪拜一分彩'
+        }, {
+          lotname: '迪拜二分彩'
+        }, {
+          lotname: '迪拜五分彩'
+        }],
+        ocf: [{
+          lotname: "上海11选5"
+        }, {
+          lotname: "江西11选5"
+        }, {
+          lotname: "广东11选"
+        }],
+        dpc: [{
+          lotname: '体彩排列3'
+        }, {
+          lotname: '福彩3D'
+        }],
+        ksc: [{
+          lotname: '江苏快3'
+        }, {
+          lotname: '上海快3'
+        }],
+        qwc: [{
+          lotname: '上海时时乐'
+        }, {
+          lotname: '北京赛车'
+        }],
+        vrc: [{
+          lotname: 'VR火星1.5分彩'
+        }, {
+          lotname: 'VR火星2分彩'
+        }, {
+          lotname: 'VR火星3分彩'
+        }],
         openList: [],
         advertisements: [],
         swiperOption: {
@@ -112,6 +203,30 @@
       News
     },
     methods: {
+    	ScrollImgLeft() {
+        var MyMar = null;
+        var scroll_begin = document.getElementById("scroll_begin");
+        var scroll_end = document.getElementById("scroll_end");
+        var bannerAdvConR = document.getElementById("bannerAdvConR");
+        console.log(scroll_end.innerHTML)
+        scroll_end.innerHTML = scroll_begin.innerHTML;
+        scroll_begin.innerHTML += scroll_begin.innerHTML;
+
+        function Marquee() {
+          if(scroll_end.offsetWidth - bannerAdvConR.scrollLeft <= 0) {
+            bannerAdvConR.scrollLeft -= scroll_begin.offsetWidth;
+          } else {
+            bannerAdvConR.scrollLeft++;
+          }
+        }
+        MyMar = setInterval(Marquee, 100);
+        bannerAdvConR.onmouseover = function() {　　　　　　　
+          clearInterval(MyMar);　　　　　
+        }　　　　
+        bannerAdvConR.onmouseout = function() {　　　　　　　
+          MyMar = setInterval(Marquee, 100);　　　　　　　　　
+        }
+      },
       async authResolve() {
         this.$store.dispatch('lotto/getTypes')
         // initLikes(this.$store,this)
@@ -277,7 +392,9 @@
           }, 500)
         })
       }
-      QieHuan()
+      QieHuan();
+      
+	    this.ScrollImgLeft();
       // $(".notice_list").niceScroll({
       //         cursorcolor: "#F7F7F7",
       //         mousescrollstep: 40,

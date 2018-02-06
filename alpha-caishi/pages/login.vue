@@ -41,8 +41,34 @@
         }, {
           name: '客服'
         }],
+        dlk_sTop: [{
+          name: '会员中心'
+        }, {
+          name: '资金管理'
+        }, {
+          name: '订单管理'
+        }, {
+          name: '代理管理'
+        }],
+        dlk_sTops: [{
+          name: '人民币：0.0000'
+        }, {
+          name: '比特币：0.0000'
+        }, {
+          name: '莱特币：0.0000'
+        }, {
+          name: '以太坊：0.0000'
+        }, {
+          name: '以太经典：0.0000'
+        }, {
+          name: '以太坊代币：0.0000'
+        }],
         payIndex:0,
+        payIndexf:0,
+        payIndexs:0,
         loginscc: false,
+        dlksTop:false,
+        dlksTops:false,
         form: {
           name: `frank0${process.env.NODE_ENV === 'production' ? 3 : 2}`,
           password: '1234',
@@ -84,6 +110,14 @@
       document.addEventListener('visibilitychange', this.handleVisibilityChange)
     },
     methods: {
+    	dlksTopL() {
+    		this.dlksTop = !this.dlksTop
+    		this.dlksTops = false
+    	},
+			dlksTopsR() {
+				this.dlksTops = !this.dlksTops
+				this.dlksTop = false
+			},
       login() {
         const {
           ip,

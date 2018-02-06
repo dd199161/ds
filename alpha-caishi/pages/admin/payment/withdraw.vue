@@ -85,12 +85,6 @@ export default {
                   type: 'error',
                 })
               } else {
-//            	console.log(this.$store.state.bal)
-//            	this.bal = this.bal - this.defaultWithdraw
-//            	this.totalBal = this.totalBal - this.defaultWithdraw
-//            	this.withdrawAt = this.withdrawAt + this.defaultWithdraw
-//            	this.withdrawCt = this.withdrawCt + 1
-              	
                 this.getBal()
                 this.$message({
                   message: `提现成功！`,
