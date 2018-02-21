@@ -1,0 +1,327 @@
+<div>
+  <div class="home">
+    <div class="reds">
+      <div class="navSecond">
+        <div class="navSecondBox">
+          <img src="../../assets/img/indexHome/icon.png" />
+          <ul>
+            <li>
+              <dl>
+                <dt>时时彩</dt>
+                <dd v-for="(sscc,index) in ssc">
+                  <a href="javascript:;">{{sscc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>特色彩</dt>
+                <dd v-for="(tscc,index) in tsc">
+                  <a href="javascript:;">{{tscc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>菲律宾</dt>
+                <dd v-for="(phcc,index) in phc">
+                  <a href="javascript:;">{{phcc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>全天彩</dt>
+                <dd v-for="(qtcc,index) in qtc">
+                  <a href="javascript:;">{{qtcc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>11选5</dt>
+                <dd v-for="(ocff,index) in ocf">
+                  <a href="javascript:;">{{ocff.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>低频彩</dt>
+                <dd v-for="(dpinc,index) in ssc">
+                  <a href="javascript:;">{{dpinc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>快3</dt>
+                <dd v-for="(kscc,index) in ksc">
+                  <a href="javascript:;">{{kscc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>趣味彩种</dt>
+                <dd v-for="(qwcc,index) in qwc">
+                  <a href="javascript:;">{{qwcc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+            <li>
+              <dl>
+                <dt>VR彩</dt>
+                <dd v-for="(vrcc,index) in vrc">
+                  <a href="javascript:;">{{vrcc.lotname}}</a>
+                </dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <el-carousel trigger="click" height="500px">
+        <el-carousel-item v-for="item in 4" :key="item">
+          <h3></h3>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+    <div class="bannerAdv-box">
+    	<div class="bannerAdv">
+	      <div class="bannerAdvC">
+	        <div class="bannerAdvConL">
+	          <img src="../../assets/img/indexHome/adv.png" />最新公告： </div>
+	        <div class="bannerAdvConR" id="bannerAdvConR">
+	          <div class="scroll_begin" id="scroll_begin">申博太阳城即日起公司入款享受1%返利优惠，线上支付享受0.6%返利，优惠无上限，全天24小时不限次数提款0手续费!&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	          <div class="scroll_end" id="scroll_end"></div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
+    <div class="result">
+      <div class="container">
+        <div class="container-left">
+          <b>&nbsp;&nbsp;热门采种&nbsp;&nbsp;</b>
+          <span>POPULAR LOTTERY</span>
+          <div class="content-left">
+            <ul>
+              <li v-for="lottoType in lottoTypes" :key="lottoType.type">
+                <p>{{lottoType.name}}</p>
+                <div class="flex-wrap">
+                  <span v-for="lotto in Object.keys(lottoType.infos)">
+                    <nuxt-link :to="`/lottery/${lotto}`">
+                      {{lottoType.infos[lotto].name}}
+                    </nuxt-link>
+                  </span>
+                </div>
+              </li>
+              <li>
+                <p>PC蛋蛋</p>
+                <div class="flex-wrap">
+                  <span>北京28</span>
+                  <span>幸运28</span>
+                </div>
+              </li>
+              <li>
+                <p>六合彩</p>
+                <div class="flex-wrap">
+                  <span>六合彩</span>
+                  <span>极速六合彩</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="container-right">
+          <b>&nbsp;&nbsp;开奖公告&nbsp;&nbsp;</b>
+          <span>LOTTERY ANNOUNCEMENT</span>
+          <div class="content-right">
+            <ul>
+              <li v-for="open in openList" :key="open.issue_no">
+                <div class="open-result">
+                  <p>
+                    <b>{{open.lottery_info_name}}</b>
+                    <span>第{{open.issue_no}}期</span>
+                  </p>
+                  <div>
+                    <span>开奖结果</span>
+                    <ul class="flex-wrap d-flex">
+                      <li v-for="result in open.win_number.split(',')">{{result}}</li>
+                    </ul>
+                  </div>
+                </div>
+                <el-button type="primary">
+                  <router-link :to="`/lottery/${open.lottery_info_identifier}`">立即投注</router-link>
+                </el-button type="primary">
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="games">
+      <div class="gamesF">
+        <div class="gamesFbox">
+        	<!--真人-->
+        	<div class="gameCon active">
+            <div class="gameTopZr"></div>
+            <div class="gameTitle">
+              <b>真人娱乐</b>
+              <span>LIVE ENTERTAINMENT</span>
+            </div>
+            <div class="gameConSize">
+              <p>目前最具创意及创新的合法博彩平台，2018年始大胆革新的思维使其
+                <br>迅速在市场上占得一席之地，全球首创VIP包桌及咪牌百家乐</p>
+            </div>
+            <div class="ganmeBut">
+              <ul class="ganmeButZr">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="gameRightZr"> </div>
+          </div>
+          <!--体育-->
+          <div class="gameCon">
+            <div class="gameTopSt"></div>
+            <div class="gameTitle">
+              <b>体育投注</b>
+              <span>LOTTERY TICKET</span>
+            </div>
+            <div class="gameConSize">
+              <p>目前最具创意及创新的合法博彩平台，2018年始大胆革新的思维使其
+                <br>迅速在市场上占得一席之地</p>
+            </div>
+            <div class="ganmeBut">
+              <ul class="ganmeButSt">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="gameRightSt"> </div>
+          </div>
+          <!--彩票-->
+          <div class="gameCon">
+            <div class="gameTopLot"></div>
+            <div class="gameTitle">
+              <b>彩票游戏</b>
+              <span>LOTTERY TICKET</span>
+            </div>
+            <div class="gameConSize">
+              <p>目前最具创意及创新的合法博彩平台，2018年始大胆革新的思维使其
+                <br>迅速在市场上占得一席之地</p>
+            </div>
+            <div class="ganmeBut">
+              <ul class="ganmeButLot">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                
+              </ul>
+              <ul class="ganmeButLots">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="gameRightLot"> </div>
+          </div>
+        	<!--电子-->
+          <div class="gameCon">
+            <div class="gameTop"></div>
+            <div class="gameTitle">
+              <b>电子游戏</b>
+              <span>SLOTS GAME</span>
+            </div>
+            <div class="gameConSize">
+              <p>目前最具创意及创新的合法博彩平台，2018年始大胆革新的思维使其
+                <br>迅速在市场上占得一席之地</p>
+            </div>
+            <div class="ganmeBut">
+              <ul class="ganmeButf">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+              </ul>
+              <ul class="ganmeButUls">
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+                <li>
+                  <a href="javacrpit:;"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="gameRight"> </div>
+          </div>
+        </div>
+      </div>
+      <div class="gamesS">
+        <div class="gamesSbox">
+          <ul class="gamesSboxT">
+            <li>
+              <a href="javascript:;">
+                <img src="../../assets/img/indexHome/game1.jpg" /> </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="../../assets/img/indexHome/game2.jpg" /> </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="../../assets/img/indexHome/game3.jpg" /> </a>
+            </li>
+            <li>
+              <a href="javascript:;">
+                <img src="../../assets/img/indexHome/game4.jpg" /> </a>
+            </li>
+          </ul>
+          <div class="gamesSboxF">
+            <ul class="gamesSboxFootUl">
+              <li v-for="(gys,index) in gy">
+                <a href="javascript:;">{{gys.name}}</a>
+              </li>
+            </ul>
+            <p>Copyright © 彩狮娱乐 Reserved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+</div>

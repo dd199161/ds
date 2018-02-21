@@ -1,0 +1,151 @@
+<template src="../../../templates/admin/payment/charge.html"> </template>
+<style lang="scss">
+  .recharge_con {
+    input {
+      &::-webkit-inner-spin-button {
+        display: none;
+      }
+    }
+  }
+</style>
+<script>
+  import { mapGetters } from 'vuex'
+  import { getRequiredRule, validNumber } from '~/plugins/formValidate'
+  const getPayments = context => context.$axios.$post('payment-platform/get')
+  export default {
+    name: 'charge',
+    async asyncData({
+      store,
+      app
+    }) {
+      if(process.server) return {
+        types: []
+      }
+      return(await getPayments(app)).data
+    },
+    data() {
+      return {
+        items: 18,
+        typeIndex: 0,
+        step: 0,
+        payIndex: 0,
+        payIndexs: 0,
+        num8: 500,
+        game_acc: [{
+          name: "微信支付"
+        }, {
+          name: "网银"
+        }],
+        jinbis: ['500', '1000', '10000'],
+        form: {
+          data: '',
+          link: '',
+          signature: '',
+          amount: ''
+        },
+        rules: {amount: [getRequiredRule('请填写充值金额'), validNumber('', {intMsg: false})]},
+        chargeId: '',
+        note: ''
+      }
+    },
+    created() {},
+    methods: {
+      jinbiC(index) {
+        var _this = this;
+        _this.num8 = _this.jinbis[index];
+      },
+      submit() {
+        this.$form.validate(valid => {
+          if(valid) {
+            const {
+              client_ip,
+              bankList,
+              platform: {
+                content
+              },
+              payItem: {
+                id: bank_id,
+                public_bank_card_id
+              },
+              note: postscript
+            } = this
+            const {
+              amount
+            } = this.form
+            const id = content.id
+            //todo : location.origin -> location.href ,require f5 refresh fix
+            this.$axiosPlus('payment-platform/deposit', {
+              id,
+              client_ip,
+              amount,
+              redirect: location.origin,
+              ...(content.need_bank ? {
+                bank_id,
+                ...(public_bank_card_id ? {
+                  public_bank_card_id,
+                  postscript
+                } : {})
+              } : {})
+            }, res => {
+              if(res.request_error) {
+                this.$message.error({
+                  duration: 2000,
+                  message: res.request_error || '该商户号通道已关闭！'
+                })
+              } else if(res.request_url || res.request_qrcode_url) {
+                const {
+                  request_data: {
+                    signature,
+                    data
+                  },
+                  request_url: link,
+                  deposit_id
+                } = res
+                this.chargeId = deposit_id
+                this.step = 1
+                this.form = {
+                  link,
+                  signature,
+                  data,
+                  amount
+                }
+              } else {
+                this.$message.success({
+                  duration: 2000,
+                  message: '转账成功！'
+                })
+              }
+            })
+          } else {
+            return false
+          }
+        })
+      }
+    },
+    computed: {
+      platform() {
+        return this.types[this.typeIndex].payment_platforms[0]
+      },
+      bankList() {
+        const {
+          banks,
+          content
+        } = this.platform
+        return banks.length ? banks.map(_ => _.content) : [content]
+      },
+      payItem() {
+        return this.bankList[this.payIndex]
+      },
+      isTransfer() {
+        return this.payItem.public_bank_card_id
+      },
+      ...mapGetters({
+        bal: 'pay/bal',
+        client_ip: 'ip'
+      })
+    },
+    mounted() {
+      this.$form = this.$refs.form
+    }
+  }
+</script>

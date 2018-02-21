@@ -1,0 +1,17 @@
+@import 'nav';
+@import 'layout';
+@import 'options';
+@import 'order';
+.b_list.kjhm .el-scrollbar__wrap {
+  max-height: 232px;
+}
+
+.lottery {
+  width: 1100px;
+  margin: 0 auto;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 20px;
+}

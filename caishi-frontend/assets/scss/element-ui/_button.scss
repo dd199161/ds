@@ -1,0 +1,11 @@
+.el-button{
+    width: 94px;
+    height: 37px;
+  &.el-button--default{
+    &:hover,&:focus{
+      color: $--button-default-hover-color;
+      border-color: $--button-default-hover-border;
+      background-color: $--button-default-hover-fill;
+    }
+  }
+}
