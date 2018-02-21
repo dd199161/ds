@@ -1,0 +1,74 @@
+<div>
+  <div class="top" id="top">
+    <div class="pop" v-show="pop">
+      <ul>
+        <li>
+          <a href="javascript:;">
+            <img src="../assets/img/indexHome/fixpr1.jpg" /> </a>
+        </li>
+        <li>
+          <img class="pop1" src="../assets/img/indexHome/fixpr2.jpg" />
+          <a href="javascript:;" class="pop2" :class="{'active':andr == ioss}" @click="andr = !andr"></a>
+          <a href="javascript:;" class="pop3" :class="{'active':ioss== andr}" @click="ioss = ! ioss"></a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <img class="pop4" src="../assets/img/indexHome/fixpr5.jpg" /> </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <img class="pop5" src="../assets/img/indexHome/fixpr6.jpg" @click="pop =!pop" /> </a>
+        </li>
+      </ul>
+    </div>
+    <div class="logo">
+      <img src="~/assets/img/indexHome/log.png" alt=""> </div>
+    <div class="nav">
+      <!--<nuxt-link to="/home" class="active"><span>首页<br /></span><b>HOME</b></nuxt-link>
+      <nuxt-link to="/lottery"><span>彩票游戏  ∨<i class="navHot"></i><br /></span><b>LOTTERY</b></nuxt-link>
+      <nuxt-link to="/events"><span>棋牌娱乐<br /></span><b>BOARD AND CARD</b></nuxt-link>
+      <nuxt-link to="/admin/user"><span>真人娱乐 ∨<i class="navNew"></i><br /></span><b>LIVE CASINO</b></nuxt-link>
+      <nuxt-link to="/admin/agent" v-show="isAgent"><span>体育竞技<br /></span><b>SPORTS</b></nuxt-link>
+      <nuxt-link to="/docs"><span>电子游戏<br /></span><b>SLOTS</b></nuxt-link>
+      <nuxt-link to="/domains"><span>手机下注<br /></span><b>MOBILE BET</b></nuxt-link>
+      <nuxt-link to="/test"><span>优惠活动<br /></span><b>PROMOTIONS</b></nuxt-link>-->
+      
+      
+      <nuxt-link to="/home" class="toactive">
+        <span class="toactive">首页<br /></span>
+        <b class="toactive">HOME</b>
+      </nuxt-link>
+      <nuxt-link to="" class="lott">
+        <span>彩票游戏 ∨<br /></span>
+        <b>LOTTERY</b>
+      </nuxt-link>
+      <nuxt-link to="">
+        <span>棋牌娱乐<br /></span>
+        <b>BOARD AND CARD</b>
+      </nuxt-link>
+      <nuxt-link to="">
+        <span>真人娱乐 ∨<br /></span>
+        <b>LIVE CASINO</b>
+      </nuxt-link>
+      <nuxt-link to="" v-show="isAgent" style="margin-right:14px">
+        <span>体育竞技<i class="navNew"></i><br /></span>
+        <b>SPORTS</b>
+      </nuxt-link>
+      <nuxt-link to="" style="margin-right:14px">
+        <span>电子游戏<i class="navHot"></i><br /></span>
+        <b>SLOTS</b>
+      </nuxt-link>
+      <nuxt-link to="">
+        <span>手机下注<br /></span>
+        <b>MOBILE BET</b>
+      </nuxt-link>
+      <nuxt-link to="">
+        <span>优惠活动<br /></span>
+        <b>PROMOTIONS</b>
+      </nuxt-link>
+    </div>
+  </div>
+  <div class="page-box">
+    <nuxt/> 
+  </div>
+</div>

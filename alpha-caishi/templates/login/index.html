@@ -1,0 +1,66 @@
+<div class="login">
+  <div class="loginBox" @mouseenter="jQueryRun">
+    <div class="loginTime">
+      <i class="icon iconfont">&#xe693;</i>美东时间：{{timewu | dataTime}}
+    </div>
+    <div class="l_min">
+      <!--<div class="yhzc">
+            	<nuxt-link to="/sign-up/65"><i class="icon iconfont">&#xe699;</i></nuxt-link>
+            </div>-->
+      <div class="dlk">
+        <div class="dlk_l">
+          <form class="loginform" action="">
+            <div class="username iconBox">
+              <i class="icon iconfont iconLogin">&#xe693;</i>
+              <input type="text" placeholder="请输入用户名" v-model="form.name"> </div>
+            <div class="password iconBox">
+              <i class="icon iconfont iconLogin">&#xe679;</i>
+              <input type="password" placeholder="请输入密码" v-model="form.password"> </div>
+            <div class="code">
+              <input class="xcode" type="text" placeholder="验证码">
+              <img class="verif" src="~/assets/img/login/login_code.jpg" alt=""> </div>
+            <div class="submite" @click="login"></div>
+            <div class="reCe">
+              <button type="info">立即注册</button>
+            </div>
+            <div class="reCe">
+              <button type="info">免费试玩</button>
+            </div>
+            <div class="mima">
+              <a class="remember" href="#">忘记密码？</a>
+            </div>
+          </form>
+        </div>
+        <div class="dlk_s"  v-show="loginscc">
+        	<ul>
+        		<li class="active">活动专区</li>
+        		<li @click="dlksTopL">我的账户  ∨
+        			<div class="dlk_sTop" v-show="dlksTop">
+        				<ul>
+        					<li v-for="(dlksTop,index) in dlk_sTop"><a href="javascript:;" :class="{active:payIndexf === index}" @click="payIndexf = index">{{dlksTop.name}}</a></li>
+        				</ul>
+        			</div>
+        		</li>
+        		<li @click="dlksTopsR">人民币：0.00元  ∨
+        			<div class="dlk_sTops" v-show="dlksTops">
+        				<ul>
+        					<li v-for="(dlksTops,index) in dlk_sTops"><a href="javascript:;" :class="{active:payIndexs === index}" @click="payIndexs = index">{{dlksTops.name}}</a></li>
+        				</ul>
+        			</div>
+        		</li>
+        		<li>充值</li>
+        		<li>提款</li>
+        		<li>转账</li>
+        		<li>公告</li>
+        		<li>客服</li>
+        		<button class="dlk_sbutt"></button>
+        	</ul>
+          <!--<ul>
+            <li v-for="(topnames,index) in topname" :class="{active:payIndex === index}" @click="payIndex = index">{{ topnames.name }}</li>
+            <button class="dlk_sbutt"></button>
+          </ul>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
