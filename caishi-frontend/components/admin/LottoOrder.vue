@@ -35,22 +35,23 @@
     </el-form>
     <data-tables-server :data="tableData" :total="total" @query-change="get" v-loading="loading.on" :element-loading-text="loading.text" :pagination-def="paginationDef">
       <!-- loadProps.sortInfo require prop sys_id -->
-      <el-table-column label="订单编号" prop="sys_id" sortable="custom">
+      <!-- <el-table-column label="订单编号" prop="sys_id" sortable="custom">
         <template slot-scope="{row}">
           <a class="el-button--text" @click="getDetail(row)">{{row.sys_id}}</a>
         </template>
-      </el-table-column>
+      </el-table-column> -->
+      <el-table-column prop="sys_id" label="订单编号"/>
       <el-table-column prop="username" label="所属会员" v-if="type" />
       <el-table-column prop="method" label="投注玩法" min-width="200" />
       <el-table-column prop="issue" min-width="150" label="投注期号" />
-      <el-table-column prop="amount" label="金额" />
-      <el-table-column prop="created_at" min-width="150" label="下单时间" />
-      <el-table-column prop="bonus" label="奖金" />
-      <el-table-column label="状态">
+      <el-table-column prop="amount" label="投注金额" />
+      <el-table-column prop="bonus" label="中奖金额" />
+      <el-table-column label="订单状态">
         <template slot-scope="{row:{status}}">
           <span :class="style(status)">{{statusLabel(status)}}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="created_at" min-width="150" label="投注时间" />
       <el-table-column label="操作" v-if="!type">
         <template slot-scope="{row}">
           <el-button v-if="row.cancelable" type="text" @click="cancel(row)">撤单</el-button>
@@ -58,6 +59,7 @@
         </template>
       </el-table-column>
     </data-tables-server>
+
     <component :is="view" ref="detail" />
   </div>
 </template>

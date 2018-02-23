@@ -1,39 +1,30 @@
 <template>
-  <div>
+  <div style="display:flex;">
     <div class="play-options">
-      <span class="play-count">{{count}}</span>注
+      共<span class="play-count">{{count}}</span>注
       <div class="play-amount-unit d-flex align-items-center">
-        模式
-        <el-button v-for="(unit,index) in ['元','角','分','厘']" :key="index" :class="{selected:index === unitIndex}" @click="select(index)">
+        单注金额
+        <div>
+          <input type="text" v-model="num8" />
+          <i class="el-icon-arrow-up"></i>
+          <ul>
+            <li v-for="(jinbi,index) in jinbis" @click="jinbiC(index)">{{ jinbi }}</li>
+          </ul>
+        </div>
+        <el-button v-for="(unit,index) in ['元','角','分']" :key="index" :class="{selected:index === unitIndex}" @click="select(index)">
           {{unit}}
         </el-button>
       </div>
-      <div>
-        倍數
-        <el-input-number v-model="multiple" :min="1"></el-input-number>
-      </div>
-      <div>
-        共 <strong>{{amount | round3}}</strong>元
-      </div>
-      <div>
-        奖金 <strong>{{bonus | round3}}</strong>元，盈利 <strong>{{profit | round3}}</strong>元
-      </div>
-
+      <div>共 <strong>{{amount | round3}}</strong>元</div>
+      <div>赔率 1.98</div>
+      <!-- <div>奖金 <strong>{{bonus | round3}}</strong>元，盈利 <strong>{{profit | round3}}</strong>元</div> -->
     </div>
-    <div class="play-slider">
-    奖金调节：<el-slider v-model="groupVal" :min="minBonusGroup" :max="max" :step="2"></el-slider> {{point}}%
-    </div>
-    <div>当前奖金：<strong>{{bonus || baseBonusCal * unit * groupVal | round3}}</strong>元</div>
-    
+    <div><button>梭哈</button>当前奖金：<strong>{{bonus || baseBonusCal * unit * groupVal | round3}}</strong>元</div>
   </div>
-    
 </template>
-
-
 <style lang="scss">
 
 </style>
-
 <script>
 import { mapGetters } from 'vuex'
 import {minus} from 'number-precision'
@@ -54,10 +45,15 @@ export default {
     return {
       unitIndex:0,
       multiple:1,
+      num8: 500,
+      jinbis: ['500', '1000', '10000'],
       groupVal:this.max //reposal options named value
     }
   },
   methods:{
+    jinbiC(index) {
+      this.num8 = this.jinbis[index];
+    },
     select(index){
       this.unitIndex = index
     }

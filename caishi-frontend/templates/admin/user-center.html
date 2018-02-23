@@ -1,63 +1,63 @@
 <div class="x_con-li">
-	
-	<div class="userinfo-title">
-	  <div class="userinfo-title-one">
-	  	<div>
-	  		<img :src="avatar"/>
-	  		<el-badge :value="8" class="item">
-				  	<el-button size="small"></el-button>
-					</el-badge>
-					<h2>欢迎您，<span>{{nickName}}</span></h2>
-					<p>上次登陆时间：{{loginTime}}</p>
-					<p>上次登陆地点：{{ip}}</p>
-	  	</div>
-	  	<button>转账</button>
-	  </div>
-	  <div class="userinfo-money">
-	  	<p>账户总额</p>
-	  	<h3>￥&nbsp;{{totalBal | round3}}</h3>
-	  	<nuxt-link to="/admin/payment" tag="div" class="userinfo-money-charge">
-	  		<span>充值</span>
-	  	</nuxt-link>
-	  </div>
-	  <div class="userinfo-money">
-	  	<p>账户余额</p>
-	  	<h3>￥&nbsp;{{bal | round3}}</h3>
-	  	<nuxt-link to="/admin/payment/withdraw" tag="div" class="userinfo-money-withdraw">
-	  		<span>提款</span>
-	  	</nuxt-link>
-	  </div>
-	  <div class="userinfo-money">
-	  	<p>冻结金额</p>
-	  	<h3>￥&nbsp;{{frozen_balance | round3}}</h3>
-	  	<nuxt-link to="/admin/payment/withdraw" tag="div" class="userinfo-money-withdraws">
-	  		<span>提款</span>
-	  	</nuxt-link>
-	  </div>
-	</div>
-	<div class="members-record-banks">
-	  <div class="members-withdraw-bank-title">
-	    <span>
+
+    <div class="userinfo-title">
+        <div class="userinfo-title-one">
+            <div>
+                <img :src="avatar" />
+                <el-badge :value="8" class="item">
+                    <el-button size="small"></el-button>
+                </el-badge>
+                <h2>欢迎您，<span>{{nickName}}</span></h2>
+                <p>上次登陆时间：{{loginTime}}</p>
+                <p>上次登陆地点：{{ip}}</p>
+            </div>
+            <button>转账</button>
+        </div>
+        <div class="userinfo-money">
+            <p>账户总额</p>
+            <h3>￥&nbsp;{{totalBal | round3}}</h3>
+            <nuxt-link to="/admin/payment" tag="div" class="userinfo-money-charge">
+                <span>充值</span>
+            </nuxt-link>
+        </div>
+        <div class="userinfo-money">
+            <p>账户余额</p>
+            <h3>￥&nbsp;{{bal | round3}}</h3>
+            <nuxt-link to="/admin/payment/withdraw" tag="div" class="userinfo-money-withdraw">
+                <span>提款</span>
+            </nuxt-link>
+        </div>
+        <div class="userinfo-money">
+            <p>冻结金额</p>
+            <h3>￥&nbsp;{{frozen_balance | round3}}</h3>
+            <nuxt-link to="/admin/payment/withdraw" tag="div" class="userinfo-money-withdraws">
+                <span>提款</span>
+            </nuxt-link>
+        </div>
+    </div>
+    <div class="members-record-banks">
+        <div class="members-withdraw-bank-title">
+            <span>
 	      <img src="../../assets/img/members/Shape-1.png" />账户类型：</span>
-	    <ul>
-	      <li v-for="(game_accs,index) in game_acc">
-	        <a :class="{active:payIndexs === index}" href="javascript:void(0)" @click="payIndexs = index">{{game_accs.name}}</a>
-	      </li>
-	    </ul>
-	  </div>
-	  <div class="members-withdraw-bank-select">
-	    <ul>
-	      <li></li>
-	      <li>
-	        <i class="el-icon-plus"></i>添加银行卡</li>
-	    </ul>
-	  </div>
-	</div>
-	<div class="userinfo-operation">
-  	<div class="change_p">
-	    <div class="cp_list">
-	      <ul>
-	      	<li>
+            <ul>
+                <li v-for="(game_accs,index) in game_acc">
+                    <a :class="{active:payIndexs === index}" href="javascript:void(0)" @click="payIndexs = index">{{game_accs.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="members-withdraw-bank-select">
+            <ul>
+                <li></li>
+                <li>
+                    <i class="el-icon-plus"></i>添加银行卡</li>
+            </ul>
+        </div>
+    </div>
+    <div class="userinfo-operation">
+        <div class="change_p">
+            <div class="cp_list">
+                <ul>
+                    <!-- <li>
 		          <div class="c_l-left fl_l">
 		          	<img src="../../assets/img/members/userinfo-bankname.jpg"/>
 		          </div>
@@ -68,63 +68,63 @@
 		          <div class="c-d">
               <a href="javascript:void(0)" data-command="BangDingQuKuanRen">绑定</a>
               </div>
-		      </li>
-		      <li>
-	          <div class="c_l-left fl_l">
-	          	<img src="../../assets/img/members/userinfo-goole.jpg"/>
-	          </div>
-	          <div class="c_l-right fl_l">
-	            <div class="c-title">{{GA ? '已' : ''}}谷歌认证</div>
-	            <div class="c-tip" v-if="!GA">绑定谷歌动态码，增加账户安全性。</div>
-	          </div>
-	          <div class="c-d">
-              <a href="javascript:void(0)" @click="activeModal('GoogleAuth')">{{GA ? '解绑' : '绑定'}}</a>
+		      </li> -->
+                    <li>
+                        <div class="c_l-left fl_l">
+                            <img src="../../assets/img/members/userinfo-goole.jpg" />
+                        </div>
+                        <div class="c_l-right fl_l">
+                            <div class="c-title">{{GA ? '已' : ''}}谷歌认证</div>
+                            <div class="c-tip" v-if="!GA">绑定谷歌动态码，增加账户安全性。</div>
+                        </div>
+                        <div class="c-d">
+                            <a href="javascript:void(0)" @click="activeModal('GoogleAuth')">{{GA ? '解绑' : '绑定'}}</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="c_l-left fl_l">
+                            <img src="../../assets/img/members/userinfo-money.jpg" />
+                        </div>
+                        <div class="c_l-right fl_l">
+                            <!--<div class="c-title">{{hasPayPw ? '已' : '未'}}設置资金密码</div>-->
+                            <div class="c-title">资金密码</div>
+                            <div class="c-tip">我们建议玩家不定时的修改资金密码，可提高账号的安全性。</div>
+                        </div>
+                        <div class="c-d">
+                            <a @click="modifyPw('pay','资金')" data-command="ZiJinMiMa">修改</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="c_l-left fl_l">
+                            <img src="../../assets/img/members/userinfo-encrypted.jpg" />
+                        </div>
+                        <div class="c_l-right fl_l">
+                            <div class="c-title">密保设置</div>
+                            <div class="c-tip">玩家忘记密码时可以自行通过密保答案找回您的登陆，资金密码。</div>
+                        </div>
+                        <div class="c-d">
+                            <a @click="activeModal('Protection')" data-command="BangDingMiBao">{{hasProtection ? '修改' : '设置'}}</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="c_l-left fl_l">
+                            <img src="../../assets/img/members/userinfo-pw.jpg" />
+                        </div>
+                        <div class="c_l-right fl_l">
+                            <div class="c-title">登录密码</div>
+                            <div class="c-tip">建议您使用字母和数字的组合、混合大小写、在组合中加入下划线等符号。</div>
+                        </div>
+                        <div class="c-d">
+                            <a @click="modifyPw('login','登錄')" data-command="XiuGaiMiMa">修改</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-	        </li>
-	        <li>
-	          <div class="c_l-left fl_l">
-	          	<img src="../../assets/img/members/userinfo-money.jpg"/>
-	          </div>
-	          <div class="c_l-right fl_l">
-	            <!--<div class="c-title">{{hasPayPw ? '已' : '未'}}設置资金密码</div>-->
-	            <div class="c-title">资金密码</div>
-	            <div class="c-tip">我们建议玩家不定时的修改资金密码，可提高账号的安全性。</div>
-	          </div>
-	          <div class="c-d">
-              <a @click="modifyPw('pay','资金')" data-command="ZiJinMiMa">修改</a>
-            </div>
-	        </li>
-	        <li>
-	          <div class="c_l-left fl_l">
-	          	<img src="../../assets/img/members/userinfo-encrypted.jpg"/>
-	          </div>
-	          <div class="c_l-right fl_l">
-	            <div class="c-title">密保设置</div>
-	            <div class="c-tip">玩家忘记密码时可以自行通过密保答案找回您的登陆，资金密码。</div>
-	          </div>
-	          <div class="c-d">
-              <a @click="activeModal('Protection')" data-command="BangDingMiBao">{{hasProtection ? '修改' : '设置'}}</a>
-            </div>
-	        </li>
-	        <li>
-	          <div class="c_l-left fl_l">
-	          	<img src="../../assets/img/members/userinfo-pw.jpg"/>
-	          </div>
-	          <div class="c_l-right fl_l">
-	            <div class="c-title">登录密码</div>
-	            <div class="c-tip">建议您使用字母和数字的组合、混合大小写、在组合中加入下划线等符号。</div>
-	          </div>
-	          <div class="c-d">
-              <a @click="modifyPw('login','登錄')" data-command="XiuGaiMiMa">修改</a>
-            </div>
-	        </li>
-	      </ul>
-	    </div>
-	  </div>
-  </div>
-  </div>
-  
-	
+        </div>
+    </div>
+</div>
+
+
 <!--	
   <div class="userinfo">
   <div class="header" @click="activeModal('Avatar')">

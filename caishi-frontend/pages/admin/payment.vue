@@ -30,7 +30,7 @@
 <style lang="scss">
     @import "../../assets/scss/admin/index.scss";
   .members-content-nav {
-    height: 70px;
+    height: 58px;
     width: 100%;
     background: #F9F9F9;
     & ul {
@@ -46,7 +46,7 @@
         width: 107px;
         height: 38px;
         font-size: 14px;
-        margin-top: 32px;
+        margin-top: 20px;
         cursor: pointer;
       }
       & li.active {

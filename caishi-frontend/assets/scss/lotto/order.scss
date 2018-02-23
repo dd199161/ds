@@ -1,12 +1,139 @@
-.betting-list{
-  li {
-    > span{
-      font-size: 12px;
+.betting-list {
+    li {
+        >span {
+            font-size: 12px;
+        }
     }
-  }
-  .el-input-number{
-    width: 20%;
-    float:left;
-    margin-top: 5px;
-  }
+    .el-input-number {
+        width: 20%;
+        float: left;
+        margin-top: 5px;
+    }
+}
+
+.order_list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 37px 0px 35px 0px;
+    >.order-box {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid #E8E8E8;
+        & .order-title {
+            display: flex;
+            justify-content: space-between;
+            height: 37px;
+            border-bottom: 1px solid #E8E8E8;
+            >div {
+                position: relative;
+                display: flex;
+                align-items: center;
+                & span {
+                    width: 21px;
+                    height: 20px;
+                    margin: 0px 12px 0px 19px;
+                    background: url(../../img/lottery/order-title.png) no-repeat;
+                }
+                & input {
+                    margin-left: 24px;
+                    width: 102px;
+                    height: 27px;
+                    padding-left: 4px;
+                    border: 1px solid #BEBEBE;
+                }
+                & i {
+                    position: absolute;
+                    right: 11px;
+                    top: 10px;
+                }
+                & ul {
+                    position: absolute;
+                    background: url(/.nuxt/dist/img/amount.c13b9ac.png) no-repeat;
+                    width: 111px;
+                    height: 108px;
+                    padding: 25px 0 0 4px;
+                    top: 34px;
+                    left: 114px;
+                    & li {
+                        width: 102px;
+                        height: 23px;
+                        padding-left: 14px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            & .order-title-but {
+                & button {
+                    border: none;
+                    color: #fff;
+                    font-size: 12px;
+                    height: 22px;
+                    border-radius: 4px;
+                }
+                & button:nth-child(1) {
+                    width: 61px;
+                    background: #ABABAB;
+                    margin-right: 18px;
+                }
+                & button:nth-child(2) {
+                    width: 47px;
+                    background: #C9AE8C;
+                    margin-right: 29px;
+                }
+            }
+        }
+        & .order-head {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #E8E8E8;
+            height: 25px;
+            background: #F9F9F9;
+            & ul {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                & li {
+                    display: flex;
+                }
+            }
+        }
+        & .order-bd {
+            & .betting-total {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                height: 37px;
+                border-top: 1px solid #F08200;
+                padding-right: 30px;
+                color: #7B7B7B;
+                & em {
+                    color: #F08200;
+                    margin: 0px 8px;
+                    font-style: normal;
+                }
+            }
+        }
+    }
+    & .order-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+        width: 134px;
+        height: 108px;
+        background: red;
+        border-radius: 3px;
+        & h2 {
+            font-size: 24px;
+            color: #FFFD3C;
+        }
+        & p {
+            color: #fff;
+            font-size: 12px;
+        }
+    }
 }

@@ -361,6 +361,7 @@ export default {
         })
       }
       this.jQueryRunEnd = true
+      
     }
   },
   computed: {

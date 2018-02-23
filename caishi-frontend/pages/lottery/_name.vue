@@ -1,64 +1,78 @@
 <template>
   <div class="lottery">
     <div class="lottery_top">
+      <issue ref="issue" />
       <div class="t_l fl_l">
         <!-- css selector not support '1min' -->
         <div class="c_pic fl_l" :class="lottoName === '1min' ? `s${lottoName}` : lottoName"></div>
         <div class="c_ld fl_l">
           <a :href="trendHref" target="_blank">
-            <i class="icon iconfont">&#xe6a1;</i>走势图　</a>
+            走 势 图<i class="icon iconfont">&#xe6a1;</i>　</a>
           <nuxt-link :to="`/${betType[0][1]}/${lottoName}`">
-            <i class="icon iconfont">&#xe66f;</i>{{betType[1][1]}}玩法</nuxt-link>
+            玩法说明<i class="icon iconfont">&#xe66f;</i></nuxt-link>
         </div>
       </div>
-      <issue ref="issue" />
     </div>
     <div class="lottery_con">
       <play-nav />
-      <div class="lottery-panel">
-        <help :identifier="playIdentifier" />
-        <layout :identifier="playIdentifier" :type="lottoType" v-bind={playText} ref="layout" />
+      <div style="padding:0px 35px 0px 26px;">
+        <div style="display:flex;">
+        <div class="lottery-panel">
+          <help :identifier="playIdentifier" />
+          <layout :identifier="playIdentifier" :type="lottoType" v-bind={playText} ref="layout" />
+          <!-- <options :max="getMaxBonus(playInfo.max_bet_prize_group)" ref="options" />
+          <div class="betting-actions">
+            <a class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">
+              <i class="icon iconfont">&#xe63d;</i>一键投注</a>
+            <a class="btn btn-bg btn-add" id="betting-add" @click="getOrder">
+              <i class="icon iconfont">
+                &#xe604;</i>添加号码</a>
+          </div> -->
+        </div>
+        <div class="lottery-basket">
+          <!-- <div class="g_head">
+            <div class="g_tab">
+              <a href="javascript:void(0)" v-for="(item,index) in ['开奖','奖期']" :key="index" :class="{active:basketIndex === index}" @click="basketIndex = index">
+                {{item}}
+              </a>
+            </div>
+            <div class="clean" @click="setOrder([])">
+              <i class="icon iconfont">&#xe64c;</i>清空
+            </div>
+          </div> -->
+          <div class="betting-lottery">
+            <!-- <order v-show="basketIndex === 0" ref="order" /> -->
+            <div class="b_list kjhm" v-show="basketIndex === 0" >
+              <div class="hd">
+                <div class="qihao">期号</div>
+                <div class="kaijiang">开奖号码</div>
+              </div>
+              <el-scrollbar>
+                <ul>
+                  <li v-for="issue in issueList" :key="issue.issue_no">
+                    <div class="qh">{{issue.issue_no}}</div>
+                    <div class="kj">
+                      <span v-for="num in issue.win_number.split(',')">{{num}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </el-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;">
         <options :max="getMaxBonus(playInfo.max_bet_prize_group)" ref="options" />
         <div class="betting-actions">
-          <a class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">
-            <i class="icon iconfont">&#xe63d;</i>一键投注</a>
-          <a class="btn btn-bg btn-add" id="betting-add" @click="getOrder">
-            <i class="icon iconfont">
-              &#xe604;</i>添加号码</a>
+          <a class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">直接购彩</a>
+          <a class="btn btn-bg btn-add" id="betting-add" @click="getOrder">添加至购物篮</a>
         </div>
       </div>
-      <div class="lottery-basket">
-        <div class="g_head">
-          <div class="g_tab">
-            <a href="javascript:void(0)" v-for="(item,index) in ['购彩篮','历史开奖']" :key="index" :class="{active:basketIndex === index}" @click="basketIndex = index">
-              {{item}}
-            </a>
-          </div>
-          <div class="clean" @click="setOrder([])">
-            <i class="icon iconfont">&#xe64c;</i>清空
-          </div>
-        </div>
-        <div class="betting-lottery">
-          <order v-show="basketIndex === 0" ref="order" />
-          <div class="b_list kjhm" v-show="basketIndex === 1">
-            <div class="hd">
-              <div class="qihao">期号</div>
-              <div class="kaijiang">开奖号码</div>
-            </div>
-            <el-scrollbar>
-              <ul>
-                <li v-for="issue in issueList" :key="issue.issue_no">
-                  <div class="qh">{{issue.issue_no}}</div>
-                  <div class="kj">
-                    <span v-for="num in issue.win_number.split(',')">{{num}}</span>
-                  </div>
-                </li>
-              </ul>
-            </el-scrollbar>
-          </div>
-        </div>
-      </div>
+      <order v-show="basketIndex === 0" ref="order" />
       <component :is="view" ref="chase" />
+
+      </div>
+      
     </div>
     <report ref="report" />
     <!-- <component :is="launchReport"></component> -->

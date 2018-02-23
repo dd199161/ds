@@ -1,9 +1,18 @@
 <template>
   <div>
+    <div class="lotto-log fl_l"><a href="javascript:;"></a></div>
+    <div class="lotto-xr fl_l"></div>
+    <div class="t_r fl_l">
+      <div class="t_r_t">
+         <p>距第&nbsp;<span>{{issue}}</span>&nbsp;期截止</p>
+        </div>
+      <div class="t_r_m">
+        <div class="clock" ref="clock"></div>
+      </div>
+    </div>
     <div class="t_m fl_l">
       <div class="m_l fl_l">
-        <span>第 {{opened.issue_no}} 期</br>
-          开奖号码为 </span>
+        <p>第&nbsp;<span>{{opened.issue_no}}</span>&nbsp;期</p>
       </div>
       <div class="m_r fl_l">
         <transition name="el-zoom-in-center">
@@ -23,14 +32,7 @@
         </transition>
       </div>
     </div>
-    <div class="t_r fl_l">
-      <div class="t_r_t">第 {{issue}} 期 投注截止时间</div>
-      <div class="t_r_m">
-        <div class="clock" ref="clock"></div>
-      </div>
-    </div>
   </div>
-
 </template>
 
 <script>

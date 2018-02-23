@@ -303,10 +303,10 @@
 }
 
 .el-carousel__item h3 {
-    background: url(~assets/img/indexHome/banner1.jpg) no-repeat;
+    background: url(~assets/img/indexHome/banner1.jpg) no-repeat center center;
     height: 500px;
     width: 100%;
-    background-size: 100% 100%;
+    // background-size: 100% 100%;
     margin: 0;
 }
 
@@ -347,18 +347,18 @@ li.el-carousel__indicator {
     background: #fff;
 }
 
-.bannerAdv-box{
+.bannerAdv-box {
     display: flex;
     justify-content: center;
     height: 35px;
     width: 100%;
 }
+
 .bannerAdv {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 1100px;
-//  margin: 0 auto;
     height: 35px;
     background: #F3F3F3;
     .bannerAdvC {
