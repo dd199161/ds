@@ -48,30 +48,30 @@ export const delayAjax = ($axios, store, callback) => {
   return callback()
 }
 
-// export default ({ $axios, app, store, route, error, redirect }) => {
-export default ({ app, store }) => {
-  // $axios.defaults.timeout = 100000000
+export default ({ $axios, app, store, route, error, redirect }) => {
+// export default ({ app, store }) => {
+  $axios.defaults.timeout = 100000000
 
-  // $axios.onError(err => {
-  //   if (err.code === 401) {
-  //     redirect('/login')
-  //   }
-  //   if (err.message.includes('timeout') && route) {
-  //     //route path is always '/'
-  //     // return error(route.path + '相关的的接口网络超时！')
-  //     return error('网络超时！')
-  //   }
-  // })
+  $axios.onError(err => {
+    if (err.code === 401) {
+      redirect('/login')
+    }
+    if (err.message.includes('timeout') && route) {
+      //route path is always '/'
+      // return error(route.path + '相关的的接口网络超时！')
+      return error('网络超时！')
+    }
+  })
 
-  // $axios.onResponse(response => {
-  //   if (response.data) {
-  //     const { data: { errorCode } } = response
-  //     if (errorCode === 102901 || errorCode === 100002) {
-  //       logout(app,errorCode)
-  //     }
-  //   }
-  //   return response
-  // })
+  $axios.onResponse(response => {
+    if (response.data) {
+      const { data: { errorCode } } = response
+      if (errorCode === 102901 || errorCode === 100002) {
+        logout(app,errorCode)
+      }
+    }
+    return response
+  })
 
   axiosPlus.install = function(Vue) {
     Vue.prototype.$axiosPlus = app.$axiosPlus = function(
@@ -91,7 +91,7 @@ export default ({ app, store }) => {
             console.error('axios catch', url, err) //require!,it can be catch error,otherwise you don't know response error
 
             this.$message({
-              message: `${url}超时，请联系相关相关人员留意！`,
+              message: '系统超时，请等待刷新或联系客服！',
               type: 'error',
               duration: 2000
             })
@@ -106,26 +106,27 @@ export default ({ app, store }) => {
   Vue.use(axiosPlus)
 
   Vue.prototype.$getJson = app.$getJson = function(api, callback) {
-    const _v = store.state.version
-    if (!_v) {
+    const _v = process.env.fixVersion || store.state.version 
+    let _version = _v === 'fix' ? '' : `.${_v}`
+    if (!store.state.version) {
       return app.$axios
         .$post('static-data/lottery-version')
         .then(({ data: { version } }) => {
           store.commit('setState', { key: 'version', value: version })
           if (process.env.NODE_ENV === 'development') {
-            return import(`~/assets/config/${api}.${version}.json`).then(() =>
-              axios.get(`${publicPath}config/${api}.${version}.json`)
+            _version = _v === 'fix' ? '' : `.${version}`
+            return import(`~/assets/config/${api}${_version}.json`).then(() =>
+              axios.get(`${publicPath}config/${api}${_version}.json`)
             )
           }
-
           return axios
             .get(`${publicPath}config/${api}.${version}.json`)
             .catch(error)
         })
     }
     if (process.env.NODE_ENV === 'development') {
-      return import(`~/assets/config/${api}.${_v}.json`).then(() =>
-        axios.get(`${publicPath}config/${api}.${_v}.json`)
+      return import(`~/assets/config/${api}${_version}.json`).then(() =>
+        axios.get(`${publicPath}config/${api}${_version}.json`)
       )
     }
     return axios.get(`${publicPath}config/${api}.${_v}.json`).catch(error)

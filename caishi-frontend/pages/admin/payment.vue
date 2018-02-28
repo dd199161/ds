@@ -10,22 +10,16 @@
         <nuxt-link to="/admin/payment/platform_report" tag="li">转账记录</nuxt-link>
       </ul>
     </div>
-    <!--<div class="x_header">
-      <nuxt-link to="/admin/payment">充值</nuxt-link>
-      <nuxt-link to="/admin/payment/withdraw">提现</nuxt-link>
-      <nuxt-link to="/admin/payment/third_platform">转账</nuxt-link>
-      <nuxt-link to="/admin/payment/charge_report">充值记录</nuxt-link>
-      <nuxt-link to="/admin/payment/withdraw_report">提现记录</nuxt-link>
-      <nuxt-link to="/admin/payment/withdraw_report">转账记录</nuxt-link>
-    </div>-->
     <div class="x_con">
-      <nuxt-child/> </div>
+      <nuxt-child/>
+    </div>
+
   </div>
 </template>
 <script>
-  export default {
-    name: 'payment',
-  }
+export default {
+  name: 'payment'
+}
 </script>
 <style lang="scss">
     @import "../../assets/scss/admin/index.scss";
@@ -82,6 +76,16 @@
     padding: 0px;
     margin-bottom: 30px;
     @for $i from 1 through 3 {
+      & div:nth-child(#{$i}) {
+        display: flex;
+        @include cBg(#fff, 'n'+$i+'.png', 221px, 44px, 0px, 0px);
+      }
+      & div:nth-child(#{$i}).active {
+        display: flex;
+        @include cBg(#fff, 'h'+$i+'.png', 221px, 44px, 0px, 0px);
+      }
+    }
+    @for $i from 1 through 3 {
       & li:nth-child(#{$i}) {
         display: flex;
         @include cBg(#fff, 'n'+$i+'.png', 221px, 44px, 0px, 0px);
@@ -116,7 +120,7 @@
         margin: 0px;
         padding: 0px;
         width: 100%;
-        @for $i from 1 through 18 {
+        @for $i from 1 through 19 {
           & li:nth-child(#{$i}) {
             display: flex;
             justify-content: center;
@@ -310,25 +314,20 @@
     	flex-direction: row;
     	margin: 0;
     	padding: 0;
-    	
-      @for $i from 1 through 2 {
-        & li:nth-child(#{$i}) {
-        	display: flex;
-        	justify-content: center;
-        	align-items: center;
-        	width: 209px;
-    			height: 45px;
-    			margin: 0px 17px 8px 0px;
-        	@if $i == 1 {
-        		border: 1px solid #E0E0E0;
-        		background: #EFEFEF;
-        	}
-        	@if $i == 2 {
-        		border: 1px dashed #E8E8E8;
-        		background: #fff;
-        	}	
-        }
-      }
+    	& li{
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
+    		width: 209px;
+    		height: 45px;
+    		margin: 0px 17px 8px 0px;
+    		border: 1px solid #E0E0E0;
+				background: #EFEFEF;
+    	}
+    	& li:last-child{
+    		border: 1px dashed #E8E8E8;
+				background: #fff;
+    	}
     }
   }
   .members-withdraw-bank-details{

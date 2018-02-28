@@ -1,11 +1,13 @@
 <template>
   <div class="m_center WanFaJieShao">
-    <div class="x_header">
-      <nuxt-link v-for="(type,index) in types" :key="type.type" :to="`/admin/playhelp/${type.type}`" v-if="index !== 0">{{type.name}}</nuxt-link>
+    <div class="x_header members-content-nav">
+    	<ul>
+      <nuxt-link tag="li" v-for="(type,index) in types" :key="type.type" :to="`/admin/playhelp/${type.type}`" v-if="index !== 0">{{type.name}}</nuxt-link>
+      </ul>
     </div>
     <div class="x_con lotto-play-help">
-      <h2>{{isSSC ? lottos[1].name : lottos.name}}玩法</h2>
-      <ul v-if="isSSC" class="lotto-play-list lotto-ssc-list">
+      <h2>{{isSSC && types && types.length ? lottos[1].name : lottos.name}}玩法</h2>
+      <ul v-if="isSSC && types && types.length" class="lotto-play-list lotto-ssc-list">
         <li v-for="(item,index) in ['全天彩','时时彩']">
           <h3>{{item}}</h3>
           <ul>
@@ -71,6 +73,37 @@
     }
   }
 }
+.members-content-nav {
+    height: 58px;
+    width: 100%;
+    background: #F9F9F9;
+    & ul {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      & li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #848484;
+        width: 107px;
+        height: 38px;
+        font-size: 14px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      & li.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 28px;
+        border: 1px solid #E8E8E8;
+        border-top: 4px solid #F08200;
+        border-bottom: 0px;
+        color: #F08200;
+      }
+    }
+  }
 </style>
 
 
@@ -78,65 +111,69 @@
 import { mapGetters } from 'vuex'
 import { flatten } from 'lodash'
 import { initLottoPlays } from '~/util/lotto/transform-plays'
+import { delayAjax } from '~/plugins/ajax'
 import cache from '~/util/cache'
+
+const renderTable = async (type, store, context, error) => {
+  const types = store.state.lotto.types
+  if (types.findIndex(_ => _.type === type) === -1)
+    return error({ message: types.length ? '无此彩系！' : '此页面不支持地址栏直接访问！' })
+  if (types.length == 0) {
+    return {
+      // [Vue warn]: Avoid adding reactive properties to a Vue instance or its root $data at runtime - declare it upfront in the data option.
+      // type,
+      tableData: []
+    }
+  }
+  const typeInfos = Object.keys(types.slice(1).find(_ => _.type === type).infos)
+  let playList = cache[typeInfos.find(lottoName => cache[lottoName])]
+  if (!playList) {
+    playList = (await initLottoPlays(
+      store,
+      //types.slice(1) filters days lotto
+      typeInfos[0],
+      context,
+      error
+    )).playList
+  }
+  return playList.reduce(
+    (prev, next) =>
+      prev.concat(
+        flatten(
+          next.small_ways.map(group =>
+            group.bets.map((bet, index, array) => {
+              const [note, short_note] = cache.helps[bet.identifier]
+              return {
+                ...bet,
+                small_ways_name: next.content.show_name + group.content.name,
+                note,
+                short_note,
+                ...(index === 0 ? { bet_length: array.length } : {})
+              }
+            })
+          )
+        )
+      ),
+    []
+  )
+}
 
 export default {
   name: 'lotto-play-help',
   async asyncData({ app, store, params, redirect, error }) {
     if (!params.type) return redirect('/admin/playhelp/ssc')
-    await store.dispatch('lotto/getTypes')
-    const types = store.state.lotto.types
-    const type = params.type
-    if (types.findIndex(_ => _.type === type) === -1)
-      return error({ message: '无此彩系！' })
-    if (types.length == 0) {
-      return {
-        // [Vue warn]: Avoid adding reactive properties to a Vue instance or its root $data at runtime - declare it upfront in the data option.
-        // type,
-        tableData: []
-      }
-    }
     if (!cache.helps) {
       cache.helps = (await import(/* webpackChunkName: "play-help" */ '~/assets/config/play-helps')).default
     }
-    if (1) {
-    }
-    const typeInfos = Object.keys(
-      types.slice(1).find(_ => _.type === params.type).infos
-    )
-    let playList = cache[typeInfos.find(lottoName => cache[lottoName])]
-    if (!playList) {
-      playList = (await initLottoPlays(
-        store,
-        //types.slice(1) filters days lotto
-        typeInfos[0],
-        app,
-        error
-      )).playList
-    }
+    // if (process.server) return { tableData: [] }
     return {
-      tableData: playList.reduce(
-        (prev, next) =>
-          prev.concat(
-            flatten(
-              next.small_ways.map(group =>
-                group.bets.map((bet, index, array) => {
-                  const [note, short_note] = cache.helps[bet.identifier]
-                  return {
-                    ...bet,
-                    small_ways_name:
-                      next.content.show_name + group.content.name,
-                    note,
-                    short_note,
-                    ...(index === 0 ? { bet_length: array.length } : {})
-                  }
-                })
-              )
-            )
-          ),
-        []
-      )
+      tableData: await renderTable(params.type, store, app, error)
     }
+  },
+  created() {
+    // if (!this.tableData.length) {
+    //   // await store.dispatch('lotto/getTypes')
+    // }
   },
   methods: {
     spanMethod({ row, columnIndex }) {
@@ -157,6 +194,7 @@ export default {
       return this.type === 'ssc'
     },
     lottos() {
+      if (!this.types || !this.types.length) return { name: '', infos: [] }
       if (this.isSSC) {
         // return this.types.slice(0, 2).reduce(
         //   (prev, next) => ({
@@ -165,7 +203,7 @@ export default {
         //   }),
         //   {}
         // )
-        return this.types.slice(0, 2)
+        return this.types.filter(_ => _.type === 'ssc')
       }
       return this.types.find(_ => _.type === this.type)
     },

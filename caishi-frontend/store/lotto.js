@@ -38,21 +38,21 @@ export const actions = {
 export const mutations = {
   setTypes(state, data) {
     let list = data
-    const ssc = list[0]
+    const ssc = list.find(_ => _.identifier === 'ssc')
     const {online_status,identifier} = ssc
-    // list.unshift(
-    //   {
-    //     // infos:remove(_ => ['FLB15','1min','TXFFC'].includes(_.i))(ssc.infos),
-    //     // lodash/fp can't remove days lotto but return not days lotto ,['cqssc','tjssc']...
-    //     infos:remove(ssc.infos,_ => ['FLB15','1min','TXFFC'].includes(_.i)),
-    //     identifier,
-    //     name: "全天彩",
-    //     online_status
-    //   }
-    // )
+    list.unshift(
+      { 
+        // infos:remove(_ => ['FLB15','1min','TXFFC'].includes(_.i))(ssc.infos),
+        // lodash/fp can't remove days lotto but return not days lotto ,['cqssc','tjssc']... 
+        infos:remove(ssc.infos,_ => ['flb15','s1min','txffc'].includes(_.i)),
+        identifier,
+        name: "全天彩",
+        online_status
+      }
+    )
     state.types = list.map(({ infos, identifier: type, name:typeName }) => {
       return {
-        infos: zipObject(infos.map(_ => _.i.toLowerCase()))(infos.map(({ id, n: name, ne: is_new, h: is_hot, d: description,mp:max_bet_prize_group,ic:max_trace_issue_count }) => ({
+        infos: zipObject(infos.map(_ => _.i))(infos.map(({ id, n: name, ne: is_new, h: is_hot, d: description,mp:max_bet_prize_group,ic:max_trace_issue_count }) => ({
           id,
           name,
           is_new,

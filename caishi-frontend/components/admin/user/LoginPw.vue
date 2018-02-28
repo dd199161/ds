@@ -1,53 +1,25 @@
 <template>
-  <el-form :model="form" :rules="rules" status-icon ref="form" class="login-pw">
-    <div class="hint">
-      <i class="hint-icon"></i>
-      <span>请输入密码，密码由6-16个字符组成，为了保障您的资金安全， 修改后请牢记您的资金密码。</span>
-    </div>
-    <el-form-item prop="pw">
-      <el-input ref="pw" type="password" v-model="form.pw" placeholder="请输入原登录密码"></el-input>
+  <el-form :model="form" :rules="rules" status-icon ref="form" label-width="100px">
+    <el-form-item label="原登录密码" prop="pw">
+      <el-input ref="pw" type="password" v-model="form.pw"></el-input>
     </el-form-item>
-    <el-form-item prop="newPw">
-      <el-input ref="newPw" type="password" v-model="form.newPw" placeholder="请输入新密码"></el-input>
+    <el-form-item label="新登录密码" prop="newPw">
+      <el-input ref="newPw" type="password" v-model="form.newPw"></el-input>
     </el-form-item>
-    <el-form-item prop="checkPw">
-      <el-input ref="checkPw" type="password" v-model="form.checkPw" placeholder="请重复新密码"></el-input>
+    <el-form-item label="确认密码" prop="checkPw">
+      <el-input ref="checkPw" type="password" v-model="form.checkPw"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">提交</el-button>
-      <el-button @click="reset">取消</el-button>
+      <el-button @click="close">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 
-<style lang="scss">
-.login-pw {
-  width: 410px;
-  margin: 0 auto;
-
-  .hint {
-    margin-bottom: 20px;
-
-    span {
-      font-size: 14px;
-      color: #444;
-    }
-  }
-
-  .hint-icon {
-    width: 16px;
-    height: 16px;
-    background: url('~assets/img/login/hint-icon.png');
-    display: inline-block;
-  }
-}
-</style>
-
-
 <script>
 import { zipObject } from 'lodash/fp'
 import { mapGetters } from 'vuex'
-import { pwReg, getRequiredRule } from '~/plugins/formValidate'
+import { pwReg, getRequiredRule } from '~/util/validator'
 // import logout from '~/util/logout'
 export default {
   props: ['visible'],
@@ -108,7 +80,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.form.validate(valid => {
+      this.$form.validate(valid => {
         if (valid) {
           this.$axiosPlus(
             'user/change-login-password',
@@ -121,7 +93,7 @@ export default {
                 type: 'success',
                 duration: 1500,
                 // onClose:() => logout(this.$store,this.$router)
-                onClose: this.closeDiglog
+                onClose: this.close
               })
             }
           )
@@ -130,11 +102,8 @@ export default {
         }
       })
     },
-    closeDiglog() {
+    close() {
       this.$emit('update:visible', false)
-    },
-    reset() {
-      this.closeDiglog()
     }
   },
   mounted() {

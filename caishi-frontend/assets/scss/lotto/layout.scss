@@ -1,122 +1,134 @@
 .play-layout {
-    min-height: 198px;
-    >li {
-        display: flex;
-        align-items: center;
-        height: 54px;
-        border-bottom: 1px dotted #CCC;
-        ul {
-            display: flex;
-        }
+  min-height: 198px;
+  margin-top: 15px;
+  padding-right: 20px;
+  > li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+    ul {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 0px 15px;
     }
-    label {
-        min-width: 60px;
+    &:last-child{
+      border-bottom:none;
     }
-    &.kl8 {
-        .play-ball-list {
-            li {
-                margin-bottom: 8px;
-            }
-        }
+  }
+  label {
+    min-width: 50px;
+    font-size: 12px;
+  }
+  &.k3-hezhi,
+  .kl8-renxuan {
+    .play-ball-list {
+      li {
+        margin-bottom: 8px;
+      }
     }
+  }
 }
-
-.play-layout li:nth-last-child(1) {
-    border-bottom: 0px dotted #CCC;
-}
-
 .play-ball-list {
-    flex-wrap: wrap;
-    margin-right: 42px;
-    li {
-        display: flex;
-        width: 39px;
-        height: 39px;
-        border: 1px solid #E4DFD5;
-        border-radius: 50%;
-        justify-content: center;
-        align-items: center;
-        margin-right: 4px;
-        cursor: pointer;
-        user-select: none;
-        &.selected {
-            &.selected {
-                background: url(~/assets/img/lottery/lottery_ball.png) no-repeat;
-                color: #fff;
-            }
-        }
+  flex-wrap: wrap;
+  li {
+    display: flex;
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+    background: white;
+    user-select: none;
+    font-size: 24px;
+    color: #4f4f4f;
+    box-shadow: 0 0 1px 1px #999, 0 0 4px 0px #e0e0e0;
+    &.selected {
+      background: linear-gradient(#ffc703, #f0a855, #ecc035);
+      color: #fff;
+      box-shadow: 0 0 0px 2px #f0ad4c;
     }
+  }
+}
+
+.play-ball-text{
+  .play-ball-list li{
+    font-size: 16px;
+  }
 }
 
 .play-ball-tool {
+  margin-left: auto;
+  height: 25px;
+  background: #f3f3f3;
+  border-radius: 12.5px / 12.5px;
+  li {
     display: flex;
+    width: 19px;
+    height: 19px;
+    font-size: 12px;
+    color: #7b7b7b;
+    border-radius: 12px;
+    justify-content: center;
     align-items: center;
-    background: #F3F3F3;
-    border-radius: 10px;
-    height: 25px;
-    margin-left: auto;
-    padding: 0px 15px;
-    li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 19px;
-        height: 19px;
-        line-height: 19px;
-        margin: 0px 8px;
-        cursor: pointer;
-        font-size: 12px;
-        user-select: none;
-        &:hover {
-            background: #E07700;
-            border-radius: 50%;
-            color: #fff;
-        }
+    margin: 0 2px;
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+      background: #e07700;
+      color: #fff;
     }
-    &:empty {
-        display: none;
-    }
+  }
+  &:empty {
+    display: none;
+  }
 }
 
+@import "k3";
+
 .play-textarea {
-    textarea {
-        width: 98%;
-        border-color: $--border-color-base;
-        min-height: 162px;
-        &+div {
-            font-size: 12px;
-            margin-top: 5px;
-        }
+  textarea {
+    width: 98%;
+    border-color: $--border-color-base;
+    min-height: 162px;
+    & + div {
+      font-size: 12px;
+      margin-top: 5px;
     }
-    .el-button {
-        background: transparent;
-        &+.el-button {
-            margin-right: 10px;
-        }
+  }
+  .el-button {
+    background: transparent;
+    & + .el-button {
+      margin-right: 10px;
     }
+  }
 }
 
 .play-help {
-    height: 16px;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    & a:nth-child(1) {
-        color: #E88620;
-        background: url(../../img/ssc/warning.png) no-repeat left center;
-        padding-left: 22px;
-    }
-    & a:nth-child(3) {
-        display: flex;
-        align-items: flex-end;
-        color: #E88620;
-        background: url(../../img/ssc/8.png) no-repeat left center;
-        padding-left: 22px;
-    }
-    .el-icon-question {
-        font-size: 16px;
-        margin-right: 3px;
-    }
+  height: 38px;
+  color: #e88620;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  .el-icon-info {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  span {
+    white-space: nowrap;
+  }
+
+  label {
+    white-space: nowrap;
+  }
+
+  .help-desc {
+    color: #000;
+    white-space: nowrap;
+  }
 }

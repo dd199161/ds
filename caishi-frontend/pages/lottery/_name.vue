@@ -1,84 +1,78 @@
 <template>
   <div class="lottery">
     <div class="lottery_top">
-      <issue ref="issue" />
-      <div class="t_l fl_l">
+      <div class="t_l">
         <!-- css selector not support '1min' -->
-        <div class="c_pic fl_l" :class="lottoName === '1min' ? `s${lottoName}` : lottoName"></div>
-        <div class="c_ld fl_l">
-          <a :href="trendHref" target="_blank">
-            走 势 图<i class="icon iconfont">&#xe6a1;</i>　</a>
-          <nuxt-link :to="`/${betType[0][1]}/${lottoName}`">
-            玩法说明<i class="icon iconfont">&#xe66f;</i></nuxt-link>
-        </div>
+        <div class="c_pic" :class="lottoName"></div>
+      </div>
+      <div class="c_ld">
+        <nuxt-link :to="`/${betType[0][1]}/${lottoName}`">
+          {{betType[1][1]}}玩法
+          <span class="transfer-type-icon"></span>
+        </nuxt-link>
+      </div>
+      <issue ref="issue" />
+      <div class="c_rd">
+        <a :href="trendHref" target="_blank" v-if="trendHref">
+          走势图
+          <span class="trend_icon"></span>
+        </a>
+        <button disabled v-else>
+          走势图
+          <span class="trend_icon"></span>
+        </button>
+        <a href="admin/playhelp/ssc" target="_blank">
+          玩法说明
+          <span class="trend_icon"></span>
+        </a>
       </div>
     </div>
     <div class="lottery_con">
       <play-nav />
-      <div style="padding:0px 35px 0px 26px;">
-        <div style="display:flex;">
+      <div class="lottery-content">
         <div class="lottery-panel">
           <help :identifier="playIdentifier" />
           <layout :identifier="playIdentifier" :type="lottoType" v-bind={playText} ref="layout" />
-          <!-- <options :max="getMaxBonus(playInfo.max_bet_prize_group)" ref="options" />
-          <div class="betting-actions">
-            <a class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">
-              <i class="icon iconfont">&#xe63d;</i>一键投注</a>
-            <a class="btn btn-bg btn-add" id="betting-add" @click="getOrder">
-              <i class="icon iconfont">
-                &#xe604;</i>添加号码</a>
-          </div> -->
         </div>
-        <div class="lottery-basket">
-          <!-- <div class="g_head">
-            <div class="g_tab">
-              <a href="javascript:void(0)" v-for="(item,index) in ['开奖','奖期']" :key="index" :class="{active:basketIndex === index}" @click="basketIndex = index">
-                {{item}}
-              </a>
-            </div>
-            <div class="clean" @click="setOrder([])">
-              <i class="icon iconfont">&#xe64c;</i>清空
-            </div>
-          </div> -->
-          <div class="betting-lottery">
-            <!-- <order v-show="basketIndex === 0" ref="order" /> -->
-            <div class="b_list kjhm" v-show="basketIndex === 0" >
-              <div class="hd">
-                <div class="qihao">期号</div>
-                <div class="kaijiang">开奖号码</div>
-              </div>
-              <el-scrollbar>
-                <ul>
-                  <li v-for="issue in issueList" :key="issue.issue_no">
-                    <div class="qh">{{issue.issue_no}}</div>
-                    <div class="kj">
-                      <span v-for="num in issue.win_number.split(',')">{{num}}</span>
-                    </div>
-                  </li>
-                </ul>
-              </el-scrollbar>
-            </div>
+        <div class="lottery-record">
+          <div class="lottery-record-head">
+            <div>奖期</div>
+            <div>开奖</div>
           </div>
+          <el-scrollbar>
+            <ul>
+              <li v-for="issue in issueList" :key="issue.issue_no" class="lottery-record-item">
+                <div class="qh">{{issue.issue_no}}</div>
+                <div class="kj">
+                  <span v-for="num in issue.win_number.split(',')">{{num}}</span>
+                </div>
+              </li>
+            </ul>
+          </el-scrollbar>
         </div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;">
-        <options :max="getMaxBonus(playInfo.max_bet_prize_group)" ref="options" />
+      <div class="lottery-operator">
+        <options :max="getMaxBonus(playInfo.max_bet_prize_group)" :maxMultiple="maxMultiple" ref="options" />
         <div class="betting-actions">
-          <a class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">直接购彩</a>
-          <a class="btn btn-bg btn-add" id="betting-add" @click="getOrder">添加至购物篮</a>
+          <el-button type="primary" class="btn btn-bg btn-betting" lottery="quick_bet" @click="bet(true)">一键投注</el-button>
+          <el-button type="primary" class="btn btn-bg btn-add" id="betting-add" @click="getOrder">添加号码</el-button>
         </div>
       </div>
-      <order v-show="basketIndex === 0" ref="order" />
-      <component :is="view" ref="chase" />
-
+      <div class="lottery-basket">
+        <div class="betting-lottery">
+          <order ref="order" :setOrder="setOrder" />
+        </div>
       </div>
-      
+      <component :is="view" ref="chase" />
     </div>
     <report ref="report" />
     <!-- <component :is="launchReport"></component> -->
   </div>
 </template>
-<style lang="scss" src="../../assets/scss/lotto/index.scss"></style>
+<style lang="scss">
+@import '../../assets/scss/lotto';
+@import '../../assets/scss/lotto/index';
+</style>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
@@ -92,8 +86,9 @@ import Options from '~/components/lotto/Options'
 import Order from '~/components/lotto/Order'
 import Report from '~/components/lotto/Report'
 import { time } from '~/plugins/filters'
-import { simpleCompress,simpleUnCompress } from '~/util/lotto/code'
-import { AsyncComp } from '~/plugins/common'
+import { simpleCompress, transformCode } from '~/util/lotto/code'
+import aesDecrypt from '~/util/aesDecrypt'
+import { AsyncComp, noop } from '~/plugins/common'
 
 export default {
   name: 'lotto',
@@ -112,7 +107,6 @@ export default {
       bigWayIndex: 0,
       playIndex: [0, 0],
       playText: {},
-      basketIndex: 0,
       view: ''
     }
   },
@@ -143,17 +137,31 @@ export default {
       setBetCount: 'lotto/setBetCount',
       setOrder: 'lotto/setOrder'
     }),
-    getOrder(add = true) {
+    async checkSinglePer() {
+      const { betCount, singlePer } = this
+      if (betCount < singlePer * this.playInfo.all_bet_count) {
+        await this.$confirm('当前选号是单挑模式，是否继续投注?', '注意', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        return true
+      } else {
+        return true
+      }
+    },
+    async getOrder(add = true) {
       //add params is MouseEvent
-      const bet_count = this.betCount
-      if (bet_count === 0) {
+      const { betCount, isPlaySimple } = this
+      if (betCount === 0) {
         return add ? this.checkOrder() : this.order
       }
+      if (!isPlaySimple && (await this.checkSinglePer().catch(noop)) !== true)
+        return
       const {
         playIdentifier,
         lottoName,
         lottoType,
-        isPlaySimple,
         betAmount,
         ballSet,
         issue,
@@ -178,7 +186,7 @@ export default {
           ? simpleCompress(textArray, layout, isPlayCodeDouble)
           : Array.isArray(code[0]) ? code.join('|') : code.toString(),
         one_bet_amount: betAmount,
-        bet_count,
+        bet_count: betCount,
         multiple,
         //1=1元, 2=1角, 3=1分, 4=1厘
         money_unit: unitIndex + 1,
@@ -197,7 +205,7 @@ export default {
         return order
       }
     },
-    bet(oneKey) {
+    async bet(oneKey) {
       const isOneKey = oneKey === true
       if (
         !this.isInvoking &&
@@ -219,14 +227,13 @@ export default {
         this.isInvoking = true
         let { textArray, code, layout } = this.$layout
         let t1 = performance.now()
+        const oneKeyOrder = await this.getOrder(false)
+        if (!oneKeyOrder) return (this.isInvoking = false)
         let allBets = Object.values(
-          groupBy(
-            isOneKey ? this.getOrder(false) : order,
-            'lottery_info_identifier'
-          )
+          groupBy(isOneKey ? oneKeyOrder : order, 'lottery_info_identifier')
         )
         let newData = []
-        Promise.all(
+        await Promise.all(
           allBets.map(bets => {
             let t2 = performance.now()
             this.$styleLog(t2 - t1, 'large')
@@ -240,66 +247,62 @@ export default {
               data => newData.push(data)
             )
           })
-        ).then(() => {
-          if (!newData.length) return
-          this.$message({
-            message: '投注成功！',
-            type: 'success',
-            duration: 1500
-          })
-          this.getBal()
-          let tableData = this.$lottoOrder.tableData
-          let length = tableData.length
-          newData = flatten(newData)
-          allBets = flatten(allBets)
-
-          this.$lottoOrder.tableData = allBets
-            .map(
-              (
-                {
-                  playName,
-                  issue,
-                  amount,
-                  lottery_info_identifier,
-                  buy_number,
-                },
-                index
-              ) => {
-                if (newData[index]) {
-                  const { ...props } = newData[index]
-                  return {
-                    ...props,
-                    buy_number:isPlaySimple ? simpleUnCompress(buy_number,this.isPlayCodeDouble) : buy_number,
-                    bonus: 0,
-                    method:
-                      this.listMap[lottery_info_identifier].name +
-                      '-' +
-                      playName,
-                    issue,
-                    amount:
-                      isOneKey && index === allBets.length - 1
-                        ? amount
-                        : this.$order.amounts[index],
-                    status: 1,
-                    created_at: time(new Date()),
-                    cancelable: true
-                  }
-                }
-                return false
-              }
-            )
-            .filter(_ => _)
-            .concat(
-              tableData.slice(
-                0,
-                length >= 10 ? length - allBets.length : length
-              )
-            )
-          this.setOrder([])
-          isPlaySimple && (playText[playIdentifier] = '')
-          isOneKey && !isPlaySimple && this.resetBallSet([])
-          this.isInvoking = false
+        )
+        if (!newData.length) return (this.isInvoking = false)
+        this.$message({
+          message: '投注成功！',
+          type: 'success',
+          duration: 1500
         })
+        this.getBal()
+        let tableData = this.$lottoOrder.tableData
+        let length = tableData.length
+        newData = flatten(newData)
+        allBets = flatten(allBets)
+
+        this.$lottoOrder.tableData = allBets
+          .map(
+            (
+              {
+                playName,
+                issue,
+                amount,
+                lottery_info_identifier,
+                buy_number,
+                lottoType
+              },
+              index
+            ) => {
+              if (newData[index]) {
+                const { ...props } = newData[index]
+                const method =
+                  this.listMap[lottery_info_identifier].name + '-' + playName
+                return {
+                  ...props,
+                  buy_number: transformCode(buy_number, method, lottoType),
+                  bonus: 0,
+                  method,
+                  issue,
+                  amount:
+                    isOneKey && index === allBets.length - 1
+                      ? amount
+                      : this.$order.amounts[index],
+                  status: 1,
+                  created_at: time(new Date()),
+                  cancelable: true
+                }
+              }
+              return false
+            }
+          )
+          .filter(_ => _)
+          .concat(
+            tableData.slice(0, length >= 10 ? length - allBets.length : length)
+          )
+        this.setOrder([])
+        isPlaySimple && (playText[playIdentifier] = '')
+        isOneKey && !isPlaySimple && this.resetBallSet([])
+        this.isInvoking = false
       }
     },
     getChase() {
@@ -330,8 +333,15 @@ export default {
   computed: {
     ...mapGetters({
       betCount: 'lotto/betCount',
-      order: 'lotto/order'
+      order: 'lotto/order',
+      sysConfigs: 'sysConfigs'
     }),
+    maxMultiple() {
+      const maxMultiple = this.sysConfigs.find(
+        _ => _.identify === 'bet_max_multiple'
+      )
+      return maxMultiple ? +aesDecrypt(maxMultiple.value) : 100000
+    },
     smallWays() {
       return this.playList[this.bigWayIndex]
         ? this.playList[this.bigWayIndex].small_ways
@@ -348,7 +358,16 @@ export default {
       return this.playInfo.identifier
     },
     isPlaySimple() {
-      return this.playIdentifier.includes('ds')
+      const { playIdentifier } = this
+      //三不同号单选 sanbutonghao_sanbutonghao_sbthds
+      return (
+        playIdentifier.includes('ds') &&
+        !/danshuang|tonghao/.test(playIdentifier)
+      )
+    },
+    singlePer() {
+      const singlePer = this.sysConfigs.find(_ => _.identify === 'single_per')
+      return singlePer ? aesDecrypt(singlePer.value) / 100 : 1
     }
   },
   mounted() {
@@ -365,3 +384,4 @@ export default {
   }
 }
 </script>
+\

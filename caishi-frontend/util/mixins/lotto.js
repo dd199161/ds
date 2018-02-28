@@ -13,7 +13,7 @@ export default {
     const type = `${this.betType[1][0]}彩票`
     const title = this.lottoId ? `${type} ${this.lottoShowName}` : ''
     return {
-      //https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-optional-chaining 
+      //https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-optional-chaining
       // babel 7.0
       title,
       meta: [
@@ -80,7 +80,7 @@ export default {
       // }
 
       // if (玩家 < 上限) {
-      //  上限 = 玩家; 
+      //  上限 = 玩家;
       // }
       // 最終上限 = 上限 //1950
       const userMax = this.bonusGroup
@@ -129,11 +129,12 @@ export default {
       return ['11x5','pk10'].some(type => this.lottoType === type)
     },
     trendHref(){
-      return `http://www.happy916.com/chart.html?lid=${trendCfg[this.lottoName]}`
+      const lid = trendCfg[this.lottoName]
+      return lid ? `http://www.happy916.com/chart.html?lid=${lid}` : false
     }
   },
   mounted(){
     this.$issue = this.$refs.issue
     this.$order = this.$refs.order
   },
-} 
+}

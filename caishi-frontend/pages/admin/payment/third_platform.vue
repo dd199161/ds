@@ -7,10 +7,10 @@
 
 
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState,mapGetters, mapActions, mapMutations } from 'vuex'
 import { isMobile } from '~/plugins/UA'
-import { pwReg, camelCase } from '~/plugins/common'
-import { getRequiredRule } from '~/plugins/formValidate'
+import {camelCase} from 'lodash'
+import { pwReg, getRequiredRule } from '~/util/validator'
 
 const initTransList = _ => ({
   ..._,
@@ -63,7 +63,7 @@ export default {
                   ? this.bal
                   : this.availableGames[form.transOut].balance) < form.amount
               ) {
-                callback(new Error(`余额不足！`))
+                callback(new Error('余额不足！'))
               }
               callback()
             },
@@ -94,10 +94,7 @@ export default {
     getStatus(item) {
       if (item[`${isMobile ? 'mobile' : 'web'}_status`] === 2) {
         return '未开放'
-      } else if (
-        this._3rdPlatformPrefix.includes(item.prefix) &&
-        item.prefix !== 'NVR'
-      ) {
+      } else if (this._3rdPlatformPrefix.includes(item.prefix) && item.prefix !== 'NVR') {
         return '进入'
       } else {
         return '注册'
@@ -139,12 +136,12 @@ export default {
       const isSignUp = this.getStatus(item) === '注册'
       const { prefix: platform } = item
       //Vue cannot detect property additions
-      this.$set(this.loadings, index, true)
+      this.$set(this.loadings,index,true)
       this.$axiosPlus(
         `third-party-game/${isSignUp ? 'register' : 'login'}`,
         { platform },
         _ => {
-          this.$set(this.loadings, index, false)
+          this.$set(this.loadings,index,false)
           this.$message({
             message: `${platform}${isSignUp ? '注册' : '登录'}成功！`,
             type: 'success',
@@ -226,7 +223,7 @@ export default {
       return this.form.transOut === 'self'
     },
     ...mapState({
-      userModel: 'user'
+      userModel:'user'
     }),
     ...mapGetters({
       bal: 'pay/bal',

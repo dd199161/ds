@@ -247,8 +247,8 @@
     position: relative;
     width: 100%; }
     .el-step__head.is-process {
-      color: #2d2f33;
-      border-color: #2d2f33; }
+      color: #444;
+      border-color: #444; }
     .el-step__head.is-wait {
       color: #bbb;
       border-color: #bbb; }
@@ -316,7 +316,7 @@
     line-height: 38px; }
     .el-step__title.is-process {
       font-weight: bold;
-      color: #2d2f33; }
+      color: #444; }
     .el-step__title.is-wait {
       color: #bbb; }
     .el-step__title.is-success {
@@ -332,7 +332,7 @@
     line-height: 20px;
     font-weight: normal; }
     .el-step__description.is-process {
-      color: #2d2f33; }
+      color: #444; }
     .el-step__description.is-wait {
       color: #bbb; }
     .el-step__description.is-success {

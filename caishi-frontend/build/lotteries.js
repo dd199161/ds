@@ -43,13 +43,14 @@ exports.toLottoInfo = (data,typeName) => {
   //   }
   // })
 
-  const transformBets = ({content:{unique_count:un,min_repeat_time:min,max_repeat_time:max,offset:o,position:p,digital_count:num,name,show_name:sa,note:i,short_note:si,buy_length:b,cal_prize_base:c,id,identifier:idf,max_bet_prize_group:mp,bet_prize}}) => {
+  const transformBets = ({content:{unique_count:un,min_repeat_time:min,max_repeat_time:max,offset:o,position:p,digital_count:num,name,show_name:sa,note:i,short_note:si,buy_length:b,cal_prize_base:c,id,identifier:idf,max_bet_prize_group:mp,singled_out_max_prize,all_bet_count
+    :ac,singled_out_max_prize:sp,bet_prize}}) => {
     return _.pickBy({
       // un,
       // o,p,
       a:name.replace(typeName,''),
       // i,si,id,
-      sa,c,idf,mp,
+      sa,c,idf,mp,ac,sp,
       bp:Number(bet_prize),
       // tid,gid,sgid,b,num,min,max,
       // ...props
@@ -112,24 +113,24 @@ exports.toReposalInfo = (data,type) => {
   }else{
     return data ? data.big_ways.map(({content:{show_name:sa,identifier:i},small_ways}) => {
       const isSingleBet = small_ways.length === 1 && small_ways[0].bets.length > 1
-  
+
       let s = small_ways.map(({bets}) => {
         return reposalBetInfo(bets,isSingleBet)
       })
-  
+
       if(isSingleBet) {
         s = s[0]
       }
-  
+
       if(s.every(_ => _.length === 1)) {
         s = s.map(_ => _[0])
       }
-  
+
       return {
         c:{sa,i},
         s
       }
     }) : []
   }
-  
+
 }

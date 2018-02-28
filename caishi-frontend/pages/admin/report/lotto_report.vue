@@ -26,7 +26,7 @@ export default {
   name: 'user-lotto-report',
   async asyncData({ app, store, params: { name }, error }) {
     if (process.server)
-      return { users: [], total: 0, parent_names: [], reportData: [] }
+      return { users: [], total: 0, parent_names: [], reportData: [],isSPA: true }
     const { data } = await request(app, {
       ...dateParam(getNewDate()),
       ...(name ? { parent_name: name } : {})

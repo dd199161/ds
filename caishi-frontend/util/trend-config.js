@@ -8,4 +8,5 @@ export default {
   tjssc: '1007',
   txffc: '1005',
   xjssc: '1003',
+  jskl3:false
 }

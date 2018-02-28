@@ -136,7 +136,7 @@ export function renderTeamView(option, element,legendSelected) {
       opt.map(function (i, k) {
         return {
           name: i.name,
-          type: 'line',
+          type: 'bar',
           data: i.data,
           ...getMarkPoint(date,i),
           // "markLine": {
@@ -196,7 +196,7 @@ export function renderTeamView(option, element,legendSelected) {
         label:{
           normal:{
             show:false
-          }  
+          }
         },
         ...getMarkPoint(date,i)
       }))

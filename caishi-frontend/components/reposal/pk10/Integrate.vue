@@ -1,6 +1,6 @@
 <template>
-  <div class="reposal-play-layout reposal-play-col10">
-    <div class="reposal-play-top">
+  <div class="reposal-play-layout reposal-play-col5">
+    <div class="reposal-play-top reposal-play-col-auto">
       <h4>冠，亚军和</h4>
       <ul>
         <li v-for="(v,k) in 2">
@@ -11,7 +11,7 @@
           </div>
           <div @click="select(k)" :class="{selected:shortcut && +topBigSmall[k]}">
             <div>冠亚{{size[k]}}</div>
-            <div>{{getOdds(10,1,k)}}</div>
+            <div>{{getOdds(10,1,k) | round3}}</div>
             <el-autocomplete @input.native="validate(k)" v-model="topBigSmall[k]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </div>
 
@@ -24,7 +24,7 @@
           </div>
           <div @click="select(k + 2)" :class="{selected:shortcut && +topOddEven[k]}">
             <div>冠亚{{size[k + 2]}}</div>
-            <div>{{getOdds(10,2,k)}}</div>
+            <div>{{getOdds(10,2,k) | round3}}</div>
             <el-autocomplete @input.native="validate(k + 2)" v-model="topOddEven[k]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </div>
         </li>
@@ -106,7 +106,7 @@ export default {
               amount >= 1 && [
                 buyValue[k],
                 this.getOdds(10, orderTypeIndex - 3, k),
-                round(amount, 5),
+                round(amount, 6),
                 orderTypeIndex > 2 ? 2 + k : k,
                 orderTypeIndex,
                 this.playList[10].bets[orderTypeIndex - 3].identifier

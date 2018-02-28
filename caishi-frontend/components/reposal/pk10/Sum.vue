@@ -20,12 +20,12 @@
           </li>
           <li v-if="k < 2" @click="select(sequence[1](k))" :class="{selected:shortcut && +topBigSmall[k]}">
             <div>{{size[k]}}</div>
-            <div>{{getOdds(10,1,k)}}</div>
+            <div>{{getOdds(10,1,k) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[1](k))" v-model="topBigSmall[k]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
           <li v-else-if="k < 4" @click="select(sequence[1](k))" :class="{selected:shortcut && +topOddEven[k - 2]}">
             <div>{{size[k]}}</div>
-            <div>{{getOdds(10,2,k - 2)}}</div>
+            <div>{{getOdds(10,2,k - 2) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[1](k))" v-model="topOddEven[k - 2]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
         </ul>

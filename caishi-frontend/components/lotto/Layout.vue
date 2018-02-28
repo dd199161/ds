@@ -5,6 +5,7 @@ import playConfig from '~/assets/config/play-config'
 import arithmetic from '~/util/lotto/arithmetic'
 import { flatten } from 'lodash'
 import { select2Code, textFilter, getFirstNum } from '~/util/lotto/code'
+import aesDecrypt from '~/util/aesDecrypt'
 //remove jsx-vue-functional since it's buggy and hard to get right
 //https://github.com/vuejs/babel-preset-vue/commit/376804c7f22bff8e7395c76ee597433ebacc4783
 //jsx-vue-functional not camelCase,first word must capitalize.eg:BallList
@@ -135,7 +136,7 @@ export default {
           ? 0
           : arithmetic(
               identifier,
-              (this.code = select2Code(val, this.isDouble)),
+              (this.code = select2Code(val, this.isDouble,identifier)),
               layout
             )
       )
@@ -211,7 +212,7 @@ export default {
       } else {
         selected = [...this.selected]
         selected = this.toggle(
-          options && options.tool[index] === '清' ? 5 : index
+          options && options.tool && options.tool[index] === '清' ? 5 : index
         )
       }
       this.selectBall(selected)
@@ -221,7 +222,7 @@ export default {
       return this.layout[1].map((v, k) => {
         let result
         let isLengthOdd = length % 2 === 0
-        let isOdd = (this.type === 'pk10' ? k + 1 : k) % 2 === 0
+        let isOdd = (this.type === 'pk10' || this.identifier === 'hezhi_hezhi_hz' ? k + 1 : k) % 2 === 0
         switch (index) {
           //全
           case 0:
@@ -251,8 +252,12 @@ export default {
     },
     limit(selected) {
       let limit
-      const opt = this.options && this.options[this.layout[0].length]
-      limit = opt && opt.limit
+      // const opt = this.options && this.options[this.layout[0].length]
+      // limit = opt && opt.limit
+      const betNumber = this.sysConfigs.find(_ => _.identify === 'lottery_kl8_renxuan_bet_number')
+      if (betNumber && this.type === 'kl8' && +getFirstNum(this.identifier) > 1) limit = aesDecrypt(betNumber.value)
+      // don't:return limit && flatten(this.code).length > limit
+      // this code maybe reactive nextTick
       return limit && flatten(select2Code(selected)).length > limit
         ? this.$msgbox(`最多只能选择${limit}个号码`, '注意')
         : true
@@ -267,7 +272,8 @@ export default {
       return playConfig[this.identifier]
     },
     ...mapGetters({
-      selected: 'lotto/ballSet'
+      selected: 'lotto/ballSet',
+      sysConfigs:'sysConfigs'
     }),
     textArray() {
       const { playText, identifier, layout, isDouble } = this
@@ -298,6 +304,8 @@ export default {
         return 2
       } else if (identifier.includes('dantuo_dantuo_dt')) {
         return +getFirstNum(identifier)
+      }else if(identifier === 'ertonghao_ertonghao_ethdx'){
+        return 6
       }
       return 0
     }
@@ -320,7 +328,8 @@ export default {
     if (Array.isArray(layout)) {
       if (typeof layout[0] === 'string') {
         return (
-          <ul class="play-layout">
+          //just class not className
+          <ul class={['play-layout', options && options.className,{'play-ball-text':/san_qita|sthtx/.test(identifier)}]}>
             <li>
               <label>{layout[0]}</label>
               <BallList
@@ -334,10 +343,10 @@ export default {
         )
       } else {
         return (
-          <ul class={['play-layout', this.type]}>
+          <ul class="play-layout">
             {layout[0].map((position, row) => {
               return (
-                <li>
+                <li class={options && options[row] && options[row].className}>
                   <label>{position}</label>
                   <BallList
                     layout={

@@ -49,15 +49,16 @@
       }
       & + div {
         position: absolute;
-        left: 270px;bottom: 5px;
-        color:$--color-text-secondary;
+        left: 270px;
+        bottom: 5px;
+        color: $--color-text-secondary;
         font-style: italic;
       }
     }
   }
   .el-form-item {
     &:nth-last-child(2) {
-      position:relative;
+      position: relative;
     }
   }
 }
@@ -65,7 +66,7 @@
 
 <script>
 import { getChildren } from '~/plugins/common'
-
+import { delayAjax } from '~/plugins/ajax'
 const initForm = () => ({
   users: [],
   title: '',
@@ -75,6 +76,7 @@ const initForm = () => ({
 export default {
   name: 'compose',
   asyncData({ store }) {
+    if (process.server) return { user: {}, level: '下级', parentName: '' }
     const { user } = store.state
     const { parent_name: parentName } = user
     return {
@@ -95,7 +97,11 @@ export default {
     }
   },
   created() {
-    this.getChildren()
+    if (this.user.token) {
+      this.getChildren()
+    } else {
+      delayAjax(this.$axios, this.$store, this.getChildren)
+    }
   },
   methods: {
     async toggle(val) {
@@ -157,9 +163,9 @@ export default {
       this.form = initForm()
       this.optionAll[0].name = '全选'
     },
-    showKeyUpTips(){
+    showKeyUpTips() {
       this.keyUpTips = true
-      setTimeout(() => this.keyUpTips = false,1500)
+      setTimeout(() => (this.keyUpTips = false), 1500)
     }
   },
   computed: {

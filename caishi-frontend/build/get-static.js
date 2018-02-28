@@ -20,12 +20,13 @@ axios.post(`${HOST}/oauth/token`, oauthParms)
         console.log(chalk.green('token.json build version ' + version))
       })
     }
-    const outPutFile = (filename,data,v) => {
-      fs.outputJson(`${OUTPUT}${filename}.${v || version}.json`, data, err => {
+    const outPutFile = (filename,data) => {
+      const fixVersion = process.env.npm_config_fix_version
+      fs.outputJson(`${OUTPUT}${filename}${fixVersion ? '' : `.${version}`}.json`, data, err => {
         if (err) {
           console.log(chalk.red(err))
         }
-        console.log(chalk.green(`${filename}.${v || version}.json build`))
+        console.log(chalk.green(`${filename}${fixVersion ? '' : `.${version}`}.json build`))
       })
     }
     let playHelps = {}
@@ -37,7 +38,7 @@ axios.post(`${HOST}/oauth/token`, oauthParms)
         let lottoNavList = toLlottoNavList(data)
         lottoNavList.reduce((prev, next,index,array) => {
           return {infos:prev.infos.concat(next.infos.map(_ => ({typeName:array[index].name,type:array[index].identifier,..._})))}
-        }, { infos: [] }).infos.map(_ => [_.i.toLowerCase(),_.typeName,_.type])
+        }, { infos: [] }).infos.map(_ => [_.i,_.typeName,_.type])
           .forEach(([identifier,typeName,type],index,array) => {
             axios.post(`${baseURL.replace('static-data','lottery')}lotteries-by-info-identifier`,{identifier})
               .then(({ data: { data } }) => {

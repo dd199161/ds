@@ -64,7 +64,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { getRequiredRule } from '~/plugins/formValidate'
+import { getRequiredRule } from '~/util/validator'
 import cache from '~/util/cache'
 
 const initQA = () => ({
@@ -265,7 +265,6 @@ export default {
       this.$emit('update:visible', false)
     },
     reset() {
-      this.$form.resetFields()
       const { hasProtection } = this
       //must after resetFields(),otherwise initQA can't clear
       this[hasProtection ? 'checkForm' : 'form'].qa.forEach(_ =>

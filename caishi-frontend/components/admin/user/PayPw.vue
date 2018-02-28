@@ -11,7 +11,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">提交</el-button>
-      <el-button @click="reset">取消</el-button>
+      <el-button @click="close">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -19,7 +19,7 @@
 <script>
 import { zipObject } from 'lodash/fp'
 import { mapGetters, mapMutations } from 'vuex'
-import { pwReg, getRequiredRule } from '~/plugins/formValidate'
+import { pwReg, getRequiredRule } from '~/util/validator'
 export default {
   props: ['visible','userModel','setUser'],
   data() {
@@ -95,7 +95,7 @@ export default {
                 duration: 1500,
                 // onClose:() => logout(this.$store,this.$router)
                 onClose: () => {
-                  this.closeDiglog()
+                  this.close()
                   !hasPayPw &&
                     setTimeout(() => {
                       this.setUser({
@@ -112,12 +112,9 @@ export default {
         }
       })
     },
-    closeDiglog() {
+    close() {
       this.$emit('update:visible', false)
-    },
-    reset() {
-      this.closeDiglog()
-    },
+    }
     // ...mapMutations(['setUser'])
   },
   computed: {

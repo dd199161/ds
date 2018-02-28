@@ -11,6 +11,7 @@ export default (context,isLogout = true) => {
   store.commit('lotto/setOrder',[])
   store.commit('pay/setBankCards',[])
   cache.memberInfo.expires = 0
+  cache.isRequestBankCards = false
   //save username
   cache.mySafeQuestions[user.name] = null
   store.commit('setState', {key:'isLogout',value:isLogout})

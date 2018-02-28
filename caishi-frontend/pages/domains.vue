@@ -2,7 +2,7 @@
 
 </template>
 
-<style lang="scss" src="../assets/c8css/domains.css">
+<style src="../assets/c8css/domains.css">
 
 </style>
 
@@ -38,11 +38,6 @@ const check = (context,{ page = 0, limit_type = 1, identify = 'alpha' } = {}) =>
 
 export default {
   name: 'domains',
-  data() {
-  	return {
-  		close:true
-  	}
-  },
   layout: 'empty',
   async asyncData({app}) {
     if(process.server) return {list:[]}

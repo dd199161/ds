@@ -30,7 +30,9 @@ export default {
   name: 'events',
   data(){
   	return{
-  		isshow:false	
+  		isshow:false,
+  		eventsactive:0,
+  		menu:[{name:'全部优惠'},{name:'彩票优惠'},{name:'真人优惠'},{name:'电子优惠'},{name:'体育优惠'}],
   	}
   },
   async asyncData({ app }) {
@@ -59,7 +61,7 @@ export default {
     }
   },
   mounted(){
-  	this.show();
+	this.show();
   },
   components:{
   	ad

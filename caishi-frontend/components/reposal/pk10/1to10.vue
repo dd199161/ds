@@ -1,5 +1,5 @@
 <template>
-  <div class="reposal-play-layout reposal-play-col10">
+  <div class="reposal-play-layout reposal-play-col5">
     <ul>
       <li v-for="(v,k) in 10">
         <h4>{{rank[k]}}</h4>
@@ -55,7 +55,7 @@ export default {
               amount >= 1 && [
                 index,
                 this.getOdds(col, 0, index),
-                round(amount, 5),
+                round(amount, 6),
                 10 * col + index,
                 ,
                 this.playList[col].bets[0].identifier

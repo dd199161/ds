@@ -1,7 +1,7 @@
 <template>
   <div class="admin-report">
     <el-form :inline="true" class="table-tool-bar">
-      <el-form-item label="操作状态：">
+      <el-form-item label="状态：">
         <el-select v-model="status">
           <el-option v-for="(label,key) in statusList" :label="label" :value="key == '0' ? '' : key" :key="key" />
         </el-select>
@@ -16,10 +16,9 @@
       </el-form-item>
     </el-form>
     <data-tables-server :data="tableData" :total="total" @query-change="get" v-loading="loading.on" :element-loading-text="loading.text" :pagination-def="paginationDef">
-      <el-table-column prop="" label="订单编号" />
       <el-table-column prop="bank_name" label="取款银行" />
       <el-table-column prop="user_name" label="所属会员" />
-      <el-table-column prop="amount" label="取款金额" />
+      <el-table-column prop="amount" label="金额" />
       <el-table-column prop="transaction_charge" label="取款手续费" />
       <el-table-column prop="status" label="状态">
         <template slot-scope="{row:{status}}">

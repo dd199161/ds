@@ -1,7 +1,5 @@
 module.exports = {
-  middleware: ['logout'
-  // ,'ssr-cookie'
-],
+  middleware: ['logout'],
   linkExactActiveClass: 'active',
   extendRoutes (routes, resolve) {
     // !isDev && _.remove(routes,_ => _.name === 'login-test')

@@ -1,5 +1,7 @@
 .x_con-li{
+    padding: 0px 30px;
     width: 100%;
+    min-height: 700px;
 }
 .userinfo-title{
     display: flex;
@@ -13,15 +15,17 @@
             height: 196px;
             margin-bottom: 10px;
             padding-left: 16px;
-            & img{
-                width: 95px;
-                height: 95px;
-                border-radius:50% ;
-                border: 4px solid #fff;
-                margin-left:60px;
-                margin-top: 16px;
+            & .header{
+                & img{
+                    width: 95px;
+                    height: 95px;
+                    border-radius:50% ;
+                    border: 4px solid #fff;
+                    margin-left:60px;
+                    margin-top: 16px;
+                }
             }
-            & div{
+            & .el-badge{
                 position: absolute;
                 top:19px;
                 right:24px;
@@ -47,6 +51,7 @@
             border-radius: 4px;
             width: 250px;
             height: 37px;
+            cursor: pointer;
         }
     }
     & .userinfo-money{

@@ -6,16 +6,18 @@ import {round} from 'lodash'
 
 import {format} from 'date-fns'
 
-export const round3 = value => round(value,3) || 0
+export const defaultRound = value => round(value,6) || 0
 
 export const round2 = value => round(value,2) || 0
+export const round3 = value => round(value,3) || 0
 
 export const time = value => format(value,'YYYY-MM-DD HH:mm:ss')
 
 
 const filters = {
-  round3,
+  defaultRound,
   round2,
+  round3,
   time
 }
 export default filters

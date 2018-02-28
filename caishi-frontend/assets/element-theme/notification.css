@@ -250,7 +250,7 @@
   .el-notification__title {
     font-weight: bold;
     font-size: 16px;
-    color: #2d2f33;
+    color: #444;
     margin: 0; }
   .el-notification__content {
     font-size: 14px;
@@ -269,7 +269,7 @@
     top: 18px;
     right: 15px;
     cursor: pointer;
-    color: #7f7f7f;
+    color: #7b7b7b;
     font-size: 16px; }
     .el-notification__closeBtn:hover {
       color: #666; }
@@ -280,7 +280,7 @@
   .el-notification .el-icon-info {
     color: #878d99; }
   .el-notification .el-icon-warning {
-    color: #dd6800; }
+    color: #f08200; }
 
 .el-notification-fade-enter.right {
   right: 0;

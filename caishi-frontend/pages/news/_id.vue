@@ -12,7 +12,8 @@
 
 <script>
 import '~/assets/c8css/notice.css'
-import {apiIdValidate} from '~/plugins/common'
+import {apiIdValidate} from '~/util/validator'
+
 import News from '~/components/News'
 import cache from '~/util/cache'
 const getdetail = (context,id) => context.$axios.$post('news-info/get-detail',{id})

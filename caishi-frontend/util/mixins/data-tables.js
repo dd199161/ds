@@ -1,7 +1,7 @@
 import { mapGetters, mapMutations } from 'vuex'
-import { round3 } from '~/plugins/filters'
+import { defaultRound } from '~/plugins/filters'
 
-export { round3 }
+export { defaultRound }
 
 //el-select change value to be '0' but not 0
 export const queryAll = { '0': '全部' }
@@ -11,12 +11,12 @@ export const levels = ['顶级', '主管', '招商', '特权', '直属', '普通
 //todo style insert component method
 // style(value > 1 ? -1 : 1,'disabled') is default ?
 // Math.sign
-export const style = (value, negative = 'danger', success = 'success') =>
-  value === 0 ? '' : `text-${[success, negative][value > 0 ? 0 : 1]}`
+export const style = (value, negative = 'danger', success = 'success',processing) =>
+  value === 0 ? processing || 'text-warning' : `text-${[success, negative][value > 0 ? 0 : 1]}`
 
 export const paginationDef = (total, pageSize, currentPage) => {
   const isLte20 = total <= 20
-  let pageSizes = [pageSize, isLte20 ? 20 : 30, 50, 100].slice(
+  let pageSizes = [pageSize, isLte20 ? pageSize * 2 : 30, 50, 100].slice(
     0,
     total >= 7.5 * pageSize
       ? 4
@@ -161,8 +161,8 @@ export default {
   },
   computed: {
     paginationDef() {
-      const { currentPage, total, pageSize } = this
-      return paginationDef(total, pageSize, currentPage)
+      const { currentPage, total, initPageSize } = this
+      return paginationDef(total, initPageSize, currentPage)
     },
     version() {
       return this.$store.state.version

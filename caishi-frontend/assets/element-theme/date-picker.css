@@ -302,7 +302,7 @@
       border-top-right-radius: 15px;
       border-bottom-right-radius: 15px; }
     .el-date-table td.disabled div {
-      background-color: #f5f7fa;
+      background-color: #f1f1f1;
       opacity: 1;
       cursor: not-allowed;
       color: #bbb; }
@@ -434,7 +434,7 @@
     padding: 20px 3px;
     cursor: pointer; }
     .el-month-table td.disabled .cell {
-      background-color: #f5f7fa;
+      background-color: #f1f1f1;
       cursor: not-allowed;
       color: #bbb; }
       .el-month-table td.disabled .cell:hover {
@@ -566,13 +566,13 @@
   margin: -1px;
   border-collapse: collapse; }
   .el-year-table .el-icon {
-    color: #2d2f33; }
+    color: #444; }
   .el-year-table td {
     text-align: center;
     padding: 20px 3px;
     cursor: pointer; }
     .el-year-table td.disabled .cell {
-      background-color: #f5f7fa;
+      background-color: #f1f1f1;
       cursor: not-allowed;
       color: #bbb; }
       .el-year-table td.disabled .cell:hover {
@@ -726,7 +726,7 @@
 
 .el-time-spinner__arrow {
   font-size: 12px;
-  color: #7f7f7f;
+  color: #7b7b7b;
   position: absolute;
   left: 0;
   width: 100%;
@@ -765,10 +765,10 @@
   font-size: 12px;
   color: #666; }
   .el-time-spinner__item:hover:not(.disabled):not(.active) {
-    background: #f5f7fa;
+    background: #f1f1f1;
     cursor: pointer; }
   .el-time-spinner__item.active:not(.disabled) {
-    color: #2d2f33;
+    color: #444;
     font-weight: bold; }
   .el-time-spinner__item.disabled {
     color: #bbb;
@@ -1225,7 +1225,7 @@
     border: none;
     outline: none;
     display: inline-block;
-    /*height: 100%;*/
+    height: 100%;
     margin: 0;
     padding: 0;
     width: 39%;
@@ -1245,7 +1245,7 @@
     line-height: 32px;
     font-size: 14px;
     width: 5%;
-    color: #2d2f33; }
+    color: #444; }
   .el-date-editor .el-range__close-icon {
     font-size: 14px;
     color: #bbb;
@@ -1302,14 +1302,14 @@
   line-height: 20px; }
 
 .el-range-editor.is-disabled {
-  background-color: #f5f7fa;
+  background-color: #f1f1f1;
   border-color: #dfe4ed;
   color: #bbb;
   cursor: not-allowed; }
   .el-range-editor.is-disabled:hover, .el-range-editor.is-disabled:focus {
     border-color: #dfe4ed; }
   .el-range-editor.is-disabled input {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     color: #bbb;
     cursor: not-allowed; }
     .el-range-editor.is-disabled input:-ms-input-placeholder {
@@ -1713,7 +1713,7 @@
       cursor: not-allowed; }
   .el-picker-panel__icon-btn {
     font-size: 12px;
-    color: #2d2f33;
+    color: #444;
     border: 0;
     background: transparent;
     cursor: pointer;
@@ -1964,7 +1964,7 @@
       font-size: 20px;
       vertical-align: middle;
       display: table-cell;
-      color: #2d2f33; }
+      color: #444; }
   .el-date-range-picker__time-picker-wrap {
     position: relative;
     display: table-cell;
@@ -2275,7 +2275,7 @@
     background-color: transparent;
     outline: none;
     font-size: 12px;
-    color: #2d2f33; }
+    color: #444; }
     .el-time-panel__btn.confirm {
       font-weight: 800;
       color: #ffd22c; }
@@ -2537,9 +2537,9 @@
       border-color: #bbb; }
     .el-textarea__inner:focus {
       outline: none;
-      border-color: #ffd22c; }
+      border-color: #ecc233; }
   .el-textarea.is-disabled .el-textarea__inner {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     border-color: #dfe4ed;
     color: #bbb;
     cursor: not-allowed; }
@@ -2601,7 +2601,7 @@
       border-color: #bbb; }
     .el-input__inner:focus {
       outline: none;
-      border-color: #ffd22c; }
+      border-color: #ecc233; }
   .el-input__suffix {
     position: absolute;
     height: 100%;
@@ -2637,9 +2637,9 @@
     pointer-events: none; }
   .el-input.is-active .el-input__inner {
     outline: none;
-    border-color: #ffd22c; }
+    border-color: #ecc233; }
   .el-input.is-disabled .el-input__inner {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     border-color: #dfe4ed;
     color: #bbb;
     cursor: not-allowed; }
@@ -2681,7 +2681,7 @@
     vertical-align: middle;
     display: table-cell; }
   .el-input-group__append, .el-input-group__prepend {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     color: #878d99;
     vertical-align: middle;
     display: table-cell;

@@ -3,13 +3,14 @@
     <el-form :model="form" ref="paForm" label-width="100px" status-icon>
       <transition-group name="el-fade-in">
         <el-form-item v-for="(question, index) in form.questionList" :label="`问题${index+1}`" :key="index" :prop="'questionList.' + index + '.question'" :rules="ruleAnswer">
-          <el-input v-model="form.answerList[index]" :placeholder="question.question_content"></el-input>
+          {{question.question_content}}
+          <el-input v-model="form.answerList[index]" placeholder="请输入答案"></el-input>
         </el-form-item>
       </transition-group>
-      <div class="d-flex justify-content-center submit-area">
+      <el-form-item>
         <el-button type="primary" @click="submit">送出</el-button>
         <el-button @click="close">取消</el-button>
-      </div>
+      </el-form-item>
     </el-form>
   </div>
 
@@ -46,8 +47,8 @@ export default {
           })
           this.$axiosPlus(
             'user-safety-question/check-answer',
-            { info: data },
-            res => {
+            {info: data},
+            (res) => {
               this.$emit('checkSuccess')
             }
           )
@@ -64,3 +65,4 @@ export default {
   }
 }
 </script>
+

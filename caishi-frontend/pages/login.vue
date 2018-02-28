@@ -48,7 +48,8 @@ export default {
       questionList: [],
       dialogTitle: '',
       visible: false,
-      view: ''
+      view: '',
+      isBindGA: undefined
     }
   },
   watch: {
@@ -76,7 +77,8 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
+      await this.checkGA()
       const { ip, form } = this
       this.$form.validate(valid => {
         if (valid) {
@@ -110,6 +112,7 @@ export default {
 
     done(data) {
       const {
+        currency_list,
         user_token: { token, expired_at: expires },
         user_role: role,
         user,
@@ -119,9 +122,33 @@ export default {
       this.$axios.setHeader('Token', token)
       this.setUser({ token, expires, role, ...user, ip: this.ip })
       this.setBal(user_balance_account)
+      this.setState({key:'pay.currencyList',value:currency_list})
       this.$router.push('/home')
     },
-
+    async validateGA() {
+      const { name } = this.form
+      if (this.GACollection[name] !== undefined)
+        return (this.isBindGA = this.GACollection[name])
+      await this.checkGA()
+    },
+    async checkGA() {
+      this.setState({
+        key: 'GACollection',
+        value: {
+          ...this.GACollection,
+          [`${this.form.name}`]: (this.isBindGA = await this.getGA())
+        }
+      })
+    },
+    async getGA() {
+      const { name } = this.form
+      if (this.GACollection[name] !== undefined)
+        return this.GACollection[name]
+      return name && (await this.$axios.$post(
+        'user-login-google-code/check-by-username',
+        { name }
+      )).data.is_open_google
+    },
     reload(errorCode) {
       this.$message({
         message: `${
@@ -256,7 +283,7 @@ export default {
   },
   computed: {
     ...mapGetters(['ip', 'loading']),
-    ...mapState(['passwords']),
+    ...mapState(['passwords','GACollection']),
     isLogout() {
       return this.$store.state.isLogout
     },
@@ -472,10 +499,11 @@ export default {
   }
 }
 
-.el-dialog {
+
+.login-bg ~ .el-dialog__wrapper {
   border-radius: 10px;
   overflow: hidden;
-
+	
   .el-input__inner {
     border-radius: 5px;
     height: 56px;

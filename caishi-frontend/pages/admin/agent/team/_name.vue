@@ -31,7 +31,7 @@
       <el-table-column label="返点" prop="point" />
       <el-table-column label="余额">
         <template slot-scope="{row:{amount}}">
-          {{amount | round3}}
+          {{amount | defaultRound}}
         </template>
       </el-table-column>
       <el-table-column label="在线状态">
@@ -72,7 +72,8 @@ import Vue from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
 import { Breadcrumb, BreadcrumbItem } from 'element-ui'
 import dateTables, { queryAll, style } from '~/util/mixins/data-tables'
-import { AsyncMultComp, paramValidate } from '~/plugins/common'
+import {paramValidate} from '~/util/validator'
+import { AsyncMultComp } from '~/plugins/common'
 import team, { getChildren } from '~/util/mixins/team'
 const AsyncComp = AsyncMultComp('admin/agent')
 Vue.use(Breadcrumb)

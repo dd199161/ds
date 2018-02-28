@@ -1,17 +1,16 @@
 <template>
   <div class="play-help">
-      <!--<el-popover 
+      <el-popover
         placement="bottom-start"
         trigger="hover"
         popper-class="lotto-play-note"
         :visible-arrow="false"
-      > 
+      >
         <div>{{help[1]}}</div>
-        <i class="el-icon-question" slot="reference"></i>
-      </el-popover>-->
-      <a href="javascript:;">玩法提示：</a>
-      <span>{{help[0]}}</span>
-      <a href="javascript:;">选号提示</a>
+        <i class="el-icon-info" slot="reference"></i>
+      </el-popover>
+      <label>选号提示：</label>
+      <span class="help-desc">{{help[0]}}</span>
     </div>
 </template>
 

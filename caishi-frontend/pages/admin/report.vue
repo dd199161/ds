@@ -10,11 +10,13 @@
       
     </div>
     <div class="x_con">
-      <nuxt-child/> </div>
-  </div>
+        <nuxt-child/>
+    </div>
+                
+  </div>  
 </template>
 <script>
   export default {
-    name: 'report'
+    name:'report'
   }
 </script>

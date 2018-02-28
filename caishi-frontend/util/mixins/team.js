@@ -1,6 +1,7 @@
 import { levels } from '~/util/mixins/data-tables'
 import { delayAjax } from '~/plugins/ajax'
-import { getChildren, paramValidate } from '~/plugins/common'
+import {paramValidate} from '~/util/validator'
+import { getChildren } from '~/plugins/common'
 export { getChildren }
 
 export default {
@@ -10,7 +11,7 @@ export default {
       listKey: 'users',
       //patch util\mixins\data-tables.js:89,checkPageData
       serverData: true,
-      ssrInvoking:true,
+      SSRInvoking:true,
       name: ''
     }
   },
@@ -53,9 +54,9 @@ export default {
     },
     async get(loadProps) {
       const { loadType, page } = this.getQueryParams(loadProps)
-      if (page === 0 && loadType === 'pageChange' && this.ssrInvoking)
+      if (page === 0 && loadType === 'pageChange' && this.SSRInvoking)
         return this.fetch()
-      this.ssrInvoking = false
+      this.SSRInvoking = false
       if (this.checkPageData(loadProps, page)) return
       //name is query self not inlucde children
       const { name } = this
@@ -67,7 +68,7 @@ export default {
           name,
           is_online,
           parent_name,
-          children_type: name ? 2 : 1,
+          children_type: name || this.onlyOnline ? 2 : 1,
           page,
           page_size: loadType ? loadProps.pageSize : this.pageSize
         })

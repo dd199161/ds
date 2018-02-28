@@ -41,7 +41,7 @@
 import Vue from 'vue'
 import { mapGetters, mapMutations } from 'vuex'
 import { Breadcrumb, BreadcrumbItem } from 'element-ui'
-import { paramValidate } from '~/plugins/common'
+import { paramValidate } from '~/util/validator'
 import datepicker, {
   getNewDate,
   dateParam,
@@ -56,8 +56,6 @@ Vue.use(BreadcrumbItem)
 export default {
   name: 'agent-lotto-report',
   async asyncData({ app, store, params: { name }, error }) {
-    if (process.server)
-      return { users: [], total: 0, parent_names: [],reportData:[] }
     if (paramValidate(name, { error })) {
       let queryDate = store.state.admin.queryLottoReportDate
       if (!queryDate.length) {
@@ -67,6 +65,15 @@ export default {
         })
         queryDate = store.state.admin.queryLottoReportDate
       }
+      if (process.server)
+        return {
+          users: [],
+          total: 0,
+          parent_names: [],
+          reportData: [],
+          queryDate,
+          isSPA: true
+        }
       const { data } = await request(app, {
         ...dateParam(queryDate),
         ...(name ? { parent_name: name } : {})
@@ -81,8 +88,7 @@ export default {
   data() {
     return {
       name: '',
-      ssrPageChangeFlag:true
-
+      SSRInvoking: true
     }
   },
   components: {
@@ -93,9 +99,9 @@ export default {
     async get(loadProps) {
       const { loadType, page } = this.getQueryParams(loadProps)
       //fix game_report/:name router change and checkPageData -> getPageCache -> currentPage,emit pageChange
-      if (page === 0 && loadType === 'pageChange' && this.ssrPageChangeFlag)
+      if (page === 0 && loadType === 'pageChange' && this.SSRInvoking)
         return this.fetch()
-      this.ssrPageChangeFlag = false
+      this.SSRInvoking = false
       if (this.checkPageData(loadProps, page)) return
       const { name } = this
       if (

@@ -232,84 +232,17 @@
     }
 }
 
-.reds {
-    position: absolute;
-    z-index: 100;
-    top: -12px;
-    width: 100%;
-    height: 332px;
-    background-size: 100% 100%;
-    display: none;
-    .navSecond {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        align-content: center;
-        align-items: center;
-        width: 100%;
-        height: 347px;
-        background: url(~assets/img/indexHome/lottGame.png) no-repeat;
-        background-size: 100% 100%;
-        padding-top: 23px;
-        .navSecondBox {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 1100px;
-            padding-left: 75px;
-            img {
-                display: flex;
-            }
-            ul {
-                display: flex;
-                justify-content: center;
-                margin: 0;
-                margin-top: 14px;
-                padding-left: 44px;
-                li {
-                    display: flex;
-                    flex-direction: column;
-                    margin-right: 26px;
-                    dl {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        span {
-                            display: flex;
-                        }
-                        dt {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            width: 92px;
-                            height: 28px;
-                            background: #E07700;
-                            color: #fff;
-                            font-size: 16px;
-                        }
-                        dd {
-                            a {
-                                color: #AEAEAE;
-                                font-size: 12px;
-                                line-height: 30px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 .el-carousel__item h3 {
     background: url(~assets/img/indexHome/banner1.jpg) no-repeat center center;
     height: 500px;
     width: 100%;
-    // background-size: 100% 100%;
     margin: 0;
 }
-
+.el-carousel__item img {
+    height: 500px;
+    width: 100%;
+    margin: 0;
+}
 .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
 }
@@ -323,7 +256,6 @@ ul.el-carousel__indicators {
     justify-content: center;
     width: 100%;
     height: 38px;
-    /*background: url(~assets/img/indexHome/el-carousel.png) no-repeat;*/
     align-items: center;
 }
 
@@ -347,18 +279,16 @@ li.el-carousel__indicator {
     background: #fff;
 }
 
-.bannerAdv-box {
+.bannerAdv-box{
     display: flex;
     justify-content: center;
     height: 35px;
     width: 100%;
 }
-
 .bannerAdv {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1100px;
     height: 35px;
     background: #F3F3F3;
     .bannerAdvC {
@@ -374,7 +304,7 @@ li.el-carousel__indicator {
             display: flex;
             align-items: center;
             height: 33px;
-            width: 800px;
+            width: 980px;
             white-space: nowrap;
             overflow: hidden;
             font: 12px/33px "微软雅黑";
@@ -390,11 +320,14 @@ li.el-carousel__indicator {
         }
     }
 }
-
+@mixin aBg($pic, $width, $height) {
+    background: url('../../img/indexHome/'+$pic) no-repeat;
+    height: $height;
+    width: $width;
+}
 .games {
     padding-top: 77px;
     background: #F3F3F3;
-    height: 687px;
     border-top: 1px solid #E1E1E1;
     .gamesF {
         background: #F5F5F5;
@@ -404,14 +337,15 @@ li.el-carousel__indicator {
             background: #ECC233;
             height: 392px;
             position: relative;
-            & .gameCon.active {
-                display: block;
+            @for $i from 1 through 4 {
+                > div.active:nth-child(#{$i}){
+                    display: block;
+                }
             }
             & .gameCon {
                 width: 1100px;
                 position: absolute;
                 padding-top: 57px;
-                display: none;
                 & .gameTop {
                     background: url(~assets/img/indexHome/five-game-platform.jpg) no-repeat;
                     width: 273px;
@@ -508,53 +442,43 @@ li.el-carousel__indicator {
         justify-content: center;
         .gamesSbox {
             width: 1100px;
-            height: 218px;
             .gamesSboxT {
                 display: flex;
                 margin: 0;
                 padding: 0;
-                li {
-                    display: flex;
-                    height: 136px;
-                }
-            }
-        }
-        .gamesSboxF {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            .gamesSboxFootUl {
-                display: flex;
-                padding: 0;
-                margin: 0;
-                margin-top: 22px;
-                li {
-                    display: flex;
-                    height: 12px;
-                    align-items: center;
-                    border-right: 1px solid #B5B5B5;
-                    a {
+                @for $i from 1 through 4 {
+                    & li:nth-child(#{$i}) {
                         display: flex;
-                        align-items: center;
-                        text-decoration: none;
-                        color: #B5B5B5;
-                        font-size: 12px;
-                        padding: 0px 15px;
+                        @include aBg('game'+$i+'.jpg',275px,136px);
+                        width: 275px;
+                        height: 136px;
+                        cursor: pointer; 
+                        & a{
+                            display: flex;
+                            background: url(../../img/indexHome/btn_h.png) no-repeat;
+                            width: 275px;
+                            height: 136px;
+                            display: none;
+                        }
+                    }
+                    & li:nth-child(#{$i}):hover {
+                        display: flex;
+//                      background: url('../../img/indexHome/game'+$i+'.png') no-repeat,url('../../img/indexHome/btn_h.png') no-repeat;
+                        @include aBg('game'+$i+'.jpg',275px,136px);
+                        width: 275px;
+                        height: 136px;
+                        & a{
+                            display: flex;
+                            background: url(../../img/indexHome/btn_h.png) no-repeat;
+                            width: 275px;
+                            height: 136px;
+                            display: block;
+                        }
                     }
                 }
-                li:last-child {
-                    border-right: 0px solid green;
+                & li a.active{
+                    display: block;
                 }
-            }
-            p {
-                display: flex;
-                flex-direction: column;
-                padding: 0;
-                margin: 0;
-                margin-top: 15px;
-                color: #B5B5B5;
-                font-size: 12px;
             }
         }
     }
@@ -664,23 +588,6 @@ li.el-carousel__indicator {
     }
 }
 
-.footer {
-    display: flex;
-    justify-content: center;
-    height: 72px;
-    background: #1B1B1B;
-    ul {
-        display: flex;
-        margin: 0;
-        padding: 0;
-        li {
-            display: flex;
-            background: url(~assets/img/indexHome/_out_01.jpg) no-repeat;
-            height: 72px;
-            width: 1100px;
-        }
-    }
-}
 
 .one_r .g_con ul {
     float: left;
@@ -743,7 +650,7 @@ li.el-carousel__indicator {
 
 .home {
     width: 100%;
-    height: 320px;
+    // height: 320px;
     position: relative;
     /*** 热门采种，开奖公告 ***/
     .result {
@@ -753,9 +660,9 @@ li.el-carousel__indicator {
         background: #fff;
         .container {
             display: flex;
-            width: 1100px;
+            // width: 1100px;
             margin-top: 10px;
-            padding-left: 0px;
+            // padding-left: 0px;
         }
         .container-right {
             width: 432px;
@@ -777,14 +684,18 @@ li.el-carousel__indicator {
             height: 372px;
             width: 432px;
             margin-top: 2px;
-            >ul {
+            overflow: auto;
+            .el-scrollbar__wrap {
+                max-height: 373px;
+            }
+            .el-scrollbar__view {
                 height: 100%;
                 overflow: auto;
                 padding: 0 8px 0 15px;
                 >li {
                     display: flex;
                     align-items: center;
-                    padding: 10px 0;
+                    padding: 10px 10px;
                     border-bottom: 1px dotted #DADBDD;
                     min-height: 90px;
                     .open-result {
@@ -828,7 +739,6 @@ li.el-carousel__indicator {
                     }
                     .el-button {
                         width: 135px;
-                        height: 38px;
                         border-radius: 4px;
                         a {
                             font-size: 16px;

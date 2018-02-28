@@ -1,5 +1,5 @@
 <template>
-  <div class="reposal-play-layout reposal-play-11x5-both">
+  <div class="reposal-play-layout reposal-1st-col-last-border">
     <ul>
       <li v-for="(v,k) in 6">
         <h4>{{k === 5 ? '总和' : labels[k]}}</h4>
@@ -11,29 +11,29 @@
         <ul v-if="k !== 5">
           <li v-for="(i,j) in 2" @click="select(sequence[0](k,j))" :class="{selected:shortcut && +bigSmall[k][j]}">
             <div>{{size[j]}}</div>
-            <div>{{getOdds(k,0,j)}}</div>
+            <div>{{getOdds(k,0,j) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[0](k,j))" v-model="bigSmall[k][j]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
           <li v-for="(i,j) in 2" @click="select(sequence[1](k,j))" :class="{selected:shortcut && +oddEven[k][j]}">
             <div>{{size[j + 2]}}</div>
-            <div>{{getOdds(k,1,j)}}</div>
+            <div>{{getOdds(k,1,j) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[1](k,j))" v-model="oddEven[k][j]" v-show="!shortcut" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
         </ul>
         <ul v-else>
           <li v-for="(i,j) in 2" @click="select(sequence[2](j))" :class="{selected:shortcut && +totalBigSmall[j]}">
             <div>总{{size[j]}}</div>
-            <div>{{getOdds(5,0,j)}}</div>
+            <div>{{getOdds(5,0,j) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[2](j))" v-show="!shortcut" v-model="totalBigSmall[j]" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
           <li v-for="(i,j) in 2" @click="select(sequence[3](j))" :class="{selected:shortcut && +totalOddEven[j]}">
             <div>总{{size[j + 2]}}</div>
-            <div>{{getOdds(5,1,j)}}</div>
+            <div>{{getOdds(5,1,j) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[3](j))" v-show="!shortcut" v-model="totalOddEven[j]" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
           <li v-for="(i,j) in 2" @click="select(sequence[4](j))" :class="{selected:shortcut && +tailBigSmall[j]}">
             <div>总尾{{size[j]}}</div>
-            <div>{{getOdds(5,2,j)}}</div>
+            <div>{{getOdds(5,2,j) | round3}}</div>
             <el-autocomplete @input.native="validate(sequence[4](j))" v-show="!shortcut" v-model="tailBigSmall[j]" :fetch-suggestions="querySearch" :debounce="0" ref="input" />
           </li>
         </ul>
@@ -43,7 +43,7 @@
 </template>
 
 <style lang="scss">
-.reposal-play-11x5-both {
+.reposal-1st-col-last-border {
   ul > li:not(:last-child) {
     ul li:last-child {
       border-bottom: 1px solid $--border-color-base;
@@ -96,7 +96,7 @@ export default {
               amount >= 1 && [
                 buyValue[k],
                 this.getOdds(5, orderTypeIndex - 2, k),
-                round(amount, 5),
+                round(amount, 6),
                 this.sequence[orderTypeIndex](k),
                 orderTypeIndex,
                 this.playList[5].bets[orderTypeIndex - 2].identifier

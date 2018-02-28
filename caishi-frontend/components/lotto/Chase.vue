@@ -1,6 +1,6 @@
 <template>
   <el-dialog :visible.sync="visible" custom-class="lotto-chase" @open="get" @close="handleClose" width="730px">
-    <div slot="title">
+    <div slot="title" class="el-dialog__title">
       <h3>我要追号</h3>
       当前销售第{{issue}}期
       <countdown :time="countdown" :auto-start="false" @countdownend="timeStart" ref="countdown">
@@ -15,7 +15,7 @@
         <el-input-number v-model="periods" controls-position="right" :min="1" :max="max" size="small"></el-input-number>
       </el-form-item>
       <el-form-item label="起始倍数">
-        <el-input-number v-model="multiple" controls-position="right" :min="1" size="small"></el-input-number>
+        <el-input-number v-model="multiple" controls-position="right" :min="1" size="small" :max="lottoRoot.maxMultiple"></el-input-number>
       </el-form-item>
       <div v-if="type === '翻倍追号'" class="chase-options">
         <el-form-item label="隔">
@@ -27,7 +27,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-input-number v-model="nums" controls-position="right" :min="1" size="small"></el-input-number> 倍
+          <el-input-number v-model="nums" controls-position="right" :min="1" :max="lottoRoot.maxMultiple" size="small"></el-input-number> 倍
         </el-form-item>
       </div>
       <div v-else-if="isProfit" class="chase-options">
@@ -44,13 +44,13 @@
       <el-checkbox v-model="is_win_stop">中奖后停止追号</el-checkbox>
       <el-button type="primary" size="medium" @click="createList">生成追号单</el-button>
     </div>
-    <el-table :data="tableData" stripe border style="width: 100%" @selection-change="val => multipleSelection = val" @select="select" @select-all="select" v-loading="loading" :element-loading-text="loadingText" ref="table">
+    <el-table :data="tableData" stripe border style="width: 100%" @selection-change="val => multipleSelection = val" @select="select" @select-all="select" v-loading="loading" :element-loading-text="loadingText" max-height="520" ref="table">
       <el-table-column type="selection" width="50" />
       <el-table-column type="index" width="50" />
       <el-table-column label="期号" prop="issue" />
       <el-table-column label="倍数" prop="multiple">
         <template slot-scope="{row}">
-          <el-input-number v-model="row.multiple" class="input-number-super-mini" controls-position="right" :min="1" size="mini"></el-input-number>
+          <el-input-number v-model="row.multiple" class="input-number-super-mini" controls-position="right" :min="1" :max="lottoRoot.maxMultiple" size="mini"></el-input-number>
         </template>
       </el-table-column>
       <el-table-column label="金额" prop="amount" />

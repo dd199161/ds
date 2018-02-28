@@ -16,7 +16,7 @@
           <tr>
             <td>投注号码</td>
             <td colspan="3">
-              <el-scrollbar tag="div" v-if="orderTable.detail.buy_number.length > 200">
+              <el-scrollbar class="el-scrollbar-show" v-if="orderTable.detail.buy_number.length > 200">
                 {{orderTable.detail.buy_number}}
               </el-scrollbar>
               <div v-else>
@@ -27,6 +27,7 @@
         </tbody>
       </table>
     </div>
+    <component :is="view" :tableData="detail.detail"></component>
     <div slot="footer" v-if="detail.cancelable">
       <el-button @click="submit" type="primary" size="mini">撤单</el-button>
       <el-button @click="close" size="mini">取消</el-button>
@@ -46,7 +47,6 @@
   }
   .el-scrollbar {
     .is-vertical {
-      opacity: 1;
       .el-scrollbar__thumb {
         //fix height calc
         min-height: 50px;
@@ -69,7 +69,8 @@
 import { flatten } from 'lodash'
 import { chunk } from 'lodash/fp'
 import { mapGetters } from 'vuex'
-import { round3, round2 } from '~/plugins/filters'
+import { defaultRound } from '~/plugins/filters'
+import {AsyncComp} from '~/plugins/common'
 const groupTable = chunk(2)
 
 export default {
@@ -103,8 +104,12 @@ export default {
     return {
       labels,
       visible: true,
-      loading: true
+      loading: true,
+      view:this.isChase && 'ChaseList'
     }
+  },
+  components:{
+    ChaseList:AsyncComp('admin', 'ChaseList')
   },
   created() {
     //before @open run,first visible true not  emit @open
@@ -122,7 +127,7 @@ export default {
       this.$axiosPlus(`user-${isChase ? 'chase-' : ''}bet-lottery/find`, { id }, data => {
         this.orderTable.detail = {
           ...this.orderTable.format(data),
-          profit: round3(data.profit_loss_amount)
+          profit: defaultRound(data.profit_loss_amount)
         }
         this.loading = false
       })
@@ -152,7 +157,7 @@ export default {
         detail.multiple,
         detail.unit,
         detail.point,
-        detail.status,
+        this.orderTable.statusLabel(detail.status),
         detail.profit,
         detail.bonus,
         detail.win_count || 0,

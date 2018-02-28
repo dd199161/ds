@@ -249,7 +249,7 @@
     font-weight: 500;
     cursor: pointer;
     vertical-align: middle;
-    color: #2d2f33; }
+    color: #444; }
     .el-switch__label.is-active {
       color: #ffd22c; }
     .el-switch__label--left {

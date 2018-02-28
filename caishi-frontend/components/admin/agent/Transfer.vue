@@ -18,11 +18,11 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { pwReg, getRequiredRule } from '~/plugins/formValidate'
+import { getRequiredRule } from '~/util/validator'
 import { plus } from 'number-precision'
 export default {
   name: 'transfer',
-  props: ['editorData', 'visible'],
+  props: ['editorData','visible'],
   data() {
     return {
       form: {
@@ -30,13 +30,13 @@ export default {
         pw: ''
       },
       rules: {
-        pw: [getRequiredRule('请输入资金密码')]
+        pw: getRequiredRule('请输入资金密码')
       }
     }
   },
   methods: {
     close() {
-      this.$emit('update:visible', false)
+      this.$emit('update:visible',false)
     },
     submit() {
       this.$form.validate(valid => {

@@ -36,20 +36,3 @@ export default{
   }
 }
 </script>
-
-<style lang="scss">
-.reposal-play-col10{
-  > ul{
-    flex-wrap: wrap;
-    > li {
-      flex: 0 0 20%;
-      strong{
-        color: $--color-primary;
-      }
-      &:nth-child(6){
-        border-left:1px solid $--border-color-base;
-      }
-    }
-  }
-}
-</style>

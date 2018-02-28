@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <div class="lotto-log fl_l"><a href="javascript:;"></a></div>
-    <div class="lotto-xr fl_l"></div>
-    <div class="t_r fl_l">
-      <div class="t_r_t">
-         <p>距第&nbsp;<span>{{issue}}</span>&nbsp;期截止</p>
-        </div>
-      <div class="t_r_m">
+  <div class="d-flex">
+    <div class="lottery_clock_container">
+      <div class="lottery_index">第 <span>{{issue}}</span> 期 投注截止时间</div>
+      <div class="lottery_clock">
         <div class="clock" ref="clock"></div>
       </div>
     </div>
-    <div class="t_m fl_l">
-      <div class="m_l fl_l">
-        <p>第&nbsp;<span>{{opened.issue_no}}</span>&nbsp;期</p>
+    <div class="t_m">
+      <div class="lottery_index">
+        第 <span>{{opened.issue_no}}</span> 期
+        开奖号码为
       </div>
-      <div class="m_r fl_l">
+      <div class="m_r">
         <transition name="el-zoom-in-center">
           <ul v-show="showCode" v-if="isPk10" :class="['lotto-code-pk10',`lotto-code-${lottoName}`]">
             <li :class="`lotto-pk10-${num < 10 ? num.replace('0','') : num}`" v-for="(num,index) in code" :key="index">
@@ -33,6 +30,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>

@@ -670,7 +670,7 @@
       opacity: 1;
       color: #ffd22c; }
     .el-upload-list__item:hover {
-      background-color: #f5f7fa; }
+      background-color: #f1f1f1; }
       .el-upload-list__item:hover .el-icon-close {
         display: inline-block; }
       .el-upload-list__item:hover .el-progress__text {
@@ -705,7 +705,7 @@
     .el-upload-list__item-name [class^="el-icon"] {
       height: 100%;
       margin-right: 7px;
-      color: #7f7f7f;
+      color: #7b7b7b;
       line-height: inherit; }
   .el-upload-list__item-status-label {
     position: absolute;
@@ -957,7 +957,7 @@
     margin: 0;
     line-height: 36px;
     font-size: 14px;
-    color: #2d2f33; }
+    color: #444; }
   .el-upload-cover + .el-upload__inner {
     opacity: 0;
     position: relative;

@@ -16,14 +16,14 @@
         <img src="../../../assets/img/members/accounting.png" />账户类型：</span>
       <ul>
         <li v-for="(game_accs,index) in game_acc">
-          <a :class="{active:payIndexs === index}" href="javascript:void(0)" @click="payIndexs = index">{{game_accs.name}}</a>
+          <a :class="{'active':payIndexs === index}" href="javascript:void(0)" @click="payIndexs = index">{{game_accs.name}}</a>
         </li>
       </ul>
     </div>
     <div class="members-withdraw-bank-select">
       <p>银行卡选择：</p>
       <ul>
-        <li></li>
+        <li v-for="(bank,index) in bankCards">{{bank.bank_name}}</li>
         <li>
           <i class="el-icon-plus"></i>添加银行卡</li>
         <!--<li :class="{active:payIndex === index}" v-for="(bank,index) in bankList" :key="index" @click="payIndex = index"> {{bank.name || bank.display_name}} </li>-->
@@ -35,6 +35,9 @@
       <p><span>卡号：</span>666666</p>
       <p><span>持卡人姓名：</span>666666</p>
       <p><span>开户地址：</span>安徽-合肥-瑶海</p>
+      <!--<p><span>卡号：</span>{{bank.account_no}}</p>
+      <p><span>持卡人姓名：</span>{{bank.account_name}}</p>
+      <p><span>开户地址：</span>{{bank.bank_name}}</p>-->
     </div>
     <div class="bank-details-money">
       <div class="recharge_tit">提现金额：</div>

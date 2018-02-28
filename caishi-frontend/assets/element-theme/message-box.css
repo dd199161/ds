@@ -612,13 +612,13 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   font-size: 14px;
   border-radius: 2px; }
   .el-button + .el-button {
     margin-left: 10px; }
   .el-button.is-round {
-    padding: 12px 20px; }
+    padding: 10px 20px; }
   .el-button:hover, .el-button:focus {
     color: #ffd22c;
     border-color: #fff2c0;
@@ -749,42 +749,42 @@
         border-color: #e1f3d8; }
   .el-button--warning {
     color: #fff;
-    background-color: #dd6800;
-    border-color: #dd6800; }
+    background-color: #f08200;
+    border-color: #f08200; }
     .el-button--warning:hover, .el-button--warning:focus {
-      background: #e48633;
-      border-color: #e48633;
+      background: #f39b33;
+      border-color: #f39b33;
       color: #fff; }
     .el-button--warning:active {
-      background: #c75e00;
-      border-color: #c75e00;
+      background: #d87500;
+      border-color: #d87500;
       color: #fff;
       outline: none; }
     .el-button--warning.is-active {
-      background: #c75e00;
-      border-color: #c75e00;
+      background: #d87500;
+      border-color: #d87500;
       color: #fff; }
     .el-button--warning.is-disabled, .el-button--warning.is-disabled:hover, .el-button--warning.is-disabled:focus, .el-button--warning.is-disabled:active {
       color: #fff;
-      background-color: #eeb480;
-      border-color: #eeb480; }
+      background-color: #f8c180;
+      border-color: #f8c180; }
     .el-button--warning.is-plain {
-      color: #dd6800;
-      background: #fcf0e6;
-      border-color: #f1c399; }
+      color: #f08200;
+      background: #fef3e6;
+      border-color: #f9cd99; }
       .el-button--warning.is-plain:hover, .el-button--warning.is-plain:focus {
-        background: #dd6800;
-        border-color: #dd6800;
+        background: #f08200;
+        border-color: #f08200;
         color: #fff; }
       .el-button--warning.is-plain:active {
-        background: #c75e00;
-        border-color: #c75e00;
+        background: #d87500;
+        border-color: #d87500;
         color: #fff;
         outline: none; }
       .el-button--warning.is-plain.is-disabled, .el-button--warning.is-plain.is-disabled:hover, .el-button--warning.is-plain.is-disabled:focus, .el-button--warning.is-plain.is-disabled:active {
-        color: #eba466;
-        background-color: #fcf0e6;
-        border-color: #f8e1cc; }
+        color: #f6b466;
+        background-color: #fef3e6;
+        border-color: #fce6cc; }
   .el-button--danger {
     color: #fff;
     background-color: #ff5574;
@@ -1221,9 +1221,9 @@
       border-color: #bbb; }
     .el-textarea__inner:focus {
       outline: none;
-      border-color: #ffd22c; }
+      border-color: #ecc233; }
   .el-textarea.is-disabled .el-textarea__inner {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     border-color: #dfe4ed;
     color: #bbb;
     cursor: not-allowed; }
@@ -1285,7 +1285,7 @@
       border-color: #bbb; }
     .el-input__inner:focus {
       outline: none;
-      border-color: #ffd22c; }
+      border-color: #ecc233; }
   .el-input__suffix {
     position: absolute;
     height: 100%;
@@ -1321,9 +1321,9 @@
     pointer-events: none; }
   .el-input.is-active .el-input__inner {
     outline: none;
-    border-color: #ffd22c; }
+    border-color: #ecc233; }
   .el-input.is-disabled .el-input__inner {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     border-color: #dfe4ed;
     color: #bbb;
     cursor: not-allowed; }
@@ -1365,7 +1365,7 @@
     vertical-align: middle;
     display: table-cell; }
   .el-input-group__append, .el-input-group__prepend {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     color: #878d99;
     vertical-align: middle;
     display: table-cell;
@@ -1448,7 +1448,7 @@
     margin-bottom: 0;
     font-size: 16px;
     line-height: 1;
-    color: #2d2f33; }
+    color: #444; }
   .el-message-box__headerbtn {
     position: absolute;
     top: 15px;
@@ -1489,7 +1489,7 @@
     .el-message-box__status.el-icon-info {
       color: #878d99; }
     .el-message-box__status.el-icon-warning {
-      color: #dd6800; }
+      color: #f08200; }
     .el-message-box__status.el-icon-error {
       color: #ff5574; }
   .el-message-box__message {

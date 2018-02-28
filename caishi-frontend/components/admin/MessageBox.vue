@@ -45,7 +45,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import { paramValidate } from '~/plugins/common'
+import { paramValidate } from '~/util/validator'
 import cache from '~/util/cache'
 import dateTables, { style } from '~/util/mixins/data-tables'
 import datepicker, {
@@ -53,41 +53,42 @@ import datepicker, {
   dateParam,
   checkDateFormat
 } from '~/util/mixins/datepicker'
-
+import { delayAjax } from '~/plugins/ajax'
 const typesLabel = ['普通用戶', '系统', '管理員']
 
 export default {
   name: 'message-box',
-  props: ['type', 'serverData'],
+  props: ['type', 'serverData', 'isSPA'],
   data() {
     return {
       multipleSelection: [],
       message: {},
       visible: false,
-      statusList: { 1: '未读', 2: '已读' }
+      statusList: { 1: '未读', 2: '已读' },
+      SPAInvoking:false
     }
   },
   mixins: [datepicker, dateTables],
   created() {
-    // if (this.isOut) {
-    //   this.getBox({ key: this.type })
-    // }
+    if (!this.serverData)
+      return delayAjax(this.$axios, this.$store, () => {
+        this.SPAInvoking = true
+        this.get()
+      })
     this.fetch()
   },
   methods: {
     async get(loadProps) {
       const { loadType, page } = this.getQueryParams(loadProps)
-      if (this.checkPageData(loadProps, page)) return
+      //prevevt DataTablesServer->this.getBox
+      if (this.checkPageData(loadProps, page) || !this.serverData && !this.SPAInvoking) return
       if (this.checkDateFormat() === true) {
         !this.resetting && this.spin()
-        this.pageDone(
-          await this.getBox({
-            key: this.type,
-            page,
-            page_size: loadType ? loadProps.pageSize : this.pageSize
-          }),
-          page
-        )
+        this.pageDone(await this.getBox({
+          key: this.type,
+          page,
+          page_size: loadType ? loadProps.pageSize : this.pageSize
+        }), page)
       }
     },
     style(value) {
@@ -173,7 +174,11 @@ export default {
           this.get()
         } else {
           const ids = multipleSelection.map(_ => _.id)
-          this.pageData[this.currentPage - 1] = this.tableData = this.tableData.filter(({ id }) => !ids.includes(id))
+          this.pageData[
+            this.currentPage - 1
+          ] = this.tableData = this.tableData.filter(
+            ({ id }) => !ids.includes(id)
+          )
           this.total = this.total - ids.length
           this.set({
             ...this[this.type],

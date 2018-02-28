@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <el-table :data="tableData" stripe border @selection-change="val => multipleSelection = val" style="width: 100%;max-width:1200px" ref="table">
+  <div class="">
+    <div class="text-right" style="margin-bottom:22px">
+      <el-button type="primary" @click="delMult">删除选中</el-button>
+    </div>
+    <data-tables :data="tableData" @selection-change="val => multipleSelection = val" :pagination-def="paginationDef" ref="table">
       <el-table-column type="selection" width="55" />
       <el-table-column label="注册编号">
         <template slot-scope="{row:{ sys_id,status,id}}">
@@ -39,16 +42,23 @@
           <el-button type="text" @click="del(row.id)">删除</el-button>
         </template>
       </el-table-column>
-    </el-table>
-    <el-button type="primary" @click="delMult">删除选中</el-button>
+    </data-tables>
     <component :is="view" v-bind={editorData,set,tableData} ref="editor" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import Vue from 'vue'
+import DataTables from '~/components/vue-data-tables/components/DataTables'
 import { AsyncComp, clipboard } from '~/plugins/common'
-import { levels, style } from '~/util/mixins/data-tables'
+import { levels, style,paginationDef } from '~/util/mixins/data-tables'
+
+DataTables.install = function(Vue) {
+  Vue.component(DataTables.name, DataTables)
+}
+
+Vue.use(DataTables)
+
 const statusLabel = ['启用', '停用']
 export default {
   name: 'link-admin',
@@ -84,9 +94,7 @@ export default {
     delMult() {
       const { multipleSelection } = this
       if (!multipleSelection.length) return
-      Promise.all(
-        multipleSelection.map(({ id }) => this.delReq(id))
-      ).then(() => {
+      this.delReq(this.multipleSelection.map(_ => _.id).join()).then(() => {
         this.$message({
           message: '选中的注册链接已成功删除',
           type: 'success'
@@ -106,7 +114,7 @@ export default {
       return `${location.protocol}//${location.host}/signup/${id}`
     },
     initCopy() {
-      const elToolTips = this.$refs.table.$children
+      const elToolTips = this.$refs.table.$refs.elTable.$children
         .slice(-1)[0] //tablebody
         .$children.filter(_ => _.effect === 'danger') //tooltip exclude el-table show-overflow-tooltip
 
@@ -123,9 +131,9 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({
-    //   register:'admin/register'
-    // })
+    paginationDef(){
+      return paginationDef(this.tableData.length,10,1)
+    }
   },
   filters: {
     statusLabel(status) {

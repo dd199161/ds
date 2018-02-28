@@ -1,7 +1,7 @@
 <template>
   <el-dialog custom-class="register-modal" title="编辑链接" :visible.sync="visible" @open="get">
     <el-form status-icon label-width="8em" ref="form">
-      <el-form-item label="操作状态：">
+      <el-form-item label="状态：">
         <el-radio-group v-model="statusText" size="medium">
           <el-radio-button label="启用"></el-radio-button>
           <el-radio-button label="停用"></el-radio-button>

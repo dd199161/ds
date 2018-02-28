@@ -1,5 +1,9 @@
-.el-table.el-table--striped{
+.el-table.el-table--fit{
   font-size:$font-size-base;
+  border:1px solid #e8e8e8;
+  &:before{
+    content: none;
+  }
   th,td{
     text-align: center;
   }
@@ -13,7 +17,7 @@
     height: 23px;
   }
   td{
-    border-bottom:none;
+    // border-bottom:none;
     height:34px;
     .el-button--text{
       min-width: 60px;

@@ -22,6 +22,7 @@
   export default {
     name:'account-center',
     fetch({store,app}){
+      if(process.server) return Promise.resolve()
       return store.dispatch('getUser')
     },
     data(){
@@ -30,6 +31,9 @@
         views,
         view:views[0]
       }
+    },
+    created(){
+
     },
     components:{
       NewAccount,

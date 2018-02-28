@@ -1,140 +1,202 @@
 <template src="../../../templates/admin/payment/withdraw.html"> </template>
+
+<style lang="scss">
+.withdraw-form {
+  .el-select,
+  .el-input {
+    width: 170px;
+  }
+  .el-input {
+    margin-right: 10px;
+  }
+}
+</style>
+
+
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-  export default {
-    name: 'withdraw',
-    fetch({
-      store,
-      redirect
-    }) {
-      if(!store.state.user.token) return Promise.resolve()
-      if(!store.getters.hasPayPw) {
-        redirect('/admin/user?paypw=true')
-      }
-      if(store.getters['pay/bankCards'].length) return Promise.resolve()
-      return store.dispatch('pay/getBankCards')
-    },
-    data() {
+import { mapGetters, mapActions } from 'vuex'
+import { pick, zipObject } from 'lodash/fp'
+import { delayAjax } from '~/plugins/ajax'
+import cache from '~/util/cache'
+import { getRequiredRule } from '~/util/validator'
+const isSever = process.server
+
+const getInfo = async context =>
+  (await context.$axios.$post('user-balance-account/get-account-info')).data
+
+const setBal = (store, { list, currency_list }) => {
+  store.commit(
+    'pay/setBal',
+    zipObject(Object.keys(list))(
+      Object.values(list).map(_ =>
+        pick(['allow_withdraw_balance', 'total_balance', 'frozen_balance'])(_)
+      )
+    )
+  )
+  store.commit('setState', { key: 'pay.currencyList', value: currency_list })
+}
+
+const BIND_CARD_URL = '/admin/user?noBankCards=true'
+
+export default {
+  name: 'withdraw',
+  async fetch({ store, redirect }) {
+    if (isSever) return Promise.resolve()
+    if (!store.getters.hasPayPw) {
+      redirect('/admin/user?paypw=true')
+    }
+    if (cache.isRequestBankCards) {
+      if (!store.getters['pay/bankCards'].length) redirect(BIND_CARD_URL)
+      return Promise.resolve()
+    }
+    await store.dispatch('pay/getBankCards')
+    cache.isRequestBankCards = true
+    if (!store.getters['pay/bankCards'].length) redirect(BIND_CARD_URL)
+    return Promise.resolve()
+  },
+  async asyncData({ app, store }) {
+    if (
+      isSever ||
+      (cache.isRequestBankCards && !store.getters['pay/bankCards'].length)
+    )
       return {
-        bankId: '',
-        amount: '',
-        fund_password: '',
-        bankId: '',
-        payIndex: 0,
-        payIndexs: 0,
-        items: 18,
-        game_acc: [{
-          name: "彩票账户"
-        }, {
-          name: "百家乐账户"
-        }, {
-          name: "快乐彩账户"
-        }],
-        defaultWithdraw: 500,
-        total_balance: '',
-        allow_withdraw_balance: '',
         lottery_to_consume: '',
-        withdraw_amount_today: '',
-        withdraw_count_today: '',
+        withdraw_amount_today: 0,
+        withdraw_count_today: 0,
         withdraw_limit_amount_per_day: '',
-        withdraw_limit_count_per_day: '',
-        withdraw_count_without_fee: '',
-        lay: '',
-        bankWithdrawTime: '',
-        disabled:false
+        withdraw_limit_count_per_day: 0,
+        withdraw_count_without_fee: ''
       }
-    },
-    created() {
-      this.getBanck();
-    },
-    methods: {
-      getBanck() {
-        this.$axiosPlus('user-balance-account/get-account-info', data => {
-//        this.total_balance = data.total_balance
-        	this.total_balance = this.totalBal
-          this.allow_withdraw_balance = data.allow_withdraw_balance
-          this.lottery_to_consume = data.lottery_to_consume
-          this.withdraw_amount_today = data.withdraw_amount_today
-          this.withdraw_count_today = data.withdraw_count_today
-          this.withdraw_limit_amount_per_day = data.withdraw_limit_amount_per_day
-          this.withdraw_limit_count_per_day = data.withdraw_limit_count_per_day
-          this.withdraw_count_without_fee = data.withdraw_count_without_fee
-        });
-        this.$axiosPlus('user-bank-card/get', data => {
-          this.userBankCards = data.user_bank_cards
-          this.bankWithdrawTime = this.userBankCards[0].content.bank_withdraw_time
-        })
-      },
-      keyup() {
-        if(Number(this.defaultWithdraw) < 100) {
-          this.defaultWithdraw = 100;
+    const data = await getInfo(app)
+    setBal(store, data)
+    return data.list[store.getters['pay/currency']]
+  },
+  data() {
+    const form = {
+      bankId: '',
+      amount: '',
+      pw: ''
+    }
+    return {
+      payIndex: 0,
+      payIndexs: 0,
+      game_acc: [
+        {
+          name: '彩票账户'
+        },
+        {
+          name: '百家乐账户'
+        },
+        {
+          name: '快乐彩账户'
         }
-        if(Number(this.defaultWithdraw) > this.withdraw_limit_amount_per_day) {
-          this.defaultWithdraw = this.withdraw_limit_amount_per_day
-          if(Number(this.defaultWithdraw) > this.allow_withdraw_balance) {
-            this.defaultWithdraw = this.allow_withdraw_balance
+      ],
+      form,
+      rules: {
+        bankId: [
+          getRequiredRule('请选择银行卡'),
+          {
+            validator: (rule, value, callback) => {
+              if (
+                +new Date(
+                  this.bankCards.find(_ => value === _.id).end_locked_at
+                ) >= Date.now()
+              ) {
+                return callback(new Error('该银行卡已锁定'))
+              }
+              callback()
+            },
+            trigger: 'change'
           }
-        }
-      },
-      submit() {
-//      if(this.$store.state.pay.bal.frozen_balance) {
-//        this.$alert('暂有金额冻结中，无法提现！', '温馨提示', {
-//          confirmButtonText: '确定'
-//        });
-//      } else {
-          this.$axiosPlus('user-bank-card/get', data => {
-            this.userBankCards = data.user_bank_cards
-            if(this.total_balance < 100 || this.allow_withdraw_balance < 100) {
-              this.$message({
-                message: `余额不足100元整！`,
-                duration: 800,
-                type: 'error'
-              })
-            }
-            if(this.fund_password === '') {
-              this.$message({
-                message: `支付密码不能为空！`,
-                duration: 800,
-                type: 'error'
-              })
-            } else {
-              this.total_balance -= this.defaultWithdraw
-              this.allow_withdraw_balance -= this.defaultWithdraw
-              this.withdraw_amount_today = Number(this.withdraw_amount_today) + Number(this.defaultWithdraw)
-              this.withdraw_count_today = Number(this.withdraw_count_today) + 1
+        ],
+        amount: [
+          getRequiredRule('请输入提现金额'),
+          {
+            validator: (rule, value, callback) => {
+              if (value > this.availableAmount) {
+                return callback(
+                  new Error(`提现金额不能超过${this.availableAmount}！`)
+                )
+              }
+              callback()
+            },
+            trigger: 'blur'
+          }
+        ],
+        pw: getRequiredRule('请输入资金密码')
+      }
+    }
+  },
+  created() {
+    if (!cache.isRequestBankCards) {
+      delayAjax(this.$axios, this.$store, () => {
+        this.$store.dispatch('pay/getBankCards').then(() => {
+          if (this.bankCards.length) {
+            getInfo(this).then(data => {
+              Object.assign(
+                this,
+                data.list[this.$store.getters['pay/currency']]
+              )
+              setBal(this.$store, data)
+            })
+          } else {
+            this.$router.push(BIND_CARD_URL)
+          }
+        })
+      })
+    }
+  },
+  methods: {
+    submit() {
+      this.$form.validate(valid => {
+        if (valid) {
+          const { form, client_ip } = this
+          this.$axiosPlus(
+            'user-bank-withdraw/create',
+            {
+              ...zipObject(['user_bank_id', 'amount', 'fund_password'])(
+                Object.values(form)
+              ),
+              client_ip
+            },
+            data => {
               this.getBal()
               this.$message({
                 message: `提现成功！`,
                 type: 'success',
-                duration: 1500,
-//              onClose: this.getBal
+                duration: 1500
               })
             }
-          })
-//      }
-      },
-      ...mapActions({
-        getBal: 'pay/getBal'
-      })
-    },
-    computed: {
-      enabled() {
-        if(!this.bankId) return true
-        return(+new Date(this.bankCards.find(_ => this.bankId === _.id).end_locked_at) < Date.now())
-      },
-      ...mapGetters({
-        bal: 'pay/bal',
-        client_ip: 'ip',
-        totalBal: 'pay/totalBal',
-        bankCards: 'pay/bankCards'
-      })
-    },
-    directives: {
-      focus: {
-        inserted: function(el) {
-          el.focus()
+          )
+        } else {
+          return false
         }
-      }
-    }
+      })
+    },
+    ...mapActions({
+      getBal: 'pay/getBal'
+    })
+  },
+  computed: {
+    currentCard() {
+      return this.bankCards.find(_ => _.id === this.form.bankId)
+    },
+    availableAmount() {
+      const { bal, currentCard } = this
+      return Math.min(bal, currentCard && currentCard.bank_max_withdraw_load)
+    },
+    frozenBal() {
+      return this.$store.state.pay.bal.frozen_balance
+    },
+    ...mapGetters({
+      bal: 'pay/bal',
+      client_ip: 'ip',
+      totalBal: 'pay/totalBal',
+      bankCards: 'pay/bankCards'
+    })
+  },
+  mounted() {
+    this.$form = this.$refs.form
   }
+}
 </script>

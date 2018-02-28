@@ -3,20 +3,24 @@
 // import '~/components/reposal/All5in1'
 
 import { mapGetters } from 'vuex'
-import {round3} from '~/plugins/filters'
+import {defaultRound} from '~/plugins/filters'
 import { flatten,round } from 'lodash'
 import props from '~/util/lotto/reposal-props'
 import mapMethods from '~/util/lotto/reposal-methods'
 export default {
   props,
+  inject: ['lottoRoot'],
   methods:{
+    selected(value){
+      return typeof value === 'string' && value || value === null
+    },
     getOdds(listIndex,betIndex,_index){
       if(!this.playList.length) return 0
       let index = _index
       if(this.orderStr === 'orderVS') {
         index = _index === 2 ? 1 : _index == 1  ?  2 : _index
       }
-      return round3((this.bonus || this.playMaxGroup)/2000/this.playList[listIndex].bets[betIndex].odds[index])
+      return defaultRound((this.bonus || this.playMaxGroup)/2000/this.playList[listIndex].bets[betIndex].odds[index])
     },
     flattenOrder(orderType,splice = false,_flatten = flatten){
       let _orderType = orderType
@@ -38,7 +42,7 @@ export default {
               if (typeof buyValue == 'function') {
                 buyValue = _buyValue(j)
               }
-              //reslut [buyValue:'大',odds:1.95,amount:100,14:$refs.input index,orderTypeIndex,playIdentifier]
+              //reslut [buyValue:'大',odds:1.95,amount:100,14:$refs.input index,orderTypeIndex,playIdentifier,function:components/reposal/k3/BigSmall.vue:173 getLoopItem]
               let result = [
                 buyValue,
                 this.getOdds(col,orderTypeIndex,j),
@@ -68,15 +72,28 @@ export default {
       bonus:'reposal/bonus',
       shortcut:'reposal/shortcut',
       hotNums:'reposal/nums'
-    }),
-    // odds(){
-    //   return this.playList.map(_ => _.bets.map(_ => _.odds.map(_ => round3((this.bonus || this.playMaxGroup)/2000/eval(_)))))
-    // }
-    
+    })
   },
   mounted(){
     this.validate = i => this._validate(this.$refs.input[i])
     this.select = i => this._select(this, i)
-    
   },
+}
+
+export const getRecur = (recur,temp,length) => {
+  let startRecur = 0
+  let step = 0
+
+  const sequence = () => {
+    if(step == recur.length) return
+    if (recur[step] == startRecur){
+      step++
+      startRecur = 0
+    }
+    let result = temp(step + 1,startRecur + 2 + step)
+    startRecur++
+    return result
+  }
+
+  return [...Array(length)].map(sequence)
 }

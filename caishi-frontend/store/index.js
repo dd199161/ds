@@ -12,8 +12,9 @@ export const state = () => ({
   news: [],
   _3rdGames: [],
   passwords: {},
+  sysConfigs: [],
   docable: false,
-  ui_docable: false
+  GACollection:{}
 })
 
 export const getters = {
@@ -38,12 +39,13 @@ export const getters = {
     return ''
   },
   loading: state => state.loading,
-  _3rdGames: state => state._3rdGames
+  _3rdGames: state => state._3rdGames,
+  sysConfigs: state => state.sysConfigs
 }
 
 export const actions = {
   // third-party-game/all-balance
-  async get3rdGames({ commit }) {
+  get3rdGames({ commit }) {
     // api slow,require catch
     // commit('setState',{key:'_3rdGames',value:(await this.$axios.$post('third-party-game/all-balance')).data})
     this.$axios
@@ -57,26 +59,28 @@ export const actions = {
       callback(result)
     })
   },
-
-  getAvatar({ commit, state: { user } }) {
+  getAvatar({ commit, state: { user }}) {
+    if(!user.token) return Promise.resolve()
     return this.$axios.$post('user/get-chat-avatar').then(({ data }) => {
-      commit('setUser', { ...user, avatar: data.chat_avatar })
+      commit('setUser', {
+        ...user,
+        avatar: data.chat_avatar || '/img/avatar/1.jpg'
+      })
     })
   },
-
   getNews({ commit }) {
     return this.$axios.$post('news-info/get').then(({ data }) => {
       commit('setState', { key: 'news', value: data.list })
     })
   },
-  //fetch before run nuxtServerInit
-  // nuxtServerInit({ commit, state: { user } }, { req }) {
-  //   console.log('process.server ',user.token,req.session.token)
-  //   if (process.server && req.session && req.session.token) {
-  //     const { token } = req.session
-  //     this.$axios.setHeader('Token', token)
-  //     commit('setUser', { ...user, token })
-  //   }
+  async getSysConfig({ commit }) {
+    commit('setState', {
+      key: 'sysConfigs',
+      value: (await this.$axios.$post('sys-config/get')).data.sys_configs
+    })
+  }
+  // async nuxtServerInit ({ commit,dispatch }, { app,req,route }) {
+  //   await dispatch('getNews')
   // }
 }
 

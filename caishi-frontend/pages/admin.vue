@@ -6,7 +6,6 @@
     display: flex;
     width: 1100px;
     margin: 0 auto;
-    /*margin-top:80px;*/
     .members-nav {
       width: 70px;
       & ul {

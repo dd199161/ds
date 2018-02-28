@@ -286,7 +286,7 @@
   cursor: pointer;
   line-height: 44px;
   font-size: 12px;
-  color: #7f7f7f; }
+  color: #7b7b7b; }
 
 .el-tabs__nav-next {
   right: 0; }
@@ -310,7 +310,7 @@
   list-style: none;
   font-size: 14px;
   font-weight: 500;
-  color: #2d2f33;
+  color: #444;
   position: relative; }
   .el-tabs__item:focus, .el-tabs__item:focus:active {
     outline: none; }
@@ -393,7 +393,7 @@
   .el-tabs--border-card > .el-tabs__content {
     padding: 15px; }
   .el-tabs--border-card > .el-tabs__header {
-    background-color: #f5f7fa;
+    background-color: #f1f1f1;
     border-bottom: 1px solid #dfe4ed;
     margin: 0; }
   .el-tabs--border-card > .el-tabs__header .el-tabs__nav-wrap::after {
@@ -402,7 +402,7 @@
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     border: 1px solid transparent;
     margin: -1px -1px 0;
-    color: #7f7f7f; }
+    color: #7b7b7b; }
     .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
       color: #ffd22c;
       background-color: #fff;

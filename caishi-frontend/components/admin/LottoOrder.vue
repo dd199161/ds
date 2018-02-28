@@ -33,20 +33,20 @@
         <el-button @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
-    <data-tables-server :data="tableData" :total="total" @query-change="get" v-loading="loading.on" :element-loading-text="loading.text" :pagination-def="paginationDef">
+    <data-tables-server :data="tableData" :total="total" @query-change="get" v-loading="loading.on" :element-loading-text="loading.text" :pagination-def="paginationDef" :table-props="{height:fixTableHeight}">
       <!-- loadProps.sortInfo require prop sys_id -->
-      <!-- <el-table-column label="订单编号" prop="sys_id" sortable="custom">
+      <el-table-column label="订单编号" prop="sys_id" sortable="custom">
         <template slot-scope="{row}">
           <a class="el-button--text" @click="getDetail(row)">{{row.sys_id}}</a>
         </template>
-      </el-table-column> -->
-      <el-table-column prop="sys_id" label="订单编号"/>
+      </el-table-column>
       <el-table-column prop="username" label="所属会员" v-if="type" />
       <el-table-column prop="method" label="投注玩法" min-width="200" />
       <el-table-column prop="issue" min-width="150" label="投注期号" />
       <el-table-column prop="amount" label="投注金额" />
       <el-table-column prop="bonus" label="中奖金额" />
-      <el-table-column label="订单状态">
+
+      <el-table-column label="状态">
         <template slot-scope="{row:{status}}">
           <span :class="style(status)">{{statusLabel(status)}}</span>
         </template>
@@ -54,25 +54,25 @@
       <el-table-column prop="created_at" min-width="150" label="投注时间" />
       <el-table-column label="操作" v-if="!type">
         <template slot-scope="{row}">
-          <el-button v-if="row.cancelable" type="text" @click="cancel(row)">撤单</el-button>
+          <el-button v-if="row.cancelable" type="text" @click="cancel(row)" style="margin-left: -12px;">撤单</el-button>
           <i class="el-icon-minus" v-else></i>
         </template>
       </el-table-column>
     </data-tables-server>
-
     <component :is="view" ref="detail" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { paramValidate, AsyncComp } from '~/plugins/common'
+import {paramValidate} from '~/util/validator'
+import { AsyncComp } from '~/plugins/common'
 import datepicker, {
   dateParam,
   checkDateFormat
 } from '~/util/mixins/datepicker'
-import dateTables, { round3, queryAll } from '~/util/mixins/data-tables'
-import { simpleUnCompress } from '~/util/lotto/code'
+import dateTables, { defaultRound, queryAll } from '~/util/mixins/data-tables'
+import { transformCode } from '~/util/lotto/code'
 
 export default {
   name: 'lotto-order',
@@ -98,7 +98,8 @@ export default {
       view: '',
       // lottoType:null,
       detail: null,
-      ...this.initDate()
+      ...this.initDate(),
+      fixTableHeight:this.$store.getters.token && 200 
     }
   },
   mixins: [datepicker, dateTables],
@@ -119,9 +120,9 @@ export default {
       }
       //ensure cancelKey,statusList:{"0":"全部","1":"追号中","2":"已撤单","3":"追号结束"}
       !this.cancelKey &&
-        (this.cancelKey = Object.keys(this.statusList)[Object.values(this.statusList).findIndex(_ =>
-          _.includes('撤单')
-        )])
+        (this.cancelKey = Object.keys(this.statusList)[
+          Object.values(this.statusList).findIndex(_ => _.includes('撤单'))
+        ])
     },
     get(loadProps) {
       console.log('loadProps', loadProps)
@@ -171,11 +172,12 @@ export default {
       is_cancel,
       self_return_amount,
       buy_number,
+      profit_loss_amount,
       ...props
     }) {
-      const lottoInfo = this.listMap[lottery_info_identifier.toLowerCase()]
+      const lottoInfo = this.listMap[lottery_info_identifier]
       const method = lottery_method_name.replace(
-        lottoInfo.typeName,
+        lottoInfo.typeName === '全天彩' ? '时时彩' : lottoInfo.typeName,
         lottoInfo.name + '-'
       )
       const { isChase } = this
@@ -183,15 +185,14 @@ export default {
         ...props,
         status,
         username,
-        amount: round3(total_bet_amount),
-        bonus: win_amount ? round3(win_amount) : 0,
+        amount: defaultRound(total_bet_amount),
+        bonus: win_amount ? defaultRound(win_amount) : 0,
         method,
-        buy_number: method.includes('单式')
-          ? simpleUnCompress(buy_number, this.isPlayCodeDouble(lottoInfo.type))
-          : buy_number,
-        point: round3(self_return_amount),
+        buy_number: transformCode(buy_number,method,lottoInfo.type),
+        point: defaultRound(self_return_amount),
         end_betted_at,
         unit: ['元', '角', '分', '厘'][money_unit - 1],
+        profit:defaultRound(profit_loss_amount),
         cancelable:
           // status === this.cancelable &&
           // (isChase ? true : new Date() < new Date(end_betted_at)),

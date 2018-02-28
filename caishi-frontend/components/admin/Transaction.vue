@@ -30,7 +30,7 @@
       <el-table-column prop="beforeBal" label="操作前余额" />
       <el-table-column label="金额">
         <template slot-scope="{row:{amount}}">
-          <span :class="style(amount)">{{amount | round3}}</span>
+          <span :class="style(amount)">{{amount | defaultRound}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="afterBal" label="操作后余额" />
@@ -48,8 +48,8 @@
 
 <script>
 import datepicker from '~/util/mixins/datepicker'
-import dateTables, { round3, queryAll } from '~/util/mixins/data-tables'
-import { paramValidate } from '~/plugins/common'
+import dateTables, { defaultRound, queryAll } from '~/util/mixins/data-tables'
+import { paramValidate } from '~/util/validator'
 
 export default {
   name: 'transaction',
@@ -113,8 +113,8 @@ export default {
     }) {
       return {
         transType: this.transList[trans_type],
-        beforeBal: round3(before_user_total_balance),
-        afterBal: round3(after_user_total_balance),
+        beforeBal: defaultRound(before_user_total_balance),
+        afterBal: defaultRound(after_user_total_balance),
         status: this.statusList[status],
         remark: admin_note,
         ...props

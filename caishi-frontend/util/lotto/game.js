@@ -92,202 +92,202 @@ export default {
 
 
 	//for (x=0;x<10;x++){codes[x]!==undefined?arr.push(codes[x]+""):arr.push("");}
-	get_zx60:function(codes){
-    var _this=this;
-    if(codes[0] === undefined || codes[1] === undefined) return 0
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var recount = 0; //重复数
-		if (codes_0 && codes_0.length > 0 && codes_1 && codes_1.length > 0) {
-			for (var i = 0; i < codes_0.length; i++) {
-				for (var j = 0; j < codes_1.length; j++){
-					if (codes_1[j] && codes_1[j] == codes_0[i]) {
-						recount++;
-					}
-				}
-			}
-		}
-		var itemcount = 0;
-		if( len_1>=3 && len_0>=1) {
-			for(len_0; len_0>0; len_0--) {
-				if(recount>0) {
-					var diffcount = len_1-4;
-					var topcount = len_1-1;
-					var subcount =  len_1-4;
-					if(diffcount > 0) {
-						var temp = len_1-1;
-						while( diffcount>1 ) {
-							diffcount--;
-							temp--;
-							topcount =  topcount * temp;
-							subcount = subcount * diffcount;
-						}
-						itemcount += (topcount/subcount);
-					}else if(diffcount < 0) {
-					}else {
-						itemcount += 1;
-					}
-					recount--;
-				}else {
-					var diffcount = len_1-3;
-					var topcount = len_1;
-					var subcount =  len_1-3;
-					if(diffcount > 0) {
-						var temp = len_1;
-						while( diffcount>1 ) {
-							diffcount--;
-							temp--;
-							topcount =  topcount * temp;
-							subcount = subcount * diffcount;
-						}
-						itemcount += (topcount/subcount);
-					}else {
-						itemcount += 1;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
-	get_zx30:function(codes){
-		var _this=this;
-		if(codes[0] === undefined || codes[1] === undefined) return 0
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var itemcount = 0;
-		if(len_0 > 1 && len_1 > 0 ) {
-			for(var i = 0; i < codes_1.length; i++) {
-				if(codes_1[i] != undefined && codes_1[i] != "") {
-					if(codes_0[i] != undefined && codes_0[i] != "") {
-						if(len_0 > 2) {
-							itemcount += (len_0-1)*(len_0-2)/2;
-						}
-					} else {
-						itemcount += len_0*(len_0-1)/2;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
-	get_zx20:function(codes){
-		var _this=this;
-		if(codes[0] === undefined || codes[1] === undefined) return 0
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
+	// get_zx60:function(codes){
+  //   var _this=this;
+  //   if(codes[0] === undefined || codes[1] === undefined) return 0
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var recount = 0; //重复数
+	// 	if (codes_0 && codes_0.length > 0 && codes_1 && codes_1.length > 0) {
+	// 		for (var i = 0; i < codes_0.length; i++) {
+	// 			for (var j = 0; j < codes_1.length; j++){
+	// 				if (codes_1[j] && codes_1[j] == codes_0[i]) {
+	// 					recount++;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	var itemcount = 0;
+	// 	if( len_1>=3 && len_0>=1) {
+	// 		for(len_0; len_0>0; len_0--) {
+	// 			if(recount>0) {
+	// 				var diffcount = len_1-4;
+	// 				var topcount = len_1-1;
+	// 				var subcount =  len_1-4;
+	// 				if(diffcount > 0) {
+	// 					var temp = len_1-1;
+	// 					while( diffcount>1 ) {
+	// 						diffcount--;
+	// 						temp--;
+	// 						topcount =  topcount * temp;
+	// 						subcount = subcount * diffcount;
+	// 					}
+	// 					itemcount += (topcount/subcount);
+	// 				}else if(diffcount < 0) {
+	// 				}else {
+	// 					itemcount += 1;
+	// 				}
+	// 				recount--;
+	// 			}else {
+	// 				var diffcount = len_1-3;
+	// 				var topcount = len_1;
+	// 				var subcount =  len_1-3;
+	// 				if(diffcount > 0) {
+	// 					var temp = len_1;
+	// 					while( diffcount>1 ) {
+	// 						diffcount--;
+	// 						temp--;
+	// 						topcount =  topcount * temp;
+	// 						subcount = subcount * diffcount;
+	// 					}
+	// 					itemcount += (topcount/subcount);
+	// 				}else {
+	// 					itemcount += 1;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
+	// get_zx30:function(codes){
+	// 	var _this=this;
+	// 	if(codes[0] === undefined || codes[1] === undefined) return 0
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var itemcount = 0;
+	// 	if(len_0 > 1 && len_1 > 0 ) {
+	// 		for(var i = 0; i < codes_1.length; i++) {
+	// 			if(codes_1[i] != undefined && codes_1[i] != "") {
+	// 				if(codes_0[i] != undefined && codes_0[i] != "") {
+	// 					if(len_0 > 2) {
+	// 						itemcount += (len_0-1)*(len_0-2)/2;
+	// 					}
+	// 				} else {
+	// 					itemcount += len_0*(len_0-1)/2;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
+	// get_zx20:function(codes){
+	// 	var _this=this;
+	// 	if(codes[0] === undefined || codes[1] === undefined) return 0
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
 
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var itemcount = 0;
-		if(len_0 > 0 && len_1 > 1) {
-			for(var i = 0; i < codes_0.length; i++) {
-				if(codes_0[i] != undefined && codes_0[i] != "") {
-					if(codes_1[i] != undefined && codes_1[i] != "") {
-						if(len_1 > 2) {
-							itemcount += (len_1-1)*(len_1-2)/2;
-						}
-					} else {
-						itemcount += len_1*(len_1-1)/2;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
-	get_zx10:function(codes){
-		var _this=this;
-		if(codes[0] === undefined || codes[1] === undefined) return 0
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var itemcount = 0;
-		if(len_0 > 0 && len_1 > 0) {
-			for(var i = 0; i < codes_0.length; i++) 
-			{
-				if(codes_0[i] != undefined && codes_0[i] != "") 
-				{
-					if(codes_1[i] != undefined && codes_1[i] != "") 
-					{
-						if(len_1 > 1) 
-						{
-							itemcount += len_1-1;
-						}
-					} 
-					else 
-					{
-						itemcount += len_1;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
-	get_zx5:function(codes){
-		return this.get_zx10(codes);
-	},
-	get_zx12:function(codes){
-		var _this=this;
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var itemcount = 0;
-		if(len_0 > 0 && len_1 > 1) {
-			for(var i = 0; i < codes_0.length; i++) 
-			{
-				if(codes_0[i] != undefined && codes_0[i] != "") 
-				{
-					if(codes_1[i] != undefined && codes_1[i] != "") 
-					{
-						if(len_1 > 2) 
-						{
-							itemcount += (len_1-1)*(len_1-2)/2;
-						}
-					}
-					 else 
-					{
-						itemcount += len_1*(len_1-1)/2;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
-	get_zx4:function(codes){
-		var _this=this;
-		if(codes[0] === undefined || codes[1] === undefined) return 0
-		var codes_0 = _this.get_codes(codes[0]);
-		var codes_1 = _this.get_codes(codes[1]);
-		var len_0 = codes[0].length;
-		var len_1 = codes[1].length;
-		var itemcount = 0;
-		if(len_0 > 0 && len_1 > 0) 
-		{
-			for(var i = 0; i < codes_0.length; i++) 
-			{
-				if(codes_0[i] != undefined && codes_0[i] != "") 
-				{
-					if(codes_1[i] != undefined && codes_1[i] != "") 
-					{
-						if(len_1 > 1) 
-						{
-							itemcount += len_1-1;
-						}
-					} 
-					else 
-					{
-						itemcount += len_1;
-					}
-				}
-			}
-		}
-		return itemcount;
-	},
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var itemcount = 0;
+	// 	if(len_0 > 0 && len_1 > 1) {
+	// 		for(var i = 0; i < codes_0.length; i++) {
+	// 			if(codes_0[i] != undefined && codes_0[i] != "") {
+	// 				if(codes_1[i] != undefined && codes_1[i] != "") {
+	// 					if(len_1 > 2) {
+	// 						itemcount += (len_1-1)*(len_1-2)/2;
+	// 					}
+	// 				} else {
+	// 					itemcount += len_1*(len_1-1)/2;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
+	// get_zx10:function(codes){
+	// 	var _this=this;
+	// 	if(codes[0] === undefined || codes[1] === undefined) return 0
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var itemcount = 0;
+	// 	if(len_0 > 0 && len_1 > 0) {
+	// 		for(var i = 0; i < codes_0.length; i++) 
+	// 		{
+	// 			if(codes_0[i] != undefined && codes_0[i] != "") 
+	// 			{
+	// 				if(codes_1[i] != undefined && codes_1[i] != "") 
+	// 				{
+	// 					if(len_1 > 1) 
+	// 					{
+	// 						itemcount += len_1-1;
+	// 					}
+	// 				} 
+	// 				else 
+	// 				{
+	// 					itemcount += len_1;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
+	// get_zx5:function(codes){
+	// 	return this.get_zx10(codes);
+	// },
+	// get_zx12:function(codes){
+	// 	var _this=this;
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var itemcount = 0;
+	// 	if(len_0 > 0 && len_1 > 1) {
+	// 		for(var i = 0; i < codes_0.length; i++) 
+	// 		{
+	// 			if(codes_0[i] != undefined && codes_0[i] != "") 
+	// 			{
+	// 				if(codes_1[i] != undefined && codes_1[i] != "") 
+	// 				{
+	// 					if(len_1 > 2) 
+	// 					{
+	// 						itemcount += (len_1-1)*(len_1-2)/2;
+	// 					}
+	// 				}
+	// 				 else 
+	// 				{
+	// 					itemcount += len_1*(len_1-1)/2;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
+	// get_zx4:function(codes){
+	// 	var _this=this;
+	// 	if(codes[0] === undefined || codes[1] === undefined) return 0
+	// 	var codes_0 = _this.get_codes(codes[0]);
+	// 	var codes_1 = _this.get_codes(codes[1]);
+	// 	var len_0 = codes[0].length;
+	// 	var len_1 = codes[1].length;
+	// 	var itemcount = 0;
+	// 	if(len_0 > 0 && len_1 > 0) 
+	// 	{
+	// 		for(var i = 0; i < codes_0.length; i++) 
+	// 		{
+	// 			if(codes_0[i] != undefined && codes_0[i] != "") 
+	// 			{
+	// 				if(codes_1[i] != undefined && codes_1[i] != "") 
+	// 				{
+	// 					if(len_1 > 1) 
+	// 					{
+	// 						itemcount += len_1-1;
+	// 					}
+	// 				} 
+	// 				else 
+	// 				{
+	// 					itemcount += len_1;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return itemcount;
+	// },
 	get_zldt:function(codes){
 		var _this=this;
 		var codes_0 = _this.get_codes(codes[0]);

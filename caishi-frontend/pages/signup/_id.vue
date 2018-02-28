@@ -14,7 +14,9 @@
 .code {
   img {
     position: absolute;
-    right: 15px;
+    right: 1px;
+    top: 1px;
+    height: 38px;
   }
 }
 
@@ -38,12 +40,12 @@
 
 <script>
 import { zipObject, pickBy, isUndefined } from 'lodash/fp'
-import { apiIdValidate } from '~/plugins/common'
 import {
+  apiIdValidate,
   validUsername,
   validPassword,
   getRequiredRule
-} from '~/plugins/formValidate'
+} from '~/util/validator'
 import { DeviceType as device_type } from '~/plugins/UA'
 export default {
   name: 'sign-up',
@@ -56,11 +58,14 @@ export default {
       return Promise.resolve()
     }
   },
+  head() {
+    return {
+      title: `${this.isCommonUser ? '直营' : '代理'}注册`
+    }
+  },
   data() {
     return {
-      isCommonUser: false,
       captchaCode: '',
-
       form: {
         name: '',
         password: '',
@@ -69,13 +74,23 @@ export default {
         code: '',
         checkPassword: ''
       },
-
+      validateCaptcha: false,
       rules: {
         name: [getRequiredRule('请填写用户名'), validUsername()],
         password: [getRequiredRule('请填写密码'), validPassword()],
-        real_name: [getRequiredRule('请填写真实姓名')],
-        nick_name: [getRequiredRule('请填写昵称')],
-        code: [getRequiredRule('请填写验证码')],
+        real_name: getRequiredRule('请填写真实姓名'),
+        nick_name: getRequiredRule('请填写昵称'),
+        code: [
+          getRequiredRule('请填写验证码'),
+          {
+            validator: (rule, value, callback) => {
+              if (this.validateCaptcha) {
+                return callback(new Error('验证码错误'))
+              }
+              callback()
+            }
+          }
+        ],
         checkPassword: [
           getRequiredRule('请填写确认密码'),
           {
@@ -117,12 +132,27 @@ export default {
               client_ip,
               user_register_link_id
             }),
-            data => {
-              this.$message({
-                message: '注册成功！',
-                type: 'success'
-              })
-            }
+            res => {
+              if (res && res.error) {
+                if (res.errorCode === 100172) {
+                  this.validateCaptcha = true
+                  this.captchaFields.validate()
+                }else{
+                  this.$message({
+                  message: res.message,
+                  type: 'error',
+                  duration:2000
+                })
+                }
+              } else {
+                this.validateCaptcha = false
+                this.$message({
+                  message: '注册成功！',
+                  type: 'success'
+                })
+              }
+            },
+            { showError: false, errCb: true }
           )
         } else {
           return false
@@ -132,7 +162,7 @@ export default {
 
     getCaptcha() {
       const { ip } = this
-      this.$axiosPlus('/user/captcha', {}, data => {
+      this.$axiosPlus('user/captcha', {}, data => {
         if (data) {
           this.captchaCode = data.code
         } else {
@@ -148,12 +178,15 @@ export default {
   computed: {
     ip() {
       return this.$store.getters.ip
+    },
+    isCommonUser() {
+      return !this.$route.params.id
     }
   },
 
   mounted() {
     this.$form = this.$refs.form
-    this.isCommonUser = !this.$route.params.id
+    this.captchaFields = this.$form && this.$form.fields.slice(-1)[0] //cache this.$form validateField
     if (this.isCommonUser) {
       this.getCaptcha()
     }

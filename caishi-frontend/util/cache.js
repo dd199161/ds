@@ -1,6 +1,7 @@
 import { addSeconds } from 'date-fns'
 
 let cache = {
+  isRequestBankCards:false,
   memberInfo: {
     expires: 0,
     value: {

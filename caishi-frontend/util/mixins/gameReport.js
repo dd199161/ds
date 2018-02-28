@@ -1,6 +1,5 @@
-// import dateTables, { style, round3 ,paginationDef} from '~/util/mixins/data-tables'
-
-import { round3 } from '~/plugins/filters'
+import { delayAjax } from '~/plugins/ajax'
+import { defaultRound } from '~/plugins/filters'
 import { plus, minus } from 'number-precision'
 
 export const request = (context, props = {}) =>
@@ -16,7 +15,11 @@ export default {
     }
   },
   created() {
-    this.fetch()
+    if (this.isSPA) {
+      delayAjax(this.$axios, this.$store, this.get)
+    } else {
+      this.fetch()
+    }
   },
   methods: {
     getStatus(){
@@ -50,7 +53,7 @@ export default {
         const value = item[key]
         typeof value !== 'boolean' &&
           !Number.isNaN(+value) &&
-          (item[key] = round3(value))
+          (item[key] = defaultRound(value))
       })
       return item
     }
